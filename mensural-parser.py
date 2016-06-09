@@ -94,14 +94,17 @@ for i in range (len(ties_list)-1, -1, -1):
 output_doc = MeiDocument()
 output_doc.root = input_doc.getRootElement()
 
-# ScoreDef Part of the <score> element
+# ScoreDef Part of the <score> element:
+
 # New scoreDef element with the same id as the one in the input file and with the staffGrp element that contains all the staves of the input file
 out_scoreDef = MeiElement('scoreDef')
 out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
 
 out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]   # This is the one that contains the staves
 stavesDef = out_staffGrp.getChildren()
-# Mensuration added to the staves
+
+# Mensuration added to the staves (in each staffDef element) and stored for each voice
+mensuration = []
 for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
@@ -111,19 +114,23 @@ for staffDef in stavesDef:
     staffDef.addAttribute('modusminor', modusminor)
     staffDef.addAttribute('tempus', tempus)
     staffDef.addAttribute('prolatio', prolatio)
+
+    mensuration_per_voice = {'modusminor': modusminor, 'tempus': tempus, 'prolatio': prolatio}
+    mensuration.append(mensuration_per_voice)
+
 out_scoreDef.addChild(out_staffGrp)
 
-# Section Part of the <score> element
+# Section Part of the <score> element:
 out_section = MeiElement('section')
 out_section.id = input_doc.getElementsByName('section')[0].id
 
-# Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up
+# Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up:
 score = output_doc.getElementsByName('score')[0]
 score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
-# Filling the section element
+# Filling the section element:
 for ind_voice in all_voices:
     staff = MeiElement('staff')
     out_section.addChild(staff)
