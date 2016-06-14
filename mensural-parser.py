@@ -8,90 +8,55 @@ from pymei import *
 # This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
 
 def ModificationNoteDuration(modusminor, tempus, prolatio, notes, triplet_of_minims):
+    # Default values according to mensuration
+    # And presence or absence of triplets of minims in the piece
     if triplet_of_minims:
-        # Default values of notes according to the mensuration:
         semibrevis_default_val = 1024
-        brevis_default_val = int(tempus) * semibrevis_default_val
-        longa_default_val = int(modusminor) * brevis_default_val
+    else:
+        # minima_default_val = 512
+        semibrevis_default_val = int(prolatio) * 512    
+    brevis_default_val = int(tempus) * semibrevis_default_val
+    longa_default_val = int(modusminor) * brevis_default_val
 
-        # Check when a note should be imperfected (this only makes sense when the mensuration indicates perfection):
-        for note in notes:
-            # It is not necessary to check the rests, as they always keep the value that the mensuration indicates
-            # They remain perfect when the mensuration is perfect
-            # They are imperfect when the mensuration is imperfect
+    # Check when a note should be imperfected (this only makes sense when the mensuration indicates perfection):
+    for note in notes:
+        # It is not necessary to check the rests, as they always keep the value that the mensuration indicates
+        # They remain perfect when the mensuration is perfect
+        # They are imperfect when the mensuration is imperfect
+        durges = note.getAttribute('dur.ges').value
+        durges_num = int(durges[0:len(durges)-1])
 
-            durges = note.getAttribute('dur.ges').value
-            durges_num = int(durges[0:len(durges)-1])
-
-            # Checking in accordance to prolatio
-            # Since there are triplets of minims, the prolatio is 3, so there could be semibreves that have been imperfected   
-            imperfected_semibrevis_val = int(semibrevis_default_val * 2/3)    # 682
+        # Checking in accordance to prolatio
+        if prolatio == 3:
+            imperfected_semibrevis_val = int(semibrevis_default_val * 2/3) 
+            #### or in the CASE OF TRIPLET_OF_MINIMS: ###########################################################
+            #### imperfected_semibrevis_val = int(semibrevis_default_val * 2/3)    # 682
+            ####    imperfected_semibrevis_val = minima_default_val * 2
+            ### in this case, both ways of calculate the imperfected_semibrevis_val, result in the same value
+            ### Maybe that wont be the case in Ars Antiqua ######################################################
             if durges_num == imperfected_semibrevis_val:
-                # The semibreve is imperfect
+                # The semibreve has been imperfected
                 note.addAttribute('quality', 'i')
                 note.addAttribute('num', '3')
                 note.addAttribute('numbase', '2')
 
-            # Checking in accordance to tempus
-            if tempus == 3:
-                imperfected_brevis_val = semibrevis_default_val * 2
-                if durges_num == imperfected_brevis_val:
-                    # The breve has been imperfected
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
+        # Checking in accordance to tempus
+        if tempus == 3:
+            imperfected_brevis_val = semibrevis_default_val * 2
+            if durges_num == imperfected_brevis_val:
+                # The breve has been imperfected
+                note.addAttribute('quality', 'i')
+                note.addAttribute('num', '3')
+                note.addAttribute('numbase', '2')
 
-            # Checking in accordance to modusminor
-            if modusminor == 3:
-                imperfected_longa_val = brevis_default_val * 2
-                if durges_num == imperfected_longa_val:
-                    # The longa has been imperfected
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-
-    else:
-        # Default values of notes according to the mensuration:
-        minima_default_val = 512
-        semibrevis_default_val = int(prolatio) * minima_default_val
-        brevis_default_val = int(tempus) * semibrevis_default_val
-        longa_default_val = int(modusminor) * brevis_default_val
-
-        # Check when a note should be imperfected (this only makes sense when the mensuration indicates perfection):
-        for note in notes:
-            # It is not necessary to check the rests, as they always keep the value that the mensuration indicates
-            # They remain perfect when the mensuration is perfect
-            # They are imperfect when the mensuration is imperfect
-
-            durges = note.getAttribute('dur.ges').value
-            durges_num = int(durges[0:len(durges)-1])
-
-            # Checking in accordance to prolatio
-            if prolatio == 3:
-                imperfected_semibrevis_val = minima_default_val * 2
-                if durges_num == imperfected_semibrevis_val:
-                    # The semibreve has been imperfected
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-
-            # Checking in accordance to tempus
-            if tempus == 3:
-                imperfected_brevis_val = semibrevis_default_val * 2
-                if durges_num == imperfected_brevis_val:
-                    # The breve has been imperfected
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-
-            # Checking in accordance to modusminor
-            if modusminor == 3:
-                imperfected_longa_val = brevis_default_val * 2
-                if durges_num == imperfected_longa_val:
-                    # The longa has been imperfected
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
+        # Checking in accordance to modusminor
+        if modusminor == 3:
+            imperfected_longa_val = brevis_default_val * 2
+            if durges_num == imperfected_longa_val:
+                # The longa has been imperfected
+                note.addAttribute('quality', 'i')
+                note.addAttribute('num', '3')
+                note.addAttribute('numbase', '2')
 
 
 # ----------- #
