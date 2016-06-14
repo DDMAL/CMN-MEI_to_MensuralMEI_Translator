@@ -1,6 +1,103 @@
 from pymei import *
 
 
+# --------- #
+# FUNCTIONS #
+# --------- #
+
+# This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
+
+def ModificationNoteDuration(modusminor, tempus, prolatio, notes, triplet_of_minims):
+    if triplet_of_minims:
+        # Default values of notes according to the mensuration:
+        semibrevis_default_val = 1024
+        brevis_default_val = int(tempus) * semibrevis_default_val
+        longa_default_val = int(modusminor) * brevis_default_val
+
+        # Check when a note should be imperfected (this only makes sense when the mensuration indicates perfection):
+        for note in notes:
+            # It is not necessary to check the rests, as they always keep the value that the mensuration indicates
+            # They remain perfect when the mensuration is perfect
+            # They are imperfect when the mensuration is imperfect
+
+            durges = note.getAttribute('dur.ges').value
+            durges_num = int(durges[0:len(durges)-1])
+
+            # Checking in accordance to prolatio
+            # Since there are triplets of minims, the prolatio is 3, so there could be semibreves that have been imperfected   
+            imperfected_semibrevis_val = int(semibrevis_default_val * 2/3)    # 682
+            if durges_num == imperfected_semibrevis_val:
+                # The semibreve is imperfect
+                note.addAttribute('quality', 'i')
+                note.addAttribute('num', '3')
+                note.addAttribute('numbase', '2')
+
+            # Checking in accordance to tempus
+            if tempus == 3:
+                imperfected_brevis_val = semibrevis_default_val * 2
+                if durges_num == imperfected_brevis_val:
+                    # The breve has been imperfected
+                    note.addAttribute('quality', 'i')
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
+
+            # Checking in accordance to modusminor
+            if modusminor == 3:
+                imperfected_longa_val = brevis_default_val * 2
+                if durges_num == imperfected_longa_val:
+                    # The longa has been imperfected
+                    note.addAttribute('quality', 'i')
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
+
+    else:
+        # Default values of notes according to the mensuration:
+        minima_default_val = 512
+        semibrevis_default_val = int(prolatio) * minima_default_val
+        brevis_default_val = int(tempus) * semibrevis_default_val
+        longa_default_val = int(modusminor) * brevis_default_val
+
+        # Check when a note should be imperfected (this only makes sense when the mensuration indicates perfection):
+        for note in notes:
+            # It is not necessary to check the rests, as they always keep the value that the mensuration indicates
+            # They remain perfect when the mensuration is perfect
+            # They are imperfect when the mensuration is imperfect
+
+            durges = note.getAttribute('dur.ges').value
+            durges_num = int(durges[0:len(durges)-1])
+
+            # Checking in accordance to prolatio
+            if prolatio == 3:
+                imperfected_semibrevis_val = minima_default_val * 2
+                if durges_num == imperfected_semibrevis_val:
+                    # The semibreve has been imperfected
+                    note.addAttribute('quality', 'i')
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
+
+            # Checking in accordance to tempus
+            if tempus == 3:
+                imperfected_brevis_val = semibrevis_default_val * 2
+                if durges_num == imperfected_brevis_val:
+                    # The breve has been imperfected
+                    note.addAttribute('quality', 'i')
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
+
+            # Checking in accordance to modusminor
+            if modusminor == 3:
+                imperfected_longa_val = brevis_default_val * 2
+                if durges_num == imperfected_longa_val:
+                    # The longa has been imperfected
+                    note.addAttribute('quality', 'i')
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
+
+
+# ----------- #
+# MAIN SCRIPT #
+# ----------- #
+
 path = raw_input("Input the path to the MEI file you want to transform into mensural-mei: ")
 
 # Input file part - Separates individual voice information for the parser part
@@ -94,17 +191,14 @@ for i in range (len(ties_list)-1, -1, -1):
 output_doc = MeiDocument()
 output_doc.root = input_doc.getRootElement()
 
-# ScoreDef Part of the <score> element:
-
+# ScoreDef Part of the <score> element
 # New scoreDef element with the same id as the one in the input file and with the staffGrp element that contains all the staves of the input file
 out_scoreDef = MeiElement('scoreDef')
 out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
 
 out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]   # This is the one that contains the staves
 stavesDef = out_staffGrp.getChildren()
-
-# Mensuration added to the staves (in each staffDef element) and stored for each voice
-mensuration = []
+# Mensuration added to the staves
 for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
@@ -114,23 +208,19 @@ for staffDef in stavesDef:
     staffDef.addAttribute('modusminor', modusminor)
     staffDef.addAttribute('tempus', tempus)
     staffDef.addAttribute('prolatio', prolatio)
-
-    mensuration_per_voice = {'modusminor': modusminor, 'tempus': tempus, 'prolatio': prolatio}
-    mensuration.append(mensuration_per_voice)
-
 out_scoreDef.addChild(out_staffGrp)
 
-# Section Part of the <score> element:
+# Section Part of the <score> element
 out_section = MeiElement('section')
 out_section.id = input_doc.getElementsByName('section')[0].id
 
-# Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up:
+# Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up
 score = output_doc.getElementsByName('score')[0]
 score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
-# Filling the section element:
+# Filling the section element
 for ind_voice in all_voices:
     staff = MeiElement('staff')
     out_section.addChild(staff)
@@ -149,13 +239,16 @@ for ind_voice in all_voices:
             # Tuplets
             elif element.name == 'tuplet':
                 print(element)
-                children = element.getChildren()
+                tuplet = element
+                num = int(tuplet.getAttribute('num').value)
+                numbase = int(tuplet.getAttribute('numbase').value)
+                notes_grouped = tuplet.getChildren()
                 # At the moment we have only found tuplets of "semibrevis" and tuplets of "minima"
-                for note in children:
-                    dur = note.getAttribute('dur').value
-                    if dur == '1':
-                        note.addAttribute('num', '3')
-                        note.addAttribute('numbase', '2')
+                for note in notes_grouped:
+                    durges = note.getAttribute('dur.ges').value
+                    actual_durges_num = int( int(durges[0:len(durges)-1]) * numbase / num )
+                    actual_durges = str(actual_durges_num) + 'p'
+                    note.getAttribute('dur.ges').setValue(actual_durges)
                     layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
@@ -168,7 +261,7 @@ for ind_voice in all_voices:
                     rest.addAttribute('dur', 'long')
                     #### Is it necessary to add a @dur.ges too????
                     ##### Maybe no, because the rest will always have the default value given by the mensuration
-            # Notes
+            # Notes and simple rests
             else:
                 print(element)
                 layer.addChild(element)
@@ -179,6 +272,7 @@ print("")
 # Change in the @dur value to represent mensural figures
 notes = output_doc.getElementsByName('note')
 notes.extend(output_doc.getElementsByName('rest'))
+durges_list = []
 for note in notes:
     print(note)
     dur_attrib = note.getAttribute('dur')
@@ -193,6 +287,28 @@ for note in notes:
         mens_dur = "minima"
     dur_attrib.setValue(mens_dur)
 
+# Obtain all the dur.ges of the notes in the score
+notes = output_doc.getElementsByName('note')
+for note in notes:
+    durges = note.getAttribute('dur.ges').value
+    if durges not in durges_list:
+        durges_list.append(durges)
+
+# Indicate when a note has been modified from its original, default, value (the value given by the mensuration)
+triplet_of_minims = False
+if '341p' in durges_list:
+    triplet_of_minims = True
+
+staffDefs = output_doc.getElementsByName('staffDef')
+staves = output_doc.getElementsByName('staff')
+for i in range(0, len(staffDefs)):
+    staffDef = staffDefs[i]
+    modusminor = int(staffDef.getAttribute('modusminor').value)
+    tempus = int(staffDef.getAttribute('tempus').value)
+    prolatio = int(staffDef.getAttribute('prolatio').value)
+    notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
+    ModificationNoteDuration(modusminor, tempus, prolatio, notes_per_voice, triplet_of_minims)
+
 # Removing extraneous elements and attributes
 notes = output_doc.getElementsByName('note')
 for note in notes:
@@ -205,6 +321,8 @@ for note in notes:
         note.removeAttribute('staff')
     if note.hasAttribute('stem.dir'):
         note.removeAttribute('stem.dir')
+    if note.hasAttribute('dots'):
+        note.removeAttribute('dots')
 
 outputfile = path[0:len(path)-4] + "_output.mei"
 documentToFile(output_doc, outputfile)
