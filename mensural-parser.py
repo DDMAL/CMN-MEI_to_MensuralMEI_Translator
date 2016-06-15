@@ -7,7 +7,7 @@ from pymei import *
 
 # This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
 
-def ModificationNoteDuration(modusminor, tempus, prolatio, notes, triplet_of_minims):
+def ModificationNoteDuration(modusminor, tempus, prolatio, notes, triplet_of_minims, rests):
     # Default values according to mensuration
     # And presence or absence of triplets of minims in the piece
     if triplet_of_minims:
@@ -57,6 +57,25 @@ def ModificationNoteDuration(modusminor, tempus, prolatio, notes, triplet_of_min
                 note.addAttribute('quality', 'i')
                 note.addAttribute('num', '3')
                 note.addAttribute('numbase', '2')
+
+    # THIS PART WILL INDICATE IF A REST (of longa) IS 2 OR 3 BREVES LONG
+    ### FOR NOW, IT JUST "IMPERFECTS" THE "LONGA"-REST TO MAKE IT 2 BREVES LONG
+    ### THIS IS THE LAST NECESSARY PART FOR THE CORRECT ALIGNMENT OF THE PIECES IN ARS NOVA
+    ### CONSIDERING THAT THERE ARE NO OTHER KIND OF TUPLETS IN IT (2-TUPLET WITH TENUTO IN THE LAST NOTE, like Gaude in Fauvel)
+    ##### THIS CODE IS JUST FOR THE CORRECT ALIGNMENT OF THE PIECE (AS THESE "LONGA" RESTS ARE THE LAST PART TO MODIFY)
+    ###### BUT WE STILL HAVE TO FIGURE OUT HOW TO ENCODE THE 2 OR 3 BREVE REST, AS IT IS NOT PART OF THE MENSURAL-MEI MODULE FOR NOW
+    # FOR NOW:
+    if modusminor == 3:
+        for rest in rests:
+            if rest.hasAttribute('dur.ges'):
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
+                if durges_num == brevis_default_val * 2:
+                    # It is a: 2 BREVE REST 
+                    #(FOR NOW: WE WILL 'IMPERFECT IT', BUT LATER IT IS SUPPOSED TO BE REPRESENTED AS A 2-BREVE REST, WHEN THE MENSURAL-MEI MODULE INCLUDES THIS)
+                    rest.addAttribute('num', '3')
+                    rest.addAttribute('numbase', '2')
+    ##### SHOULD I ALLOW IT JUST FOR MODUSMINOR 3, INSTEAD OF IN GENERAL???
+    #### (BECAUSE IF THERE IS NO LONGA RESTS AT ALL, MAYBE IT SHOULD BE ALLOWED FOR MODUSMINOR 2 EITHER, GENERAL)
 
 
 # ----------- #
@@ -272,8 +291,9 @@ for i in range(0, len(staffDefs)):
     tempus = int(staffDef.getAttribute('tempus').value)
     prolatio = int(staffDef.getAttribute('prolatio').value)
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
-    ModificationNoteDuration(modusminor, tempus, prolatio, notes_per_voice, triplet_of_minims)
-
+    rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
+    ModificationNoteDuration(modusminor, tempus, prolatio, notes_per_voice, triplet_of_minims, rests_per_voice)
+    
 # Removing extraneous elements and attributes
 notes = output_doc.getElementsByName('note')
 for note in notes:
