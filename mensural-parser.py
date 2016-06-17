@@ -193,10 +193,10 @@ for note in notes:
         mens_dur = "minima"
     dur_attrib.setValue(mens_dur)
 
-# Removing extraneous elements and attributes
+# Removing or replacing extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
 for note in notes:
-    # Extraneous attributes in the <note> element
+    # Removing extraneous attributes in the <note> element
     if note.hasAttribute('layer'):
         note.removeAttribute('layer')
     if note.hasAttribute('pnum'):
@@ -205,6 +205,29 @@ for note in notes:
         note.removeAttribute('staff')
     if note.hasAttribute('stem.dir'):
         note.removeAttribute('stem.dir')
+    if note.hasAttribute('dots'):
+        note.removeAttribute('dots')
+    # Replacement of extraneous attributes by appropriate mensural attributes or elements within the <note> element:
+    # For plicas
+    if note.hasAttribute('stem.mod'):
+        stemmod = note.getAttribute('stem.mod')
+        if stemmod.value == "1slash":
+            note.addAttribute('plica', 'desc')
+            note.removeAttribute('stem.mod')
+        elif stemmod.value == "2slash":
+            note.addAttribute('plica', 'asc')
+            note.removeAttribute('stem.mod')
+        else:
+            pass
+    # Articulations changes
+    if note.hasAttribute('artic'):
+        artic = note.getAttribute('artic')
+        if artic.value == "stacc":
+            note.addChild('dot')
+            note.removeAttribute('artic')
+        elif artic.value == "ten":
+            note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
+            note.removeAttribute('artic')
 
 outputfile = path[0:len(path)-4] + "_output.mei"
 documentToFile(output_doc, outputfile)
