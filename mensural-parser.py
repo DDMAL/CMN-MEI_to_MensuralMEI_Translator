@@ -370,7 +370,7 @@ for note in notes:
     if note.hasAttribute('artic'):
         artic = note.getAttribute('artic')
         if artic.value == "stacc":
-            note.addChild('dot')
+            note.addChild(MeiElement('dot'))
             note.removeAttribute('artic')
         elif artic.value == "ten":
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
