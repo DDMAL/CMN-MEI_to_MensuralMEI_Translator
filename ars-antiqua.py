@@ -274,7 +274,7 @@ for ind_voice in all_voices:
                 else:
                     notes_grouped = tuplet.getChildren()
                     for note in notes_grouped:
-                        note.addAttribute('num', num)
+                        note.addAttribute('num', str(num))
                         note.addAttribute('numbase', str(numbase+1))    ##### Which will be a '3'
                         layer.addChild(note)
             # mRests
