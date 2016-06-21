@@ -57,7 +57,7 @@ def change_note_value(notes, rests, modusminor,tempus):
 
 # Note's Actual Duration Part
 # Identifies what notes were Imperfected or Altered and indicates that with the @quality, @num and @numbase attributes
-def mark_modification_in_note_duration(notes, modusminor, tempus):
+def mark_modification_in_note_duration(notes, children_of_voiceStaff, modusminor, tempus):
     # Default values according to mensuration and presence or absence of triplets of minims in the piece 
     brevis_default_val = 2048
     longa_default_val = int(modusminor) * brevis_default_val
@@ -84,6 +84,30 @@ def mark_modification_in_note_duration(notes, modusminor, tempus):
                     note.addAttribute('numbase', '2')
                 else:
                     print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)    
+
+    # Finds and indicates which Semibreves are Major
+    for element in children_of_voiceStaff:
+        if element.name == 'note' and element.getAttribute('dur').value == 'semibrevis': # A semibrevis
+            note_sb = element
+            coming_element = children_of_voiceStaff[children_of_voiceStaff.index(element) + 1]
+            if note_sb.hasAttribute('artic') and note_sb.getAttribute('artic').value == 'stacc':
+                #print("Dot of division in " + element.id)
+                note_sb.addAttribute('quality', 'major')
+                note_sb.addAttribute('num', '1')
+                note_sb.addAttribute('numbase', '2')
+            elif coming_element.name == 'tuplet':
+                #print("Tuplet after " + element.id)
+                note_sb.addAttribute('quality', 'major')
+                note_sb.addAttribute('num', '1')
+                note_sb.addAttribute('numbase', '2')
+            elif coming_element.getAttribute('dur').value == 'brevis':
+                #print("Breve after " + element.id)
+                note_sb.addAttribute('quality', 'major')
+                note_sb.addAttribute('num', '1')
+                note_sb.addAttribute('numbase', '2')
+            else:
+                pass
+
 
 
 # ----------- #
@@ -210,15 +234,22 @@ score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
+voices_elements = []
 # Filling the section element
 for ind_voice in all_voices:
     staff = MeiElement('staff')
+    staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
     out_section.addChild(staff)
     layer = MeiElement('layer')
+    layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
     staff.addChild(layer)
+
+    print(ind_voice)
+    elements_per_voice = []
+
     for i in range(0, len(ind_voice)):
+
         musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
-        print(ind_voice[i])
         # Adds the elements of each measure into the one voice staff and a barline after each measure content is added
         for element in musical_content:
             # Tied notes
@@ -228,6 +259,9 @@ for ind_voice in all_voices:
                 pass
             # Tuplets
             elif element.name == 'tuplet':
+
+                elements_per_voice.append(element)
+
                 print(element)
                 tuplet = element
                 num = int(tuplet.getAttribute('num').value)
@@ -245,6 +279,9 @@ for ind_voice in all_voices:
                         layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
+
+                elements_per_voice.append(element)
+
                 rest = MeiElement('rest')
                 rest.id = element.id
                 rest.setAttributes(element.getAttributes())
@@ -262,10 +299,17 @@ for ind_voice in all_voices:
                     rest.addAttribute('dur', 'longa')
             # Notes and simple rests
             else:
+
+                elements_per_voice.append(element)
+
                 print(element)
                 layer.addChild(element)
         print("BARLINE - BARLINE - BARLINE")
         layer.addChild(MeiElement('barLine'))
+
+
+    voices_elements.append(elements_per_voice)
+
 
 
 # Modify the note shape (@dur) and sets the note quality (imperfect/altered) to encode its mensural value. 
@@ -278,8 +322,9 @@ for i in range(0, len(staffDefs)):
     tempus = int(staffDef.getAttribute('tempus').value)
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
     rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
+    elements_per_voice = voices_elements[i]
     change_note_value(notes_per_voice, rests_per_voice, modusminor, tempus)
-    mark_modification_in_note_duration(notes_per_voice, modusminor, tempus)
+    mark_modification_in_note_duration(notes_per_voice, elements_per_voice, modusminor, tempus)
 
 # Removing or replacing extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
@@ -317,5 +362,5 @@ for note in notes:
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
             note.removeAttribute('artic')
 
-outputfile = path[0:len(path)-4] + "_output.mei"
+outputfile = path[0:len(path)-4] + "_output1.mei"
 documentToFile(output_doc, outputfile)
