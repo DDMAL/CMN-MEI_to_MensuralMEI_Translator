@@ -263,7 +263,7 @@ for ind_voice in all_voices:
     staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
     out_section.addChild(staff)
     layer = MeiElement('layer')
-    layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
+    layer.setId(input_doc.getElementsByName('layer')[0].id)
     staff.addChild(layer)
     for i in range(0, len(ind_voice)):
         musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
