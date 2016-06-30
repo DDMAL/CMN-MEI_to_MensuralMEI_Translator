@@ -5,26 +5,21 @@ from pymei import *
 # FUNCTIONS #
 # --------- #
 
-# This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
-
-# Identifies the relative values of the notes (its performed values) according to the mensuration
-def relative_vals(triplet_of_minims, modusminor, tempus, prolatio):
-    if triplet_of_minims:
-        semibrevis_default_val = 1024
-    else:
-        # minima_default_val = 512
-        semibrevis_default_val = int(prolatio) * 512    
-    brevis_default_val = int(tempus) * semibrevis_default_val
-    longa_default_val = int(modusminor) * brevis_default_val
-
-    return [semibrevis_default_val, brevis_default_val, longa_default_val]
+# This is for ARS ANTIQUA
+# NO MINIMS
+# NO PROLATIO
+# The BREVE CAN'T be PERFECT or IMPERFECT
+# It is just 3 MINOR SEMIBREVES LONG
+# The SEMIBREVE CAN'T be ALTERED
+# It is MAJOR or MINOR
 
 # Note/Rest Shape Part
 # Changes the @dur value to represent mensural figures
-def change_noterest_value(notes, rests, modusminor, tempus, prolatio, triplet_of_minims_flag):
+def change_noterest_value(notes, rests, modusminor, tempus):
     
     # Notes:
-    # They can be altered
+    # Only breves can be altered (as only longs can be perfect/imperfect)
+    # Breves can't be perfect/imperfect (they are always 3 minor-semibreves long)
     for note in notes:
         dur = note.getAttribute('dur').value
         # all notes have a @dur attribute, so the value of @dur is well defined
@@ -35,37 +30,24 @@ def change_noterest_value(notes, rests, modusminor, tempus, prolatio, triplet_of
             else:
                 mens_dur = "longa"
         elif dur == "breve":
-            if tempus == 3 and note.hasAttribute('artic') and note.getAttribute('artic').value == "stop":
-                # the note has been altered
-                mens_dur = "semibrevis"
-            else:
-                mens_dur = "brevis"
+            mens_dur = "brevis"
         elif dur == "1":
-            if prolatio == 3 and note.hasAttribute('artic') and note.getAttribute('artic').value == "stop":
-                # the note has been altered
-                mens_dur = "minima"
-            else:
-                mens_dur = "semibrevis"
-        elif dur == "2":
-            mens_dur = "minima"
+            mens_dur = "semibrevis"
         else:
             print("This is Ars Nova, this note " + note + " shouldn't appear, as its value is " + note.getAttribute('dur').value)
         note.getAttribute('dur').setValue(mens_dur)
 
     # Rests:
-    # Can't be altered
-    # But long-rests actually don't exist, there are only 1, 2 or 3 breve-rests
-    longa_default_val = relative_vals(triplet_of_minims_flag, modusminor, tempus, prolatio)[2]
-
+    # Rests can't be altered
+    # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
+    longa_default_val = int(modusminor) * 2048
     for rest in rests:
         dur = rest.getAttribute('dur').value
         # Due to the mRest part of the code, all the rests have a @dur attribute.
-        if dur == "2":
-            mens_dur = "minima"
-        elif dur == "1":
+        if dur == "1":
             mens_dur = "semibrevis"
         elif dur == "breve":
-            mens_dur = "brevis" # 1B rest??????????
+            mens_dur = "brevis"
         elif dur == "long":
             mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
             if modusminor == 2:
@@ -89,65 +71,19 @@ def change_noterest_value(notes, rests, modusminor, tempus, prolatio, triplet_of
             pass
         rest.getAttribute('dur').setValue(mens_dur)
 
-# def longarests(rests):
-#     if rest.hasAttribute('dur.ges'):
-#         durges_num = int(rest.getAttribute('dur.ges').value[:-1])
-#         if durges_num == int(longa_default_val * 2/3):
-#             rest.addAttribute('eventualDUR', '2B')
-#             rest.addAttribute('num', '3')
-#             rest.addAttribute('numbase', '2')
-#         elif durges_num == longa_default_val:
-#             rest.addAttribute('eventualDUR', '3B')
-#         else:
-#             pass
-#     else:
-#         rest.addAttribute('eventualDUR', '3B')
 
 # Note's Actual Duration Part
 # Identifies what notes were Imperfected or Altered and indicates that with the @quality, @num and @numbase attributes
-def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
-    # Default values according to mensuration and presence or absence of triplets of minims in the piece 
-    [semibrevis_default_val, brevis_default_val, longa_default_val] = relative_vals(triplet_of_minims_flag, modusminor, tempus, prolatio)
-    
+def impalt(notes, modusminor):
+    # Default values according to mensuration
+    brevis_default_val = 2048
+    longa_default_val = int(modusminor) * brevis_default_val
+
     # Check when a note should be imperfected or altered
     # This check only makes sense for notes (as rests can't be imperfected nor altered)
     # and when the mensuration indicates perfection
     for note in notes:
         durges_num = int(note.getAttribute('dur.ges').value[:-1])
-
-        # Check in accordance to prolatio
-        if prolatio == 3:
-            imperfected_semibrevis_val = int(semibrevis_default_val * 2/3)
-            if durges_num == imperfected_semibrevis_val:
-                if note.getAttribute('dur').value == "semibrevis":
-                    # Imperfection
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-                elif note.getAttribute('dur').value == "minima":
-                    # Alteration
-                    note.addAttribute('quality', 'a')
-                    note.addAttribute('num', '2')
-                    note.addAttribute('numbase', '3')
-                else:
-                    print("MISTAKE!!! this note is neither an imperfected semibrevis nor an altered minima: " + note)
-
-        # Check in accordance to tempus
-        if tempus == 3:
-            imperfected_brevis_val = int(brevis_default_val * 2/3)
-            if durges_num == imperfected_brevis_val:
-                if note.getAttribute('dur').value == "brevis":
-                    # Imperfection
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-                elif note.getAttribute('dur').value == "semibrevis":
-                    # Alteration
-                    note.addAttribute('quality', 'a')
-                    note.addAttribute('num', '2')
-                    note.addAttribute('numbase', '3')
-                else:
-                    print("MISTAKE!!! this note is neither an imperfected brevis nor an altered semibrevis " + note)
 
         # Check in accordance to modusminor
         if modusminor == 3:
@@ -164,10 +100,24 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                     note.addAttribute('num', '1')
                     note.addAttribute('numbase', '2')
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)
+                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)    
 
-#def sb_major_minor:
-#    ...
+def sb_major_minor(children_of_voiceStaff):
+    # Finds and indicates which Semibreves are Major
+    indices_BrevesOrTuplets = [-1]
+    for element in children_of_voiceStaff:
+        if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa')):
+            indices_BrevesOrTuplets.append(children_of_voiceStaff.index(element))
+    for i in range(0, len(indices_BrevesOrTuplets)-1):
+        start = indices_BrevesOrTuplets[i]
+        end = indices_BrevesOrTuplets[i+1]
+        cont_Sb = 0
+        for j in range(start+1, end):
+            cont_Sb = cont_Sb + 1
+            if cont_Sb % 2 == 0:
+                children_of_voiceStaff[j].addAttribute('quality', 'major')
+                children_of_voiceStaff[j].addAttribute('num', '1')
+                children_of_voiceStaff[j].addAttribute('numbase', '2')
 
 
 # ----------- #
@@ -279,11 +229,9 @@ for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
     modusminor = raw_input("Modus minor (3 or 2): ")
-    tempus = raw_input("Tempus (3 or 2): ")
-    prolatio = raw_input("Prolatio (3 or 2): ")
+    tempus = raw_input("Tempus (generally is 3, may be 2): ")
     staffDef.addAttribute('modusminor', modusminor)
     staffDef.addAttribute('tempus', tempus)
-    staffDef.addAttribute('prolatio', prolatio)
 out_scoreDef.addChild(out_staffGrp)
 
 # Section Part of the <score> element
@@ -296,6 +244,7 @@ score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
+voices_elements = []
 # Filling the section element
 for ind_voice in all_voices:
     staff = MeiElement('staff')
@@ -304,9 +253,13 @@ for ind_voice in all_voices:
     layer = MeiElement('layer')
     layer.setId(input_doc.getElementsByName('layer')[0].id)
     staff.addChild(layer)
+
+    print(ind_voice)
+    elements_per_voice = []
+
     for i in range(0, len(ind_voice)):
+
         musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
-        print(ind_voice[i])
         # Adds the elements of each measure into the one voice staff and a barline after each measure content is added
         for element in musical_content:
             # Tied notes
@@ -316,20 +269,29 @@ for ind_voice in all_voices:
                 pass
             # Tuplets
             elif element.name == 'tuplet':
+
+                elements_per_voice.append(element)
+
                 print(element)
                 tuplet = element
                 num = int(tuplet.getAttribute('num').value)
-                numbase = int(tuplet.getAttribute('numbase').value)
+                numbase = int(tuplet.getAttribute('numbase').value) ##### generally is '2' (because is a certain number of semibreves in the place of 2 semibreves)
+
                 notes_grouped = tuplet.getChildren()
-                # At the moment we have only found tuplets of "semibrevis" and tuplets of "minima"
-                for note in notes_grouped:
-                    durges = note.getAttribute('dur.ges').value
-                    actual_durges_num = int( int(durges[0:len(durges)-1]) * numbase / num )
-                    actual_durges = str(actual_durges_num) + 'p'
-                    note.getAttribute('dur.ges').setValue(actual_durges)
-                    layer.addChild(note)
+                if (numbase+1)/num == 1:    # If it is a triplet (so the fraction is 3/3), there is no need to add num and numbase because they are all 3 minor semibreves
+                    for note in notes_grouped:
+                        layer.addChild(note)
+                else:
+                    notes_grouped = tuplet.getChildren()
+                    for note in notes_grouped:
+                        note.addAttribute('num', str(num))
+                        note.addAttribute('numbase', str(numbase+1))    ##### Which will be a '3'
+                        layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
+
+                elements_per_voice.append(element)
+
                 rest = MeiElement('rest')
                 rest.id = element.id
                 rest.setAttributes(element.getAttributes())
@@ -339,25 +301,17 @@ for ind_voice in all_voices:
                     rest.addAttribute('dur', 'long')
             # Notes and simple rests
             else:
+
+                elements_per_voice.append(element)
+
                 print(element)
                 layer.addChild(element)
         print("BARLINE - BARLINE - BARLINE")
         layer.addChild(MeiElement('barLine'))
 
 
-# Notice the presence (or absence) of triplets of minims in the piece:
+    voices_elements.append(elements_per_voice)
 
-#Obtain all the dur.ges of the notes in the score
-notes = output_doc.getElementsByName('note')
-durges_list = []
-for note in notes:
-    durges = note.getAttribute('dur.ges').value
-    if durges not in durges_list:
-        durges_list.append(durges)
-# Sets the triplet_of_minims flag to True or False
-triplet_of_minims = False
-if '341p' in durges_list:
-    triplet_of_minims = True
 
 # Modify the note shape (@dur) and sets the note quality (imperfect/altered) to encode its mensural value. 
 # This is done for the notes of each voice, taking into account the mensuration of each voice.
@@ -367,13 +321,13 @@ for i in range(0, len(staffDefs)):
     staffDef = staffDefs[i]
     modusminor = int(staffDef.getAttribute('modusminor').value)
     tempus = int(staffDef.getAttribute('tempus').value)
-    prolatio = int(staffDef.getAttribute('prolatio').value)
-    
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
     rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
-
-    change_noterest_value(notes_per_voice, rests_per_voice, modusminor, tempus, prolatio, triplet_of_minims)
-    impalt(notes_per_voice, modusminor, tempus, prolatio, triplet_of_minims)
+    elements_per_voice = voices_elements[i]
+    
+    change_noterest_value(notes_per_voice, rests_per_voice, modusminor, tempus)
+    impalt(notes_per_voice, modusminor)
+    sb_major_minor(elements_per_voice)
 
 # Removing or replacing extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
@@ -411,5 +365,5 @@ for note in notes:
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
             note.removeAttribute('artic')
 
-outputfile = path[0:len(path)-4] + "_output.mei"
+outputfile = path[0:len(path)-4] + "_output2.mei"
 documentToFile(output_doc, outputfile)
