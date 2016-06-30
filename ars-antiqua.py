@@ -298,14 +298,6 @@ for ind_voice in all_voices:
                 layer.addChild(rest)
                 # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
                 if rest.hasAttribute('dur') == False:
-                    ###### All the pieces are bared by the long
-                    ####### So when the modusminor = 3, this is a 3-breve rest
-                    ####### And when the modusminor = 2, this is a 2-breve rest
-                    ###### Its value goes according to the mensuration then.
-                    ### FOR NOW: it is changed to a longa right away (so its value will be according to the mensuration)
-                    ### And the other long-rests that are note mRests, have to be 2-breve rests in modusminor = 3 
-                    ### so they are FOR NOW imperfected in order to make them 2-breve rests
-                    ####### THIS SHOULD EVENTUALLY BE CORRECTED WHEN THE MENSURAL-MEI MODULE HAS A WAY TO ENCODE 2-BREVE AND 3-BREVE RESTS\
                     rest.addAttribute('dur', 'long')
             # Notes and simple rests
             else:
