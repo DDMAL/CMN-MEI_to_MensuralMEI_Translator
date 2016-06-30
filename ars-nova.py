@@ -7,10 +7,24 @@ from pymei import *
 
 # This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
 
-# Note's Shape Part
+# Identifies the relative values of the notes (its performed values) according to the mensuration
+def relative_vals(triplet_of_minims, modusminor, tempus, prolatio):
+    if triplet_of_minims:
+        semibrevis_default_val = 1024
+    else:
+        # minima_default_val = 512
+        semibrevis_default_val = int(prolatio) * 512    
+    brevis_default_val = int(tempus) * semibrevis_default_val
+    longa_default_val = int(modusminor) * brevis_default_val
+
+    return [semibrevis_default_val, brevis_default_val, longa_default_val]
+
+# Note/Rest Shape Part
 # Changes the @dur value to represent mensural figures
-def change_note_value(notes, rests, modusminor,tempus, prolatio):
-    # Notes can be altered
+def change_noterest_value(notes, rests, modusminor, tempus, prolatio, triplet_of_minims_flag):
+    
+    # Notes:
+    # They can be altered
     for note in notes:
         dur = note.getAttribute('dur').value
         # all notes have a @dur attribute, so the value of @dur is well defined
@@ -38,41 +52,63 @@ def change_note_value(notes, rests, modusminor,tempus, prolatio):
             print("This is Ars Nova, this note " + note + " shouldn't appear, as its value is " + note.getAttribute('dur').value)
         note.getAttribute('dur').setValue(mens_dur)
 
-    # Rests can't be altered
-    # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
+    # Rests:
+    # Can't be altered
+    # But long-rests actually don't exist, there are only 1, 2 or 3 breve-rests
+    longa_default_val = relative_vals(triplet_of_minims_flag, modusminor, tempus, prolatio)[2]
+
     for rest in rests:
         dur = rest.getAttribute('dur').value
         # Due to the mRest part of the code, all the rests have a @dur attribute.
-        if dur == "breve":
-            mens_dur = "brevis"
+        if dur == "2":
+            mens_dur = "minima"
         elif dur == "1":
             mens_dur = "semibrevis"
-        elif dur == "2":
-            mens_dur = "minima"
+        elif dur == "breve":
+            mens_dur = "brevis" # 1B rest??????????
         elif dur == "long":
-            ######## Should and will be 2-breve rest: @dur = "2-breve"
-            ##### For now a 2-breve rest is modelled as an imperfection:
-            mens_dur = "longa"
-            rest.addAttribute('num', '3')
-            rest.addAttribute('numbase', '2')
-        else: 
-        ##### The case of the <mRest> that has already been changed to 'longa' (so it goes according to the mensuration -2 or 3 breves long depending if modusminor = 2 or 3-)
-            mens_dur = dur
+            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
+            if modusminor == 2:
+                rest.addAttribute('EVENTUALDUR', '2B')  # mens_dur = 2b
+            elif modusminor == 3:
+                if rest.hasAttribute('dur.ges'):
+                    durges_num = int(rest.getAttribute('dur.ges').value[:-1])
+                    if durges_num == longa_default_val:   # mens_dur = 3b
+                        rest.addAttribute('EVENTUALDUR', '3B')
+                    elif durges_num == int(longa_default_val * 2/3):  # mens_dur = 2b and add attributes of "imperfection" (@num and @numbase)
+                        rest.addAttribute('EVENTUALDUR', '2B')
+                        rest.addAttribute('num', '3')
+                        rest.addAttribute('numbase', '2')
+                    else:
+                        pass
+                else:
+                    rest.addAttribute('EVENTUALDUR', '3B')  # mens_dur = 3b
+            else:
+                pass
+        else:
+            pass
         rest.getAttribute('dur').setValue(mens_dur)
 
+# def longarests(rests):
+#     if rest.hasAttribute('dur.ges'):
+#         durges_num = int(rest.getAttribute('dur.ges').value[:-1])
+#         if durges_num == int(longa_default_val * 2/3):
+#             rest.addAttribute('eventualDUR', '2B')
+#             rest.addAttribute('num', '3')
+#             rest.addAttribute('numbase', '2')
+#         elif durges_num == longa_default_val:
+#             rest.addAttribute('eventualDUR', '3B')
+#         else:
+#             pass
+#     else:
+#         rest.addAttribute('eventualDUR', '3B')
 
 # Note's Actual Duration Part
 # Identifies what notes were Imperfected or Altered and indicates that with the @quality, @num and @numbase attributes
-def mark_modification_in_note_duration(notes, triplet_of_minims, modusminor, tempus, prolatio):
-    # Default values according to mensuration and presence or absence of triplets of minims in the piece
-    if triplet_of_minims:
-        semibrevis_default_val = 1024
-    else:
-        # minima_default_val = 512
-        semibrevis_default_val = int(prolatio) * 512    
-    brevis_default_val = int(tempus) * semibrevis_default_val
-    longa_default_val = int(modusminor) * brevis_default_val
-
+def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
+    # Default values according to mensuration and presence or absence of triplets of minims in the piece 
+    [semibrevis_default_val, brevis_default_val, longa_default_val] = relative_vals(triplet_of_minims_flag, modusminor, tempus, prolatio)
+    
     # Check when a note should be imperfected or altered
     # This check only makes sense for notes (as rests can't be imperfected nor altered)
     # and when the mensuration indicates perfection
@@ -128,7 +164,10 @@ def mark_modification_in_note_duration(notes, triplet_of_minims, modusminor, tem
                     note.addAttribute('num', '1')
                     note.addAttribute('numbase', '2')
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)    
+                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)
+
+#def sb_major_minor:
+#    ...
 
 
 # ----------- #
@@ -305,7 +344,7 @@ for ind_voice in all_voices:
                     ### And the other long-rests that are note mRests, have to be 2-breve rests in modusminor = 3 
                     ### so they are FOR NOW imperfected in order to make them 2-breve rests
                     ####### THIS SHOULD EVENTUALLY BE CORRECTED WHEN THE MENSURAL-MEI MODULE HAS A WAY TO ENCODE 2-BREVE AND 3-BREVE RESTS\
-                    rest.addAttribute('dur', 'longa')
+                    rest.addAttribute('dur', 'long')
             # Notes and simple rests
             else:
                 print(element)
@@ -337,10 +376,12 @@ for i in range(0, len(staffDefs)):
     modusminor = int(staffDef.getAttribute('modusminor').value)
     tempus = int(staffDef.getAttribute('tempus').value)
     prolatio = int(staffDef.getAttribute('prolatio').value)
+    
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
     rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
-    change_note_value(notes_per_voice, rests_per_voice, modusminor, tempus, prolatio)
-    mark_modification_in_note_duration(notes_per_voice, triplet_of_minims, modusminor, tempus, prolatio)
+
+    change_noterest_value(notes_per_voice, rests_per_voice, modusminor, tempus, prolatio, triplet_of_minims)
+    impalt(notes_per_voice, modusminor, tempus, prolatio, triplet_of_minims)
 
 # Removing or replacing extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
