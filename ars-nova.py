@@ -127,8 +127,8 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                 elif note.getAttribute('dur').value == "minima":
                     # Alteration
                     note.addAttribute('quality', 'a')
-                    note.addAttribute('num', '2')
-                    note.addAttribute('numbase', '3')
+                    note.addAttribute('num', '1')
+                    note.addAttribute('numbase', '2')
                 else:
                     print("MISTAKE!!! this note is neither an imperfected semibrevis nor an altered minima: " + note)
 
@@ -144,8 +144,8 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                 elif note.getAttribute('dur').value == "semibrevis":
                     # Alteration
                     note.addAttribute('quality', 'a')
-                    note.addAttribute('num', '2')
-                    note.addAttribute('numbase', '3')
+                    note.addAttribute('num', '1')
+                    note.addAttribute('numbase', '2')
                 else:
                     print("MISTAKE!!! this note is neither an imperfected brevis nor an altered semibrevis " + note)
 
