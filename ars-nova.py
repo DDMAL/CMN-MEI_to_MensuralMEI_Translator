@@ -49,7 +49,8 @@ def change_noterest_value(notes, rests, modusminor, tempus, prolatio, triplet_of
         elif dur == "2":
             mens_dur = "minima"
         else:
-            print("This is Ars Nova, this note " + note + " shouldn't appear, as its value is " + note.getAttribute('dur').value)
+            print("This is Ars Nova, this note " + str(note) + " shouldn't appear, as its value is " + note.getAttribute('dur').value)
+            mens_dur = dur
         note.getAttribute('dur').setValue(mens_dur)
 
     # Rests:
@@ -115,6 +116,7 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
     for note in notes:
         durges_num = int(note.getAttribute('dur.ges').value[:-1])
 
+
         # Check in accordance to prolatio
         if prolatio == 3:
             imperfected_semibrevis_val = int(semibrevis_default_val * 2/3)
@@ -130,7 +132,26 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                     note.addAttribute('num', '1')
                     note.addAttribute('numbase', '2')
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected semibrevis nor an altered minima: " + note)
+                    print("MISTAKE!!! this note is neither an imperfected semibrevis nor an altered minima: " + str(note))
+
+        elif prolatio == 2:
+            perf_semibrevis_val = int(1.5 * semibrevis_default_val)
+            if durges_num == perf_semibrevis_val:
+                # Perfection
+                # So, the note is now 3/2 times its original value
+                note.addAttribute('quality', 'p')
+                note.addAttribute('num', '2')
+                note.addAttribute('numbase', '3')
+                # And we add a dot of perfection
+                if note.getChildrenByName('dot') == []:
+                    dot = MeiElement('dot')
+                    note.addChild(dot)
+                dot.addAttribute('format', 'aug')
+
+        else:
+            print("ERROR! Wrong value for prolatio")
+            pass
+
 
         # Check in accordance to tempus
         if tempus == 3:
@@ -147,7 +168,26 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                     note.addAttribute('num', '1')
                     note.addAttribute('numbase', '2')
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected brevis nor an altered semibrevis " + note)
+                    print("MISTAKE!!! this note is neither an imperfected brevis nor an altered semibrevis " + str(note))
+
+        elif tempus == 2:
+            perf_brevis_val = int(1.5 * brevis_default_val)
+            if durges_num == perf_brevis_val:
+                # Perfection
+                # So, the note is now 3/2 times its original value
+                note.addAttribute('quality', 'p')
+                note.addAttribute('num', '2')
+                note.addAttribute('numbase', '3')
+                # And we add a dot of perfection
+                if note.getChildrenByName('dot') == []:
+                    dot = MeiElement('dot')
+                    note.addChild(dot)
+                dot.addAttribute('format', 'aug')
+
+        else:
+            print("ERROR! Wrong value for tempus")
+            pass
+
 
         # Check in accordance to modusminor
         if modusminor == 3:
@@ -164,7 +204,38 @@ def impalt(notes, modusminor, tempus, prolatio, triplet_of_minims_flag):
                     note.addAttribute('num', '1')
                     note.addAttribute('numbase', '2')
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)
+                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + str(note))
+
+        elif modusminor == 2:
+            perf_longa_val = int(1.5 * longa_default_val)
+            if durges_num == perf_longa_val:
+                # Perfection
+                # So, the note is now 3/2 times its original value
+                note.addAttribute('quality', 'p')
+                note.addAttribute('num', '2')
+                note.addAttribute('numbase', '3')
+                # And we add a dot of perfection
+                if note.getChildrenByName('dot') == []:
+                    dot = MeiElement('dot')
+                    note.addChild(dot)
+                dot.addAttribute('format', 'aug')
+
+        else:
+            print("ERROR! Wrong value for modusminor")
+            pass
+
+
+ 
+        # MAXIMAS CASE:
+
+        if durges_num == 2 * longa_default_val:
+            # The maxima is Imperfect
+            # The default modusmajor in Verovio is '3' (Perfect)
+            # Then, we need to add an imperfection mark
+            note.addAttribute('quality', 'i')
+            note.addAttribute('num', '3')
+            note.addAttribute('numbase', '2')
+
 
 #def sb_major_minor:
 #    ...
@@ -223,7 +294,9 @@ for i in range (len(ties_list)-1, -1, -1):
     # Also update the value of the first note (dur.ges)
         
         # dur
-        if start_dur == 'breve':    # Other options???
+        if start_dur == 'long':
+            start_note.getAttribute('dur').setValue('maxima')
+        elif start_dur == 'breve':    # Other options???
             start_note.getAttribute('dur').setValue('long')
         elif start_dur == '1':
             start_note.getAttribute('dur').setValue('breve')
@@ -243,7 +316,9 @@ for i in range (len(ties_list)-1, -1, -1):
     # Also update the value of the first note (dur.ges)
 
         # dur
-        if (start_dur == 'breve' and end_dur == 'long') or (start_dur == 'long' and end_dur == 'breve'):
+        if (start_dur == 'long' and end_dur == 'maxima') or (start_dur == 'maxima' and end_dur == 'long'):
+            start_note.getAttribute('dur').setValue('maxima')
+        elif (start_dur == 'breve' and end_dur == 'long') or (start_dur == 'long' and end_dur == 'breve'):
             start_note.getAttribute('dur').setValue('long')
         elif (start_dur == '1' and end_dur == 'breve') or (start_dur == 'breve' and end_dur == '1'):
             start_note.getAttribute('dur').setValue('breve')
@@ -405,7 +480,8 @@ for note in notes:
     if note.hasAttribute('artic'):
         artic = note.getAttribute('artic')
         if artic.value == "stacc":
-            note.addChild(MeiElement('dot'))
+            if note.getChildrenByName('dot') == []:
+                note.addChild(MeiElement('dot'))
             note.removeAttribute('artic')
         elif artic.value == "ten":
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
