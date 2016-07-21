@@ -86,6 +86,12 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     note.addAttribute('quality', 'p')
                     note.addAttribute('num', '2')
                     note.addAttribute('numbase', '3')
+                    # # And we add a dot of perfection
+                    # if not note.hasChildren('dot'):
+                    #     dot = MeiElement('dot')
+                    #     note.addChild('dot')
+                    # dot = note.getChildrenByName('dot')
+                    # dot.addAttribute('format', 'aug')
                 # Default case
                 elif modusmaior == 3:
                     pass
@@ -144,6 +150,12 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     note.addAttribute('quality', 'p')
                     note.addAttribute('num', '2')
                     note.addAttribute('numbase', '3')
+                    # # And we add a dot of perfection
+                    # if not note.hasChildren('dot'):
+                    #     dot = MeiElement('dot')
+                    #     note.addChild('dot')
+                    # dot = note.getChildrenByName('dot')
+                    # dot.addAttribute('format', 'aug')
                 # Default case
                 elif modusminor == 3:
                     pass
@@ -202,6 +214,12 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     note.addAttribute('quality', 'p')
                     note.addAttribute('num', '2')
                     note.addAttribute('numbase', '3')
+                    # # And we add a dot of perfection
+                    # if not note.hasChildren('dot'):
+                    #     dot = MeiElement('dot')
+                    #     note.addChild('dot')
+                    # dot = note.getChildrenByName('dot')
+                    # dot.addAttribute('format', 'aug')
                 # Default case
                 elif tempus == 3:
                     pass
@@ -254,6 +272,12 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     note.addAttribute('quality', 'p')
                     note.addAttribute('num', '2')
                     note.addAttribute('numbase', '3')
+                    # # And we add a dot of perfection
+                    # if not note.hasChildren('dot'):
+                    #     dot = MeiElement('dot')
+                    #     note.addChild('dot')
+                    # dot = note.getChildrenByName('dot')
+                    # dot.addAttribute('format', 'aug')
                 # Default case
                 elif prolatio == 3:
                     pass
@@ -586,7 +610,7 @@ for note in notes:
     if note.hasAttribute('artic'):
         artic = note.getAttribute('artic')
         if artic.value == "stacc":
-            if note.getChildrenByName('dot') == []:
+            if not note.hasChildren('dot'):
                 note.addChild(MeiElement('dot'))
             note.removeAttribute('artic')
         elif artic.value == "ten":
