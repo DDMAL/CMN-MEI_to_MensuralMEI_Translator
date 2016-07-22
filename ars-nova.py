@@ -418,7 +418,6 @@ input_doc = documentFromFile(path).getMeiDocument()
 staffDef_list = input_doc.getElementsByName('staffDef')
 num_voices = len(staffDef_list)
 all_voices = []
-mensuration_all_voices = {}
 for i in range(0, num_voices):
     measures_list = input_doc.getElementsByName('measure')
     ind_voice = []

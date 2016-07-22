@@ -1,4 +1,5 @@
 from pymei import *
+from fractions import *
 
 
 # --------- #
@@ -13,100 +14,197 @@ from pymei import *
 # The SEMIBREVE CAN'T be ALTERED
 # It is MAJOR or MINOR
 
+
 # Note/Rest Shape Part
 # Changes the @dur value to represent mensural figures
 def change_noterest_value(notes, rests, modusminor, tempus):
+
+    # Default values for notes according to the mensuration
+    b_def = 2048
     
-    # Notes:
+    l_def = modusminor * b_def
+    l_imp = 2* b_def
+    l_perf = 3 * b_def
+
+    max_def = 2 * l_def
+    # The default value of the 'maxima' is double, because actually there is no maxima in this repertory
+    # Ars Antiqua has no 'maximas' just 'duplex longs'
+
+    # Notes's Part:
     # Only breves can be altered (as only longs can be perfect/imperfect)
     # Breves can't be perfect/imperfect (they are always 3 minor-semibreves long)
     for note in notes:
         dur = note.getAttribute('dur').value
-        # all notes have a @dur attribute, so the value of @dur is well defined
-        if dur == "long":
-            if modusminor == 3 and note.hasAttribute('artic') and note.getAttribute('artic').value == "stop":
-                # the note has been altered
-                mens_dur = "brevis"
-            else:
-                mens_dur = "longa"
-        elif dur == "breve":
-            mens_dur = "brevis"
-        elif dur == "1":
-            mens_dur = "semibrevis"
-        else:
-            print("This is Ars Nova, this note " + note + " shouldn't appear, as its value is " + note.getAttribute('dur').value)
-        note.getAttribute('dur').setValue(mens_dur)
-
-    # Rests:
-    # Rests can't be altered
-    # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
-    longa_default_val = int(modusminor) * 2048
-    for rest in rests:
-        dur = rest.getAttribute('dur').value
-        # Due to the mRest part of the code, all the rests have a @dur attribute.
-        if dur == "1":
-            mens_dur = "semibrevis"
-        elif dur == "breve":
-            mens_dur = "brevis"
-        elif dur == "long":
-            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
-            if modusminor == 2:
-                rest.addAttribute('EVENTUALDUR', '2B')  # mens_dur = 2b
-            elif modusminor == 3:
-                if rest.hasAttribute('dur.ges'):
-                    durges_num = int(rest.getAttribute('dur.ges').value[:-1])
-                    if durges_num == longa_default_val:   # mens_dur = 3b
-                        rest.addAttribute('EVENTUALDUR', '3B')
-                    elif durges_num == int(longa_default_val * 2/3):  # mens_dur = 2b and add attributes of "imperfection" (@num and @numbase)
-                        rest.addAttribute('EVENTUALDUR', '2B')
-                        rest.addAttribute('num', '3')
-                        rest.addAttribute('numbase', '2')
-                    else:
-                        pass
-                else:
-                    rest.addAttribute('EVENTUALDUR', '3B')  # mens_dur = 3b
-            else:
-                pass
-        else:
-            pass
-        rest.getAttribute('dur').setValue(mens_dur)
-
-
-# Note's Actual Duration Part
-# Identifies what notes were Imperfected or Altered and indicates that with the @quality, @num and @numbase attributes
-def impalt(notes, modusminor):
-    # Default values according to mensuration
-    brevis_default_val = 2048
-    longa_default_val = int(modusminor) * brevis_default_val
-
-    # Check when a note should be imperfected or altered
-    # This check only makes sense for notes (as rests can't be imperfected nor altered)
-    # and when the mensuration indicates perfection
-    for note in notes:
         durges_num = int(note.getAttribute('dur.ges').value[:-1])
 
-        # Check in accordance to modusminor
-        if modusminor == 3:
-            imperfected_longa_val = int(longa_default_val * 2/3)
-            if durges_num == imperfected_longa_val:
-                if note.getAttribute('dur').value == "longa":
-                    # Imperfection
-                    note.addAttribute('quality', 'i')
-                    note.addAttribute('num', '3')
-                    note.addAttribute('numbase', '2')
-                elif note.getAttribute('dur').value == "brevis":
-                    # Alteration
-                    note.addAttribute('quality', 'a')
-                    note.addAttribute('num', '1')
-                    note.addAttribute('numbase', '2')
+        # For the tied notes
+        # First find its right (contemporary) duration
+        if dur == 'TiedNote!':
+            # Maximas
+            if durges_num == max_def:
+                dur = 'maxima'
+            # Longas
+            elif durges_num in [l_imp, l_perf]:
+                dur = 'long'
+            # MISTAKE in tie duration
+            else:
+                print("Weird\n The tied note doesn't seem to be any note in the range of longa to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
+            note.getAttribute('dur').setValue(dur)
+
+        # Look for the mensural duration of the notes
+
+        # MAXIMA
+        if dur == 'maxima':
+            mens_dur = 'maxima'
+
+        # LONGA
+        elif dur == 'long':
+            # Default @dur value of the note (Exception: Altered Breve)
+            mens_dur = 'longa'
+
+            # Looking for 'perfections', 'imperfections' and 'alterations'
+            if durges_num == l_perf:
+                # Perfection case
+                if modusminor == 2:
+                    note.addAttribute('quality', 'p')
+                    note.addAttribute('num', '2')
+                    note.addAttribute('numbase', '3')
+                    # # And we add a dot of perfection
+                    # if not note.hasChildren('dot'):
+                    #     dot = MeiElement('dot')
+                    #     note.addChild('dot')
+                    # dot = note.getChildrenByName('dot')
+                    # dot.addAttribute('format', 'aug')
+                # Default case
+                elif modusminor == 3:
+                    pass
+                # Mensuration MISTAKE: 'modusminor'
                 else:
-                    print("MISTAKE!!! this note is neither an imperfected longa nor an altered brevis " + note)    
+                    print("MISTAKE IN MENSURATION: modusminor")
+                    pass
+            elif durges_num == l_imp:
+                if modusminor == 3:
+                    # Alteration case - here the @dur attribute changes
+                    if note.hasAttribute('artic') and note.getAttribute('artic').value == 'stop':
+                        mens_dur = 'brevis'
+                        note.addAttribute('quality', 'a')
+                        note.addAttribute('num', '1')
+                        note.addAttribute('numbase', '2')
+                    # Imperfection case
+                    else:
+                        note.addAttribute('quality', 'i')
+                        note.addAttribute('num', '3')
+                        note.addAttribute('numbase', '2')
+                # Default case
+                elif modusminor == 2:
+                    pass
+                # Mensuration MISTAKE: 'modusminor'
+                else:
+                    print("MISTAKE IN MENSURATION: modusminor")
+                    pass
+            # MISTAKE on the note's duration
+            else:
+                print("This LONG note " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(Fraction(durges_num, l_def).numerator) + "/" + str(Fraction(durges_num, l_def).denominator) + " part of its normal value.")
+
+        # BREVIS
+        elif dur == 'breve':
+            mens_dur = 'brevis'
+
+        # SEMIBREVIS
+        elif dur == '1':
+            mens_dur = 'semibrevis'
+
+        # INCORRECT NOTE VALUE
+        else:
+            if dur != "TiedNote!":
+                print("This note shouldn't be here, as it is larger than a maxima or shorter than a semibrevis! " + str(note) + ", " + str(dur) + ", " + str(durges_num) + "p")
+                mens_dur = dur
+            else:
+                print("Still tied-note")
+
+        # Change the @dur value to the corresponding mensural note value
+        note.getAttribute('dur').setValue(mens_dur)
+
+    # Rest's Part:
+    # Rests can't be modified from its original value
+    # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
+    for rest in rests:
+        # Due to the mRest part of the code, all the rests have a @dur attribute.
+        dur = rest.getAttribute('dur').value
+        # Semibreve rest
+        if dur == "1":
+            mens_dur = "semibrevis"
+            # Check for mistakes in duration (@dur.ges attribute)
+            if rest.hasAttribute('dur.ges'):
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1]) 
+                if durges_num != 1024:
+                    print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 1024p\n")
+        # Breve rest
+        elif dur == "breve":
+            mens_dur = "brevis" # 1B rest??????????
+            # Check for mistakes in duration (@dur.ges attribute)
+            if rest.hasAttribute('dur.ges'):
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
+                if durges_num != 2048:
+                    print("This BREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 2048p\n")
+        # 2-breve and 3-breve rest
+        elif dur == "long":
+            ##############################################################################################
+            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
+            ##############################################################################################
+            if rest.hasAttribute('dur.ges'):
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
+                # 2-breve rest
+                if durges_num == l_imp:
+                    rest.addAttribute('EVENTUALDUR', '2B')  # It will be:   mens_dur = '2B'
+                    ###################################################################################################################
+                    ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
+                    if modusminor == 3: # 'imperfected'
+                        rest.addAttribute('num', '3')
+                        rest.addAttribute('numbase', '2')
+                    else:   # Default
+                        pass
+                    ###################################################################################################################
+                # 3-breve rest
+                elif durges_num == l_perf:
+                    rest.addAttribute('EVENTUALDUR', '3B')  # It will be:   mens_dur = '3B'
+                    ###################################################################################################################
+                    ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
+                    if modusminor == 2: # 'perfected'
+                        rest.addAttribute('num', '2')
+                        rest.addAttribute('numbase', '3')
+                    else:   # Default
+                        pass
+                    ###################################################################################################################
+                # Check for mistakes in duration (@dur.ges attribute)
+                else:
+                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
+                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+            else:
+                # 3-breve rest
+                if modusminor == 3:
+                    rest.addAttribute('EVENTUALDUR', '3B')
+                #2-breve rest
+                elif modusminor == 2:
+                    rest.addAttribute('EVENTUALDUR', '2B')
+                # Check for mistakes in duration (@dur.ges attribute)
+                else:
+                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
+                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+        # Mistake in rest's duration (@dur attribute)
+        else:
+            print("This kind of Rest shouldn't be in this repertory " + str(note) + ", it has a duration of  " + str(dur) + "\n")
+            mens_dur = dur
+
+        # Change the @dur value to the corresponding mensural note value
+        rest.getAttribute('dur').setValue(mens_dur)
+
 
 def sb_major_minor(children_of_voiceStaff):
     # Finds and indicates which Semibreves are Major
     indices_BrevesOrTuplets = [-1]
     for element in children_of_voiceStaff:
-        if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa')):
+        if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa' or element.getAttribute('dur').value == 'maxima')):
             indices_BrevesOrTuplets.append(children_of_voiceStaff.index(element))
     for i in range(0, len(indices_BrevesOrTuplets)-1):
         start = indices_BrevesOrTuplets[i]
@@ -154,8 +252,7 @@ for i in range (len(ties_list)-1, -1, -1):
     start_note = input_doc.getElementById(note_startid)
     #print(start_note)
     start_dur = start_note.getAttribute('dur').value    # Value of the form: 'long', 'breve', '1' or '2'
-    start_durGes = start_note.getAttribute('dur.ges').value    # Value of the form: '1024p'
-    start_durGes_number = int(start_durGes[0:len(start_durGes)-1])  # Value of the form: 1024
+    start_durGes_number = int(start_note.getAttribute('dur.ges').value[:-1])    # Value of the form: 1024
 
     endid = tie.getAttribute('endid').value
     note_endid = endid[1:]
@@ -164,52 +261,15 @@ for i in range (len(ties_list)-1, -1, -1):
     end_note = input_doc.getElementById(note_endid)
     #print(end_note)
     end_dur = end_note.getAttribute('dur').value
-    end_durGes = end_note.getAttribute('dur.ges').value
-    end_durGes_number = int(end_durGes[0:len(end_durGes)-1])
+    end_durGes_number = int(end_note.getAttribute('dur.ges').value[:-1])
 
-    if start_durGes == end_durGes:
-    # Upgrade the start_note to the next high value figure (two breves --> upgrade to a longa)
-    # Remove the second figure
-    # Also update the value of the first note (dur.ges)
-        
-        # dur
-        if start_dur == 'breve':    # Other options???
-            start_note.getAttribute('dur').setValue('long')
-        elif start_dur == '1':
-            start_note.getAttribute('dur').setValue('breve')
-        else:
-            #etc. (what should the etc. consider? are these all the cases?)
-            pass
-        
-        # dur.ges
-        start_durGes_number = start_durGes_number + end_durGes_number
-        start_durGes = str(start_durGes_number) + "p"
-        start_note.getAttribute('dur.ges').setValue(start_durGes)
-        ids_removeList.append(end_note.id)
+    # durges
+    durGes_number = start_durGes_number + end_durGes_number
+    durGes = str(durGes_number) + "p"
+    start_note.getAttribute('dur.ges').setValue(durGes)
+    ids_removeList.append(end_note.id)
 
-    elif start_durGes_number == end_durGes_number/2 or end_durGes_number == start_durGes_number/2:
-    # Take the larger figure [long followed by a breve (or viceversa) --> long] and assign it to the start_note preserves its value
-    # Remove then the second figure
-    # Also update the value of the first note (dur.ges)
-
-        # dur
-        if (start_dur == 'breve' and end_dur == 'long') or (start_dur == 'long' and end_dur == 'breve'):
-            start_note.getAttribute('dur').setValue('long')
-        elif (start_dur == '1' and end_dur == 'breve') or (start_dur == 'breve' and end_dur == '1'):
-            start_note.getAttribute('dur').setValue('breve')
-        else:
-            # etc. (what should the etc. consider? are these all the cases to take into account?)
-            pass
-
-        # durges
-        durGes_number = start_durGes_number + end_durGes_number
-        durGes = str(durGes_number) + "p"
-        start_note.getAttribute('dur.ges').setValue(durGes)
-        ids_removeList.append(end_note.id)
-    
-    else:
-        # Again, should I consider another one? Here, I don't think so.
-        pass
+    start_note.getAttribute('dur').setValue('TiedNote!')
 
 #print(ids_removeList)
 
@@ -230,6 +290,7 @@ for staffDef in stavesDef:
     print("Give the mensuration for the " + voice + ":")
     modusminor = raw_input("Modus minor (3 or 2): ")
     tempus = raw_input("Tempus (generally is 3, may be 2): ")
+    staffDef.addAttribute('modusmaior', '2')
     staffDef.addAttribute('modusminor', modusminor)
     staffDef.addAttribute('tempus', tempus)
 out_scoreDef.addChild(out_staffGrp)
@@ -326,7 +387,6 @@ for i in range(0, len(staffDefs)):
     elements_per_voice = voices_elements[i]
     
     change_noterest_value(notes_per_voice, rests_per_voice, modusminor, tempus)
-    impalt(notes_per_voice, modusminor)
     sb_major_minor(elements_per_voice)
 
 # Removing or replacing extraneous attributes on the notes
@@ -359,11 +419,19 @@ for note in notes:
     if note.hasAttribute('artic'):
         artic = note.getAttribute('artic')
         if artic.value == "stacc":
-            note.addChild(MeiElement('dot'))
+            if not note.hasChildren('dot'):
+                note.addChild(MeiElement('dot'))
             note.removeAttribute('artic')
         elif artic.value == "ten":
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
             note.removeAttribute('artic')
 
-outputfile = path[0:len(path)-4] + "_output2.mei"
+# Removing @dots from <rest> elements
+rests = output_doc.getElementsByName('rest')
+for rest in rests:
+    if rest.hasAttribute('dots'):
+        rest.removeAttribute('dots')
+
+outputfile = path[0:len(path)-4] + "_output.mei"
 documentToFile(output_doc, outputfile)
+
