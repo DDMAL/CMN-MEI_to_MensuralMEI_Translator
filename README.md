@@ -1,2 +1,2 @@
 # mensuralmei
-This repository contains an Mei-to-MensuralMei translator.
+This repository contains an CMNmei-to-MensuralMei translator.
