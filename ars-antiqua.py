@@ -17,7 +17,7 @@ from fractions import *
 
 # Note/Rest Shape Part
 # Changes the @dur value to represent mensural figures
-def change_noterest_value(notes, rests, modusminor, tempus):
+def change_noterest_value(notes, rests, modusminor):
 
     # Default values for notes according to the mensuration
     b_def = 2048
@@ -209,13 +209,53 @@ def sb_major_minor(children_of_voiceStaff):
     for i in range(0, len(indices_BrevesOrTuplets)-1):
         start = indices_BrevesOrTuplets[i]
         end = indices_BrevesOrTuplets[i+1]
-        cont_Sb = 0
-        for j in range(start+1, end):
-            cont_Sb = cont_Sb + 1
-            if cont_Sb % 2 == 0:
-                children_of_voiceStaff[j].addAttribute('quality', 'major')
-                children_of_voiceStaff[j].addAttribute('num', '1')
-                children_of_voiceStaff[j].addAttribute('numbase', '2')
+        number_sb = end - start - 1
+        # Case 1: Even number of semibreves
+        if number_sb % 2 == 0:
+            cont_sb = 0
+            for j in range(start+1, end):
+                cont_sb = cont_sb + 1
+                if cont_sb % 2 == 0:
+                # 2nd, 4th, 6th, ... semibreve in the sequence; generally, these are the ones that are Major (default case), but there are exceptions
+                    previous_sb = children_of_voiceStaff[j-1]
+                    # The exception: tenuto marks (downward stems) in the previous note (1st, 3rd, 5th, ... semibreve)
+                    if previous_sb.hasAttribute('artic') and previous_sb.getAttribute('artic').value == 'ten':
+                        previous_sb.addAttribute('quality', 'major')
+                        previous_sb.addAttribute('num', '1')
+                        previous_sb.addAttribute('numbase', '2')
+                    # The default case:
+                    else:
+                        current_sb = children_of_voiceStaff[j]
+                        current_sb.addAttribute('quality', 'major')
+                        current_sb.addAttribute('num', '1')
+                        current_sb.addAttribute('numbase', '2')
+                else:
+                    pass
+        # Case 2: Odd number of semibreves
+        else:
+            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence
+            # So that whole tuplet is equal to just 1 minor semibreve
+            # And the semibreve that precedes/follows it (ususally has a downward stem to indicate is longer duration in the group) is the Major Semibreve that completes the Perfect Breve
+            # Without this Major Semibreve, we are left with an even number of semibreves that can be grouped into minor-major (or major-minor) pairs, as usual
+            start_element = children_of_voiceStaff[start]
+            end_element = children_of_voiceStaff[end]
+            if (start_element.name == 'tuplet' and start_element.getAttribute('num').value == '2' and start_element.getAttribute('numbase').value == '1') or (end_element.name == 'tuplet' and end_element.getAttribute('num').value == '2' and end_element.getAttribute('numbase').value == '1'):
+                cont_sb = 0
+                for j in range(start+1, end):
+                    cont_sb = cont_sb + 1
+                    if cont_sb % 2 == 1:
+                        # Default case: Assumes there is no tenuto marks in the following notes
+                        # There is no exception case encoded as it has never been present before
+                        current_sb = children_of_voiceStaff[j]
+                        current_sb.addAttribute('quality', 'major')
+                        current_sb.addAttribute('num', '1')
+                        current_sb.addAttribute('numbase', '2')
+                    else:
+                        pass
+            # Mistake case: If there is no tuplet 2:1 in any extreme, there shouldn't be an odd number of semibreves.
+            else:
+                print("This shouldn't happen! \nThere is an odd number of semibreves between two perfect breves (or tuplets that are equivalent to a perfect breve), \nwhich doesn't allow to form minor-major (or major-minor) pairs of semibreves.")
+                print("You can find these breves between the " + str(start_element.name) + " with id " + str(start_element.id) + " and the " + str(end_element.name) + " with id " + str(end_element.id))
 
 
 # ----------- #
@@ -223,6 +263,7 @@ def sb_major_minor(children_of_voiceStaff):
 # ----------- #
 
 path = raw_input("Input the path to the MEI file you want to transform into mensural-mei: ")
+breve_choice = raw_input("Is the breve equal to:\n(A) 3 minor semibreves (or, equivalently, a pair of minor-major semibreves) or \n(B) 2 semibreves of equal duration \nNote: Option (A) is generally the case in Ars Antiqua.\nWrite the number of semibreves of equal duration (3 or 2) to which the breve is equivalent to: ")
 
 # Input file part - Separates individual voice information for the parser part
 input_doc = documentFromFile(path).getMeiDocument()
@@ -289,10 +330,9 @@ for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
     modusminor = raw_input("Modus minor (3 or 2): ")
-    tempus = raw_input("Tempus (generally is 3, may be 2): ")
     staffDef.addAttribute('modusmaior', '2')
     staffDef.addAttribute('modusminor', modusminor)
-    staffDef.addAttribute('tempus', tempus)
+    staffDef.addAttribute('tempus', breve_choice)
 out_scoreDef.addChild(out_staffGrp)
 
 # Section Part of the <score> element
@@ -338,20 +378,27 @@ for ind_voice in all_voices:
                 num = int(tuplet.getAttribute('num').value)
                 numbase = int(tuplet.getAttribute('numbase').value) ##### generally is '2' (because is a certain number of semibreves in the place of 2 semibreves)
 
+                if numbase == 2:
+                    base = int(breve_choice)
+                elif numbase == 1:
+                    base = 1
+                    #tenuto_mark = int(breve_choice) - 1
+                else:
+                    print("Shouldn't happen!")
+
                 notes_grouped = tuplet.getChildren()
-                if (numbase+1)/num == 1:    # If it is a triplet (so the fraction is 3/3), there is no need to add num and numbase because they are all 3 minor semibreves
+                durRatio = Fraction(base, num)
+                if durRatio == 1:
                     for note in notes_grouped:
                         layer.addChild(note)
                 else:
                     notes_grouped = tuplet.getChildren()
                     for note in notes_grouped:
-                        note.addAttribute('num', str(num))
-                        note.addAttribute('numbase', str(numbase+1))    ##### Which will be a '3'
+                        note.addAttribute('num', str(durRatio.denominator))
+                        note.addAttribute('numbase', str(durRatio.numerator))
                         layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
-
-                elements_per_voice.append(element)
 
                 rest = MeiElement('rest')
                 rest.id = element.id
@@ -360,6 +407,9 @@ for ind_voice in all_voices:
                 # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
                 if rest.hasAttribute('dur') == False:
                     rest.addAttribute('dur', 'long')
+
+                elements_per_voice.append(rest)
+
             # Notes and simple rests
             else:
 
@@ -381,13 +431,15 @@ staves = output_doc.getElementsByName('staff')
 for i in range(0, len(staffDefs)):
     staffDef = staffDefs[i]
     modusminor = int(staffDef.getAttribute('modusminor').value)
-    tempus = int(staffDef.getAttribute('tempus').value)
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
     rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
     elements_per_voice = voices_elements[i]
     
-    change_noterest_value(notes_per_voice, rests_per_voice, modusminor, tempus)
-    sb_major_minor(elements_per_voice)
+    change_noterest_value(notes_per_voice, rests_per_voice, modusminor)
+    if breve_choice == '3':
+        sb_major_minor(elements_per_voice)
+    else:
+        pass
 
 # Removing or replacing extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
@@ -432,6 +484,6 @@ for rest in rests:
     if rest.hasAttribute('dots'):
         rest.removeAttribute('dots')
 
-outputfile = path[0:len(path)-4] + "_output.mei"
+outputfile = path[0:len(path)-4] + "_output2.mei"
 documentToFile(output_doc, outputfile)
 
