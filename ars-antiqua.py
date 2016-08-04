@@ -382,7 +382,6 @@ for ind_voice in all_voices:
                     base = int(breve_choice)
                 elif numbase == 1:
                     base = 1
-                    #tenuto_mark = int(breve_choice) - 1
                 else:
                     print("Shouldn't happen!")
 
@@ -484,6 +483,6 @@ for rest in rests:
     if rest.hasAttribute('dots'):
         rest.removeAttribute('dots')
 
-outputfile = path[0:len(path)-4] + "_output2.mei"
+outputfile = path[0:len(path)-4] + "_output.mei"
 documentToFile(output_doc, outputfile)
 
