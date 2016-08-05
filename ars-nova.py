@@ -521,7 +521,7 @@ for ind_voice in all_voices:
                 num = int(tuplet.getAttribute('num').value)
                 numbase = int(tuplet.getAttribute('numbase').value)
                 notes_grouped = tuplet.getChildren()
-                # At the moment we have only found tuplets of "semibrevis" and tuplets of "minima"
+                # The only tuplets present in Ars Nova are tuplets of minims
                 for note in notes_grouped:
                     durges = note.getAttribute('dur.ges').value
                     actual_durges_num = int( int(durges[0:len(durges)-1]) * numbase / num )

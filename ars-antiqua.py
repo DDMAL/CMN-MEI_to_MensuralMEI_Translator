@@ -215,8 +215,8 @@ def sb_major_minor(children_of_voiceStaff):
             cont_sb = 0
             for j in range(start+1, end):
                 cont_sb = cont_sb + 1
-                if cont_sb % 2 == 0:
                 # 2nd, 4th, 6th, ... semibreve in the sequence; generally, these are the ones that are Major (default case), but there are exceptions
+                if cont_sb % 2 == 0:
                     previous_sb = children_of_voiceStaff[j-1]
                     # The exception: tenuto marks (downward stems) in the previous note (1st, 3rd, 5th, ... semibreve)
                     if previous_sb.hasAttribute('artic') and previous_sb.getAttribute('artic').value == 'ten':
@@ -233,26 +233,69 @@ def sb_major_minor(children_of_voiceStaff):
                     pass
         # Case 2: Odd number of semibreves
         else:
-            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence
+            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence of semibreves
             # So that whole tuplet is equal to just 1 minor semibreve
             # And the semibreve that precedes/follows it (ususally has a downward stem to indicate is longer duration in the group) is the Major Semibreve that completes the Perfect Breve
-            # Without this Major Semibreve, we are left with an even number of semibreves that can be grouped into minor-major (or major-minor) pairs, as usual
+            # Without this Major Semibreve, we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual
             start_element = children_of_voiceStaff[start]
             end_element = children_of_voiceStaff[end]
-            if (start_element.name == 'tuplet' and start_element.getAttribute('num').value == '2' and start_element.getAttribute('numbase').value == '1') or (end_element.name == 'tuplet' and end_element.getAttribute('num').value == '2' and end_element.getAttribute('numbase').value == '1'):
+            # If the 2:1 tuplet precedes of the sequence of semibreves
+            if (start_element.name == 'tuplet' and start_element.getAttribute('num').value == '2' and start_element.getAttribute('numbase').value == '1'):
+                # The semibreve that follows this 2:1 tuplet, should be major
+                major_sb = children_of_voiceStaff[start + 1]
+                major_sb.addAttribute('quality', 'major')
+                major_sb.addAttribute('num', '1')
+                major_sb.addAttribute('numbase', '2')
+                # The other semibreves are grouped into minor-major pairs
                 cont_sb = 0
-                for j in range(start+1, end):
+                for j in range(start+2, end):
                     cont_sb = cont_sb + 1
-                    if cont_sb % 2 == 1:
-                        # Default case: Assumes there is no tenuto marks in the following notes
-                        # There is no exception case encoded as it has never been present before
-                        current_sb = children_of_voiceStaff[j]
-                        current_sb.addAttribute('quality', 'major')
-                        current_sb.addAttribute('num', '1')
-                        current_sb.addAttribute('numbase', '2')
+                    # The second semibreve of each pair: generally it is Major (default case), but there are exceptions
+                    if cont_sb % 2 == 0:
+                        previous_sb = children_of_voiceStaff[j-1]
+                        # The exception: tenuto marks (downward stems) in the previous note (1st, 3rd, 5th, ... semibreve)
+                        if previous_sb.hasAttribute('artic') and previous_sb.getAttribute('artic').value == 'ten':
+                            previous_sb.addAttribute('quality', 'major')
+                            previous_sb.addAttribute('num', '1')
+                            previous_sb.addAttribute('numbase', '2')
+                        # The default case:
+                        else:
+                            current_sb = children_of_voiceStaff[j]
+                            current_sb.addAttribute('quality', 'major')
+                            current_sb.addAttribute('num', '1')
+                            current_sb.addAttribute('numbase', '2')
+                    # The first semibreve of each pair (it is generally minor, so we don't make any changes to it)
                     else:
                         pass
-            # Mistake case: If there is no tuplet 2:1 in any extreme, there shouldn't be an odd number of semibreves.
+            # If the 2:1 tuplet follows the sequence of semibreves
+            elif (end_element.name == 'tuplet' and end_element.getAttribute('num').value == '2' and end_element.getAttribute('numbase').value == '1'):
+                # The semibreve that precedes the 2:1 tuplet, should be major
+                major_sb = children_of_voiceStaff[end - 1]
+                major_sb.addAttribute('quality', 'major')
+                major_sb.addAttribute('num', '1')
+                major_sb.addAttribute('numbase', '2')
+                # The other semibreves are grouped into minor-major pairs
+                cont_sb = 0
+                for j in range(start+1, end-1):
+                    cont_sb = cont_sb + 1
+                    # The second semibreve of each pair: generally it is Major (default case), but there are exceptions
+                    if cont_sb % 2 == 0:
+                        previous_sb = children_of_voiceStaff[j-1]
+                        # The exception: tenuto marks (downward stems) in the previous note (1st, 3rd, 5th, ... semibreve)
+                        if previous_sb.hasAttribute('artic') and previous_sb.getAttribute('artic').value == 'ten':
+                            previous_sb.addAttribute('quality', 'major')
+                            previous_sb.addAttribute('num', '1')
+                            previous_sb.addAttribute('numbase', '2')
+                        # The default case:
+                        else:
+                            current_sb = children_of_voiceStaff[j]
+                            current_sb.addAttribute('quality', 'major')
+                            current_sb.addAttribute('num', '1')
+                            current_sb.addAttribute('numbase', '2')
+                    # The first semibreve of each pair (it is generally minor, so we don't make any changes to it)
+                    else:
+                        pass
+            # Mistake case: If there is no tuplet 2:1 in any extreme, there shouldn't be an odd number of semibreves
             else:
                 print("This shouldn't happen! \nThere is an odd number of semibreves between two perfect breves (or tuplets that are equivalent to a perfect breve), \nwhich doesn't allow to form minor-major (or major-minor) pairs of semibreves.")
                 print("You can find these breves between the " + str(start_element.name) + " with id " + str(start_element.id) + " and the " + str(end_element.name) + " with id " + str(end_element.id))
