@@ -658,7 +658,7 @@ for note in notes:
         note.removeAttribute('stem.dir')
     if note.hasAttribute('dots'):
         note.removeAttribute('dots')
-    # Replace extraneous attributes by the appropriate mensural attributes or elements within the <note> element:
+    # Replace extraneous attributes by the appropriate mensural attributes in the <note> element:
     # For plicas
     if note.hasAttribute('stem.mod'):
         stemmod = note.getAttribute('stem.mod')
