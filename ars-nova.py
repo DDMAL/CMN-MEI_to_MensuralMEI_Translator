@@ -40,8 +40,10 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     maxima_perf = longa_default_val * 3
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
 
-# Note/Rest change in values, both shape (@dur) and duration (@dur.ges), to represent mensural figures
-def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio, triplet_of_minims_flag):
+# Performs the actual change, in notes and rests, from contemporary to mensural notation. This involves 2 steps:
+# 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
+# 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
+def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio, triplet_of_minims_flag):
     list_values = imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio)
     sb_def, sb_imp, sb_perf = list_values[0]
     b_def, b_imp, b_perf = list_values[1]
@@ -53,7 +55,7 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
         dur = note.getAttribute('dur').value
         durges_num = int(note.getAttribute('dur.ges').value[:-1])
 
-        # For the tied notes
+        # For the tied notes:
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
             # Maximas
@@ -72,7 +74,7 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                 print("Weird\n The tied note doesn't seem to be any note (perfect, imperfect, or afected by patial imperfection) in the range of semibreve to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
             note.getAttribute('dur').setValue(dur)
 
-        # Look for the mensural duration of the notes
+        # Look for the corresponding mensural duration of the notes
 
         # MAXIMA
         if dur == 'maxima':
@@ -369,7 +371,7 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     print("MISTAKE IN MENSURATION: prolatio")
                     pass
             else:
-            # Check for partial imperfection (and for mistakes)
+            # Check for mistakes (there is no partial imperfection for a semibreve)
                 # Note's value MISTAKE
                 print("This SEMIBREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(Fraction(durges_num, sb_def).numerator) + "/" + str(Fraction(durges_num, sb_def).denominator) + " part of its normal value.")
                 pass
@@ -419,9 +421,9 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     print("SO IT IS: " + str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " ITS DEFAULT VALUE\n")
         # 2-breve and 3-breve rest
         elif dur == "long":
-            ##############################################################################################
-            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
-            ##############################################################################################
+            ##########################################################################################################
+            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD WE WILL USE THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
+            ##########################################################################################################
             if rest.hasAttribute('dur.ges'):
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 # 2-breve rest
@@ -459,8 +461,7 @@ def change_noterest_value(notes, rests, modusmaior, modusminor, tempus, prolatio
                     rest.addAttribute('EVENTUALDUR', '2B')
                 # Check for mistakes in duration (@dur.ges attribute)
                 else:
-                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
-                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value")
         # Mistake in rest's duration (@dur attribute)
         else:
             print("This kind of Rest shouldn't be in this repertory " + str(note) + ", it has a duration of  " + str(dur) + "\n")
@@ -491,52 +492,53 @@ for i in range(0, num_voices):
     all_voices.append(ind_voice)
 
 # Ties part
-# Join into one the notes that are tied together and give it the right note shape and dur.ges values
+# Join into one the notes that are tied together:
+# 1. Sets the @dur of the first note of the tied notes to the value 'TiedNote!'
+# 2. And its @dur.ges to the result of the sum of the performance duration (@dur.ges) of the individual notes that make up the tie
+# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document
 ids_removeList = []
 ties_list = input_doc.getElementsByName('tie')
 for i in range (len(ties_list)-1, -1, -1):
     tie = ties_list[i]
     
+    # Start note
     startid = tie.getAttribute('startid').value
     note_startid = startid[1:]  # Removing the '#' character from the startid value, to have the id of the note
-    #print(startid)
-    #print(note_startid)
     start_note = input_doc.getElementById(note_startid)
-    #print(start_note)
     start_dur = start_note.getAttribute('dur').value    # Value of the form: 'long', 'breve', '1' or '2'
     start_durGes_number = int(start_note.getAttribute('dur.ges').value[:-1])    # Value of the form: 1024
 
+    # End note
     endid = tie.getAttribute('endid').value
     note_endid = endid[1:]
-    #print(endid)
-    #print(note_endid)
     end_note = input_doc.getElementById(note_endid)
-    #print(end_note)
     end_dur = end_note.getAttribute('dur').value
     end_durGes_number = int(end_note.getAttribute('dur.ges').value[:-1])
 
-    # durges
+    # Calculation of the @dur.ges
     durGes_number = start_durGes_number + end_durGes_number
     durGes = str(durGes_number) + "p"
     start_note.getAttribute('dur.ges').setValue(durGes)
     ids_removeList.append(end_note.id)
 
+    # Sets @dur = 'TiedNote!'
     start_note.getAttribute('dur').setValue('TiedNote!')
-
 #print(ids_removeList)
+
 
 # Output File - Parser Part
 output_doc = MeiDocument()
 output_doc.root = input_doc.getRootElement()
 
-# ScoreDef Part of the <score> element
-# New scoreDef element with the same id as the one in the input file and with the staffGrp element that contains all the staves of the input file
+# ScoreDef Part of the <score> element:
 out_scoreDef = MeiElement('scoreDef')
+# Make it share the id (@xml:id) it has in the input file
 out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
-
-out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]   # This is the one that contains the staves
+# Add as its child the <staffGrp> element, with all the <staffDef> elements and the right mensuration (@modusmaior, @modusminor, @tempus and @prolatio) for each one
+out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]
+# The [-1] guarantees that the <staffGrp> element taken is the one which contains the <staffDef> elements (previous versions of the plugin stored a <staffGrp> element inside another <staffGrp>)
 stavesDef = out_staffGrp.getChildren()
-# Mensuration added to the staves
+# Mensuration added to the staves definition <staffDef>
 for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
@@ -549,7 +551,7 @@ for staffDef in stavesDef:
     staffDef.addAttribute('prolatio', prolatio)
 out_scoreDef.addChild(out_staffGrp)
 
-# Section Part of the <score> element
+# Section Part of the <score> element:
 out_section = MeiElement('section')
 out_section.id = input_doc.getElementsByName('section')[0].id
 
@@ -559,27 +561,27 @@ score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
-# Filling the section element
+# Filling the section element:
 for ind_voice in all_voices:
+    # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
     staff = MeiElement('staff')
     staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
     out_section.addChild(staff)
+    # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
     layer = MeiElement('layer')
-    layer.setId(input_doc.getElementsByName('layer')[0].id)
+    layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
     staff.addChild(layer)
+    # Fill each voice (fill the <layer> of each <staff>) with musical information (notes/rests)
     for i in range(0, len(ind_voice)):
         musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
-        print(ind_voice[i])
-        # Adds the elements of each measure into the one voice staff and a barline after each measure content is added
+        # Add the elements of each measure into the <layer> and a <barLine/> element after the measure-content
         for element in musical_content:
             # Tied notes
-            # If the element is a tied note (other than the first note of the tie), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
+            # If the element is a tied note (other than the first note of the tie: <note @dur = 'TiedNote!'/>), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
             if element.id in ids_removeList:
-                print("OUT!")
                 pass
             # Tuplets
             elif element.name == 'tuplet':
-                print(element)
                 tuplet = element
                 num = int(tuplet.getAttribute('num').value)
                 numbase = int(tuplet.getAttribute('numbase').value)
@@ -593,6 +595,7 @@ for ind_voice in all_voices:
                     layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
+                # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
                 rest = MeiElement('rest')
                 rest.id = element.id
                 rest.setAttributes(element.getAttributes())
@@ -602,13 +605,12 @@ for ind_voice in all_voices:
                     rest.addAttribute('dur', 'long')
             # Notes and simple rests
             else:
-                print(element)
                 layer.addChild(element)
-        print("BARLINE - BARLINE - BARLINE")
+        # Add barline
         layer.addChild(MeiElement('barLine'))
 
 
-# Notice the presence (or absence) of triplets of minims in the piece:
+# Establish the presence (or absence) of triplets of minims in the piece:
 
 #Obtain all the dur.ges of the notes in the score
 notes = output_doc.getElementsByName('note')
@@ -622,8 +624,8 @@ triplet_of_minims = False
 if '341p' in durges_list:
     triplet_of_minims = True
 
-# Modify the note shape (@dur) and sets the note quality (imperfect/altered) to encode its mensural value. 
-# This is done for the notes of each voice, taking into account the mensuration of each voice.
+# Modify the note shape (@dur) and sets the note quality (perfect/imperfect/altered) to encode its mensural value. 
+# This is done for the notes (and rests, just the @dur part) of each voice, taking into account the mensuration of each voice.
 staffDefs = output_doc.getElementsByName('staffDef')
 staves = output_doc.getElementsByName('staff')
 for i in range(0, len(staffDefs)):
@@ -640,12 +642,12 @@ for i in range(0, len(staffDefs)):
     print "Sb       B     L     Max"
     print(relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio))
     print ""
-    change_noterest_value(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, triplet_of_minims)
+    noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, triplet_of_minims)
 
-# Removing or replacing extraneous attributes on the notes
+# Remove/Replace extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
 for note in notes:
-    # Removing extraneous attributes in the <note> element
+    # Remove extraneous attributes in the <note> element
     if note.hasAttribute('layer'):
         note.removeAttribute('layer')
     if note.hasAttribute('pnum'):
@@ -656,7 +658,7 @@ for note in notes:
         note.removeAttribute('stem.dir')
     if note.hasAttribute('dots'):
         note.removeAttribute('dots')
-    # Replacement of extraneous attributes by appropriate mensural attributes or elements within the <note> element:
+    # Replace extraneous attributes by the appropriate mensural attributes or elements within the <note> element:
     # For plicas
     if note.hasAttribute('stem.mod'):
         stemmod = note.getAttribute('stem.mod')
