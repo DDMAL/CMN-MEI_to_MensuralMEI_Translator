@@ -6,7 +6,7 @@ from fractions import *
 # FUNCTIONS #
 # --------- #
 
-# This is for ARS ANTIQUA
+# This is for ARS ANTIQUA, so:
 # NO MINIMS
 # NO PROLATIO
 # The BREVE CAN'T be PERFECT or IMPERFECT
@@ -14,10 +14,10 @@ from fractions import *
 # The SEMIBREVE CAN'T be ALTERED
 # It is MAJOR or MINOR
 
-
-# Note/Rest Shape Part
-# Changes the @dur value to represent mensural figures
-def change_noterest_value(notes, rests, modusminor):
+# Performs the actual change, in notes and rests, from contemporary to mensural notation. This involves 2 steps:
+# 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
+# 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
+def noterest_to_mensural(notes, rests, modusminor):
 
     # Default values for notes according to the mensuration
     b_def = 2048
@@ -27,7 +27,7 @@ def change_noterest_value(notes, rests, modusminor):
     l_perf = 3 * b_def
 
     max_def = 2 * l_def
-    # The default value of the 'maxima' is double, because actually there is no maxima in this repertory
+    # The default value of the 'maxima' is double because, actually, there is no maxima in this repertoire
     # Ars Antiqua has no 'maximas' just 'duplex longs'
 
     # Notes's Part:
@@ -37,7 +37,7 @@ def change_noterest_value(notes, rests, modusminor):
         dur = note.getAttribute('dur').value
         durges_num = int(note.getAttribute('dur.ges').value[:-1])
 
-        # For the tied notes
+        # For the tied notes:
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
             # Maximas
@@ -51,9 +51,9 @@ def change_noterest_value(notes, rests, modusminor):
                 print("Weird\n The tied note doesn't seem to be any note in the range of longa to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
             note.getAttribute('dur').setValue(dur)
 
-        # Look for the mensural duration of the notes
+        # Look for the corresponding mensural duration of the notes
 
-        # MAXIMA
+        # MAXIMA (Duplex Longa)
         if dur == 'maxima':
             mens_dur = 'maxima'
 
@@ -149,9 +149,9 @@ def change_noterest_value(notes, rests, modusminor):
                     print("This BREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 2048p\n")
         # 2-breve and 3-breve rest
         elif dur == "long":
-            ##############################################################################################
-            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
-            ##############################################################################################
+            ##########################################################################################################
+            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD WE WILL USE THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
+            ##########################################################################################################
             if rest.hasAttribute('dur.ges'):
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 # 2-breve rest
@@ -189,8 +189,7 @@ def change_noterest_value(notes, rests, modusminor):
                     rest.addAttribute('EVENTUALDUR', '2B')
                 # Check for mistakes in duration (@dur.ges attribute)
                 else:
-                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
-                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+                    print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value")
         # Mistake in rest's duration (@dur attribute)
         else:
             print("This kind of Rest shouldn't be in this repertory " + str(note) + ", it has a duration of  " + str(dur) + "\n")
@@ -200,8 +199,8 @@ def change_noterest_value(notes, rests, modusminor):
         rest.getAttribute('dur').setValue(mens_dur)
 
 
+# Finds and indicates which Semibreves are Major, completing the encoding of the "Note's Actual Duration" part
 def sb_major_minor(children_of_voiceStaff):
-    # Finds and indicates which Semibreves are Major
     indices_BrevesOrTuplets = [-1]
     for element in children_of_voiceStaff:
         if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa' or element.getAttribute('dur').value == 'maxima')):
@@ -234,14 +233,14 @@ def sb_major_minor(children_of_voiceStaff):
         # Case 2: Odd number of semibreves
         else:
             # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence of semibreves
-            # So that whole tuplet is equal to just 1 minor semibreve
-            # And the semibreve that precedes/follows it (ususally has a downward stem to indicate is longer duration in the group) is the Major Semibreve that completes the Perfect Breve
-            # Without this Major Semibreve, we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual
+            # So that the whole tuplet is equal to just 1 minor semibreve
+            # And the semibreve that precedes/follows it (ususally has a downward stem to indicate its longer duration in the group) is the Major Semibreve that completes the Perfect Breve
+            # Without this grouping (major semibreve and tuplet), we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual
             start_element = children_of_voiceStaff[start]
             end_element = children_of_voiceStaff[end]
             # If the 2:1 tuplet precedes of the sequence of semibreves
             if (start_element.name == 'tuplet' and start_element.getAttribute('num').value == '2' and start_element.getAttribute('numbase').value == '1'):
-                # The semibreve that follows this 2:1 tuplet, should be major
+                # The semibreve that follows this 2:1 tuplet should be major (completing the perfection)
                 major_sb = children_of_voiceStaff[start + 1]
                 major_sb.addAttribute('quality', 'major')
                 major_sb.addAttribute('num', '1')
@@ -269,7 +268,7 @@ def sb_major_minor(children_of_voiceStaff):
                         pass
             # If the 2:1 tuplet follows the sequence of semibreves
             elif (end_element.name == 'tuplet' and end_element.getAttribute('num').value == '2' and end_element.getAttribute('numbase').value == '1'):
-                # The semibreve that precedes the 2:1 tuplet, should be major
+                # The semibreve that precedes the 2:1 tuplet, should be major (completing the perfection)
                 major_sb = children_of_voiceStaff[end - 1]
                 major_sb.addAttribute('quality', 'major')
                 major_sb.addAttribute('num', '1')
@@ -323,52 +322,53 @@ for i in range(0, num_voices):
     all_voices.append(ind_voice)
 
 # Ties part
-# Join into one the notes that are tied together and give it the right note shape and dur.ges values
+# Join into one the notes that are tied together:
+# 1. Sets the @dur of the first note of the tied notes to the value 'TiedNote!'
+# 2. And its @dur.ges to the result of the sum of the performance duration (@dur.ges) of the individual notes that make up the tie
+# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document
 ids_removeList = []
 ties_list = input_doc.getElementsByName('tie')
 for i in range (len(ties_list)-1, -1, -1):
     tie = ties_list[i]
     
+    # Start note
     startid = tie.getAttribute('startid').value
     note_startid = startid[1:]  # Removing the '#' character from the startid value, to have the id of the note
-    #print(startid)
-    #print(note_startid)
     start_note = input_doc.getElementById(note_startid)
-    #print(start_note)
     start_dur = start_note.getAttribute('dur').value    # Value of the form: 'long', 'breve', '1' or '2'
     start_durGes_number = int(start_note.getAttribute('dur.ges').value[:-1])    # Value of the form: 1024
 
+    # End note
     endid = tie.getAttribute('endid').value
     note_endid = endid[1:]
-    #print(endid)
-    #print(note_endid)
     end_note = input_doc.getElementById(note_endid)
-    #print(end_note)
     end_dur = end_note.getAttribute('dur').value
     end_durGes_number = int(end_note.getAttribute('dur.ges').value[:-1])
 
-    # durges
+    # Calculation of the @dur.ges
     durGes_number = start_durGes_number + end_durGes_number
     durGes = str(durGes_number) + "p"
     start_note.getAttribute('dur.ges').setValue(durGes)
     ids_removeList.append(end_note.id)
 
+    # Sets @dur = 'TiedNote!'
     start_note.getAttribute('dur').setValue('TiedNote!')
-
 #print(ids_removeList)
+
 
 # Output File - Parser Part
 output_doc = MeiDocument()
 output_doc.root = input_doc.getRootElement()
 
-# ScoreDef Part of the <score> element
-# New scoreDef element with the same id as the one in the input file and with the staffGrp element that contains all the staves of the input file
+# ScoreDef Part of the <score> element:
 out_scoreDef = MeiElement('scoreDef')
+# Make it share the id (@xml:id) it has in the input file
 out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
-
-out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]   # This is the one that contains the staves
+# Add as its child the <staffGrp> element, with all the <staffDef> elements and the right mensuration (@modusmaior, @modusminor and @tempus) for each one
+out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]
+# The [-1] guarantees that the <staffGrp> element taken is the one which contains the <staffDef> elements (previous versions of the plugin stored a <staffGrp> element inside another <staffGrp>)
 stavesDef = out_staffGrp.getChildren()
-# Mensuration added to the staves
+# Mensuration added to the staves definition <staffDef>
 for staffDef in stavesDef:
     voice = staffDef.getAttribute('label').value
     print("Give the mensuration for the " + voice + ":")
@@ -378,7 +378,7 @@ for staffDef in stavesDef:
     staffDef.addAttribute('tempus', breve_choice)
 out_scoreDef.addChild(out_staffGrp)
 
-# Section Part of the <score> element
+# Section Part of the <score> element:
 out_section = MeiElement('section')
 out_section.id = input_doc.getElementsByName('section')[0].id
 
@@ -388,48 +388,51 @@ score.deleteAllChildren()
 score.addChild(out_scoreDef)
 score.addChild(out_section)
 
+# list of lists, each of them with all the elements of one voice
 voices_elements = []
-# Filling the section element
+# Filling the section element:
 for ind_voice in all_voices:
+    # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
     staff = MeiElement('staff')
     staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
     out_section.addChild(staff)
+    # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
     layer = MeiElement('layer')
-    layer.setId(input_doc.getElementsByName('layer')[0].id)
+    layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
     staff.addChild(layer)
-
-    print(ind_voice)
+    # Ordered list of all the elements of one voice (<note>, <rest> and <tuplet>), useful for identifying the 'Major Semibreves' of the voice
     elements_per_voice = []
-
+    # Fill each voice (fill the <layer> of each <staff>) with musical information (notes/rests)
     for i in range(0, len(ind_voice)):
-
         musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
-        # Adds the elements of each measure into the one voice staff and a barline after each measure content is added
+        # Add the elements of each measure into the <layer> and a <barLine/> element after the measure-content
         for element in musical_content:
             # Tied notes
-            # If the element is a tied note (other than the first note of the tie), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
+            # If the element is a tied note (other than the first note of the tie: <note @dur = 'TiedNote!'>), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
             if element.id in ids_removeList:
-                print("OUT!")
                 pass
             # Tuplets
             elif element.name == 'tuplet':
-
+                # Add the <tuplet> to the list of elements in the voice
                 elements_per_voice.append(element)
-
-                print(element)
+                # The only tuplets present in Ars Antiqua are tuplets of semibreves
                 tuplet = element
                 num = int(tuplet.getAttribute('num').value)
-                numbase = int(tuplet.getAttribute('numbase').value) ##### generally is '2' (because is a certain number of semibreves in the place of 2 semibreves)
-
+                numbase = int(tuplet.getAttribute('numbase').value)
+                # @numbase is usually '2', because generally a breve = 3 minor semibreves, so tuplets of 3:2 are frequently used to represent 3 (minor) semibreves per breve.
+                # There are also other cases in which we have more than 3 semibreves per breve: 4:2, 5:2, 6:2 and 7:2
                 if numbase == 2:
                     base = int(breve_choice)
+                # There is also the case of 2:1 tuplets, in which case @numbase = '1', to indicate a group of two semibreves which should be interpreted as one minor semibreve
                 elif numbase == 1:
                     base = 1
                 else:
                     print("Shouldn't happen!")
-
+                # Find the simplified ratio between @numbase and @num 
                 notes_grouped = tuplet.getChildren()
                 durRatio = Fraction(base, num)
+                # If the ratio isn't 1, add the simplified @num and @numbase attributes to each of the notes in the tuplet
+                # And add each note to the <layer> of the voice 
                 if durRatio == 1:
                     for note in notes_grouped:
                         layer.addChild(note)
@@ -441,7 +444,7 @@ for ind_voice in all_voices:
                         layer.addChild(note)
             # mRests
             elif element.name == 'mRest':
-
+                # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
                 rest = MeiElement('rest')
                 rest.id = element.id
                 rest.setAttributes(element.getAttributes())
@@ -449,44 +452,41 @@ for ind_voice in all_voices:
                 # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
                 if rest.hasAttribute('dur') == False:
                     rest.addAttribute('dur', 'long')
-
+                # Add the <rest> to the list of elements in the voice
                 elements_per_voice.append(rest)
-
             # Notes and simple rests
             else:
-
-                elements_per_voice.append(element)
-
-                print(element)
                 layer.addChild(element)
-        print("BARLINE - BARLINE - BARLINE")
+                # Add the <note> or <rest> to the list of elements in the voice
+                elements_per_voice.append(element)
+        # Add barline
         layer.addChild(MeiElement('barLine'))
-
-
+    # Completing the list of lists with the mei-elements of each voice
     voices_elements.append(elements_per_voice)
 
-
-# Modify the note shape (@dur) and sets the note quality (imperfect/altered) to encode its mensural value. 
-# This is done for the notes of each voice, taking into account the mensuration of each voice.
+# Modify the note shape (@dur) and set the note quality (perfect/imperfect/altered) to encode its mensural value. 
+# This is done for the notes (and rests, just the @dur part) of each voice, taking into account the mensuration of each voice.
 staffDefs = output_doc.getElementsByName('staffDef')
 staves = output_doc.getElementsByName('staff')
 for i in range(0, len(staffDefs)):
     staffDef = staffDefs[i]
     modusminor = int(staffDef.getAttribute('modusminor').value)
+    
     notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
     rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
     elements_per_voice = voices_elements[i]
     
-    change_noterest_value(notes_per_voice, rests_per_voice, modusminor)
+    noterest_to_mensural(notes_per_voice, rests_per_voice, modusminor)
+    # Only if the breve is triple (equal to 3 minor semibreves), we need to evaluate which semibreves are major
     if breve_choice == '3':
         sb_major_minor(elements_per_voice)
     else:
         pass
 
-# Removing or replacing extraneous attributes on the notes
+# Remove/Replace extraneous attributes on the notes
 notes = output_doc.getElementsByName('note')
 for note in notes:
-    # Removing extraneous attributes in the <note> element
+    # Remove extraneous attributes in the <note> element
     if note.hasAttribute('layer'):
         note.removeAttribute('layer')
     if note.hasAttribute('pnum'):
@@ -497,7 +497,7 @@ for note in notes:
         note.removeAttribute('stem.dir')
     if note.hasAttribute('dots'):
         note.removeAttribute('dots')
-    # Replacement of extraneous attributes by appropriate mensural attributes or elements within the <note> element:
+    # Replace of extraneous attributes by appropriate mensural attributes in the <note> element:
     # For plicas
     if note.hasAttribute('stem.mod'):
         stemmod = note.getAttribute('stem.mod')
@@ -520,7 +520,7 @@ for note in notes:
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
             note.removeAttribute('artic')
 
-# Removing @dots from <rest> elements
+# Remove @dots from <rest> elements
 rests = output_doc.getElementsByName('rest')
 for rest in rests:
     if rest.hasAttribute('dots'):

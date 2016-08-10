@@ -393,6 +393,8 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
 
 
     # Rest's Part:
+    # Rests can't be modified from its original value
+    # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
     for rest in rests:
         # Due to the mRest part of the code, all the rests have a @dur attribute.
         dur = rest.getAttribute('dur').value
@@ -624,7 +626,7 @@ triplet_of_minims = False
 if '341p' in durges_list:
     triplet_of_minims = True
 
-# Modify the note shape (@dur) and sets the note quality (perfect/imperfect/altered) to encode its mensural value. 
+# Modify the note shape (@dur) and set the note quality (perfect/imperfect/altered) to encode its mensural value. 
 # This is done for the notes (and rests, just the @dur part) of each voice, taking into account the mensuration of each voice.
 staffDefs = output_doc.getElementsByName('staffDef')
 staves = output_doc.getElementsByName('staff')
@@ -681,7 +683,7 @@ for note in notes:
             note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
             note.removeAttribute('artic')
 
-# Removing @dots from <rest> elements
+# Remove @dots from <rest> elements
 rests = output_doc.getElementsByName('rest')
 for rest in rests:
     if rest.hasAttribute('dots'):
