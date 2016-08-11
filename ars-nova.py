@@ -6,7 +6,7 @@ from fractions import *
 # FUNCTIONS #
 # --------- #
 
-# This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO
+# This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO.
 
 # Identifies the relative values of the notes (its performed values) according to the mensuration
 def relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio):
@@ -40,7 +40,7 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     maxima_perf = longa_default_val * 3
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
 
-# Performs the actual change, in notes and rests, from contemporary to mensural notation. This involves 2 steps:
+# Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
 def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio, triplet_of_minims_flag):
@@ -497,7 +497,7 @@ for i in range(0, num_voices):
 # Join into one the notes that are tied together:
 # 1. Sets the @dur of the first note of the tied notes to the value 'TiedNote!'
 # 2. And its @dur.ges to the result of the sum of the performance duration (@dur.ges) of the individual notes that make up the tie
-# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document
+# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document.
 ids_removeList = []
 ties_list = input_doc.getElementsByName('tie')
 for i in range (len(ties_list)-1, -1, -1):

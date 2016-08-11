@@ -14,7 +14,7 @@ from fractions import *
 # The SEMIBREVE CAN'T be ALTERED
 # It is MAJOR or MINOR
 
-# Performs the actual change, in notes and rests, from contemporary to mensural notation. This involves 2 steps:
+# Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
 def noterest_to_mensural(notes, rests, modusminor):
@@ -232,10 +232,10 @@ def sb_major_minor(children_of_voiceStaff):
                     pass
         # Case 2: Odd number of semibreves
         else:
-            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence of semibreves
-            # So that the whole tuplet is equal to just 1 minor semibreve
-            # And the semibreve that precedes/follows it (ususally has a downward stem to indicate its longer duration in the group) is the Major Semibreve that completes the Perfect Breve
-            # Without this grouping (major semibreve and tuplet), we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual
+            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence of semibreves,
+            # so that the whole tuplet is equal to just 1 minor semibreve,
+            # and the semibreve that precedes/follows it (ususally has a downward stem to indicate its longer duration in the group) is the Major Semibreve that completes the Perfect Breve.
+            # Without this grouping (major semibreve and tuplet), we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual.
             start_element = children_of_voiceStaff[start]
             end_element = children_of_voiceStaff[end]
             # If the 2:1 tuplet precedes of the sequence of semibreves
@@ -325,7 +325,7 @@ for i in range(0, num_voices):
 # Join into one the notes that are tied together:
 # 1. Sets the @dur of the first note of the tied notes to the value 'TiedNote!'
 # 2. And its @dur.ges to the result of the sum of the performance duration (@dur.ges) of the individual notes that make up the tie
-# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document
+# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document.
 ids_removeList = []
 ties_list = input_doc.getElementsByName('tie')
 for i in range (len(ties_list)-1, -1, -1):
@@ -432,7 +432,7 @@ for ind_voice in all_voices:
                 notes_grouped = tuplet.getChildren()
                 durRatio = Fraction(base, num)
                 # If the ratio isn't 1, add the simplified @num and @numbase attributes to each of the notes in the tuplet
-                # And add each note to the <layer> of the voice 
+                # And add each note to the <layer> of the voice
                 if durRatio == 1:
                     for note in notes_grouped:
                         layer.addChild(note)
