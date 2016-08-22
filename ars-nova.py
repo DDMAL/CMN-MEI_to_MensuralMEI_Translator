@@ -40,6 +40,49 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     maxima_perf = longa_default_val * 3
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
 
+# Partial Imperfection:
+def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
+    # From the beginning, we assume there is a partial imperfection.
+    # But if none of the 'partial imperfection' conditions are satisfied, the partial_imperf flag would change to False.
+    partial_imperf = True
+
+    # Immediate imperfection: tempus should be 3
+    if tempus == 3 and modusminor == 2 and ratio == Fraction(5,6):
+        note.addAttribute('quality', 'immediate_imp')
+    elif tempus == 3 and modusminor == 3 and ratio == Fraction(5,9):
+        note.addAttribute('quality', 'imperfection + immediate_imp')
+    elif tempus == 3 and modusminor == 3 and ratio == Fraction(8,9):
+        note.addAttribute('quality', 'immediate_imp')
+
+    # Remote imperfection: there should be a prolatio value, and it should be 3
+    elif prolatio is not None:
+        if prolatio == 3 and tempus == 2 and modusminor == 2 and ratio == Fraction(11,12):
+            note.addAttribute('quality', 'remote_imp')
+        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(11,18):
+            note.addAttribute('quality', 'imperfection + remote_imp')
+        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(17,18):
+            note.addAttribute('quality', 'remote_imp')
+        elif prolatio == 3 and tempus == 3 and modusminor == 2 and ratio == Fraction(17,18):
+            note.addAttribute('quality', 'remote_imp')
+        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(17,27):
+            note.addAttribute('quality', 'imperfection + remote_imp')
+        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(26,27):
+            note.addAttribute('quality', 'remote_imp')
+        # It is not a 'remote partial imperfection' nor an 'immediate partial imperfection'
+        else:
+            partial_imperf = False
+
+    # It is not an 'immediate partial imperfection' and there is no possibility of 'remote imperfection' as there is no 'prolatio'
+    else:
+        partial_imperf = False
+
+    # Add the @num and @numbase attributes in case of partial imperfection
+    if partial_imperf:
+        note.addAttribute('num', str(ratio.denominator))
+        note.addAttribute('numbase', str(ratio.numerator))
+
+    return partial_imperf
+
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
@@ -122,50 +165,11 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: modusmaior")
                     pass
             else:
-            # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection (and for mistakes)
                 ratio = Fraction(durges_num, max_def)
-                # Immediate imperfection: modusminor should be 3
-                if modusminor == 3 and modusmaior == 2 and ratio == Fraction(5,6):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif modusminor == 3 and modusmaior == 3 and ratio == Fraction(5,9):
-                    note.addAttribute('quality', 'immediate imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif modusminor == 3 and modusmaior == 3 and ratio == Fraction(8,9):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                # Remote imperfection: tempus should be 3
-                elif tempus == 3 and modusminor == 2 and modusmaior == 2 and ratio == Fraction(11,12):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 2 and modusmaior == 3 and ratio == Fraction(11,18):
-                    note.addAttribute('quality', 'remote imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 2 and modusmaior == 3 and ratio == Fraction(17,18):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 3 and modusmaior == 2 and ratio == Fraction(17,18):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 3 and modusmaior == 3 and ratio == Fraction(17,27):
-                    note.addAttribute('quality', 'remote imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 3 and modusmaior == 3 and ratio == Fraction(26,27):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                # Note's value MISTAKE
-                else:
+                partial_imp = partial_imperfection(note, ratio, modusmaior, modusminor, tempus)
+                if not partial_imp:
                     print("This MAXIMA " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
-                    pass
 
         # LONGA
         elif dur == 'long':
@@ -213,50 +217,11 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: modusminor")
                     pass
             else:
-            # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection (and for mistakes)
                 ratio = Fraction(durges_num, l_def)
-                # Immediate imperfection: tempus should be 3
-                if tempus == 3 and modusminor == 2 and ratio == Fraction(5,6):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 3 and ratio == Fraction(5,9):
-                    note.addAttribute('quality', 'immediate imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif tempus == 3 and modusminor == 3 and ratio == Fraction(8,9):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                # Remote imperfection: prolatio should be 3
-                elif prolatio == 3 and tempus == 2 and modusminor == 2 and ratio == Fraction(11,12):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(11,18):
-                    note.addAttribute('quality', 'remote imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(17,18):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 3 and modusminor == 2 and ratio == Fraction(17,18):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(17,27):
-                    note.addAttribute('quality', 'remote imperfection (2)')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(26,27):
-                    note.addAttribute('quality', 'remote imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                # Note's value MISTAKE
-                else:
+                partial_imp = partial_imperfection(note, ratio, modusminor, tempus, prolatio)
+                if not partial_imp:
                     print("This LONG " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
-                    pass
 
         # BREVIS
         elif dur == 'breve':
@@ -304,26 +269,11 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: tempus")
                     pass
             else:
-            # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection (and for mistakes)
                 ratio = Fraction(durges_num, b_def)
-                # Immediate imperfection: prolatio should be 3
-                if prolatio == 3 and tempus == 2 and ratio == Fraction(5,6):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 3 and ratio == Fraction(5,9):
-                    note.addAttribute('quality', 'immediate imperfection (2)')
-                    nnote.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                elif prolatio == 3 and tempus == 3 and ratio == Fraction(8,9):
-                    note.addAttribute('quality', 'immediate imperfection')
-                    note.addAttribute('num', str(ratio.denominator))
-                    note.addAttribute('numbase', str(ratio.numerator))
-                # There is no 'Remote imperfection' in case of a 'breve'
-                # Note's value MISTAKE
-                else:
+                partial_imp = partial_imperfection(note, ratio, tempus, prolatio)
+                if not partial_imp:
                     print("This BREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
-                    pass
 
         # SEMIBREVIS
         elif dur == '1':
@@ -371,10 +321,8 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: prolatio")
                     pass
             else:
-            # Check for mistakes (there is no partial imperfection for a semibreve)
-                # Note's value MISTAKE
+                # Check for mistakes (there is no partial imperfection for a semibreve)
                 print("This SEMIBREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(Fraction(durges_num, sb_def).numerator) + "/" + str(Fraction(durges_num, sb_def).denominator) + " part of its normal value.")
-                pass
 
         # MINIMA
         elif dur == '2':
