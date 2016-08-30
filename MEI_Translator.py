@@ -97,6 +97,13 @@ def remove_CMNattributes(doc):
         if rest.hasAttribute('dots'):
             rest.removeAttribute('dots')
 
+def num(mensurationString):
+    strings_for_mensuration = ['p', 'i']
+    numbers_for_mensuration = ['3', '2']
+    mensurationNumber = numbers_for_mensuration[strings_for_mensuration.index(mensurationString)]
+    return mensurationNumber
+
+
 class MensuralMeiTranslatedDocument(MeiDocument):
 
     def __init__(self, input_doc, all_voices, ids_removeList, ars_type, mensuration_list):
@@ -116,16 +123,16 @@ class MensuralMeiTranslatedDocument(MeiDocument):
             for i in range(0, len(stavesDef)):
                 voice_staffDef = stavesDef[i]
                 voice_mensuration = mensuration_list[i]
-                voice_staffDef.addAttribute('modusmaior', voice_mensuration[0])
-                voice_staffDef.addAttribute('modusminor', voice_mensuration[1])
-                voice_staffDef.addAttribute('tempus', voice_mensuration[2])
-                voice_staffDef.addAttribute('prolatio', voice_mensuration[3])
+                voice_staffDef.addAttribute('modusmaior', num(voice_mensuration[0]))
+                voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
+                voice_staffDef.addAttribute('tempus', num(voice_mensuration[2]))
+                voice_staffDef.addAttribute('prolatio', num(voice_mensuration[3]))
         else:
             for i in range(0, len(stavesDef)):
                 voice_staffDef = stavesDef[i]
                 voice_mensuration = mensuration_list[i]
                 voice_staffDef.addAttribute('modusmaior', '2')
-                voice_staffDef.addAttribute('modusminor', voice_mensuration[1])
+                voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
                 voice_staffDef.addAttribute('tempus', voice_mensuration[0])
         out_scoreDef.addChild(out_staffGrp)
 
@@ -156,7 +163,8 @@ class MensuralMeiTranslatedDocument(MeiDocument):
 
                 arsnova.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
         else:
-            voice_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, input_doc)
+            breve = mensuration_list[0][0]
+            voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, input_doc, breve)
             staffDefs = self.output_doc.getElementsByName('staffDef')
             staves = self.output_doc.getElementsByName('staff')
             for i in range(0, len(staffDefs)):
@@ -176,14 +184,17 @@ class MensuralMeiTranslatedDocument(MeiDocument):
 
         remove_CMNattributes(self.output_doc)
 
+    def toFile(self, filename):
+        documentToFile(self.output_doc, filename)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('piece')
     parser.add_argument('which_ars', choices=['ArsNova', 'ArsAntiqua'], help="If you select 'ArsNova' you have to use the optional argument '-newVoiceN' to add the mensuration (values for: modusmajor, modusminor, tempus and prolatio) for each voice. If you choose 'ArsAntiqua' you have to use the optional argument '-newVoiceA' to add the mensuration (values for: breve and modusminor) for each voice.")
     parser.add_argument('--newvoice_nova', nargs=4, action='append', default=[]) # for now, just 4 values per voice are allowed
-    parser.add_argument('--newvoice_antiqua', nargs=2, action='append', default=[], choices=[['3', 'p'], ['3', 'i'], ['2', 'p'], ['2', 'i']]) # for now, you have to add each voice
+    parser.add_argument('--newvoice_antiqua', nargs=2, action='append', default=[]) # for now, you have to add each voice
     args = parser.parse_args()
     input_doc = documentFromFile(args.piece).getMeiDocument()
-    mensuralmei_doc = MensuralMeiTranslatedDocument(input_doc, separate_staves_per_voice(input_doc), merge_ties(input_doc), args.which_ars, args.newvoice_nova + args.newvoice_antiqua)
-    documentToFile(mensuralmei_doc, args.piece[:-4]+"_output.mei")
+    mensuralDoc = MensuralMeiTranslatedDocument(input_doc, separate_staves_per_voice(input_doc), merge_ties(input_doc), args.which_ars, args.newvoice_nova + args.newvoice_antiqua)
+    mensuralDoc.toFile(args.piece[:-4]+"_output.mei")
 

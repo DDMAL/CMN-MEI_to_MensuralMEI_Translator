@@ -301,7 +301,7 @@ def sb_major_minor(children_of_voiceStaff):
 
 
 
-def fill_section(out_section, all_voices, ids_removeList, input_doc):
+def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choice):
     # List of lists, each of them with all the elements of one voice
     voices_elements = []
     # Filling the section element:
