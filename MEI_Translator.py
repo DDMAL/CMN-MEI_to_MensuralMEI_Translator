@@ -224,6 +224,7 @@ if __name__ == "__main__":
             else:
                 pass
     # Case: the numer of voices entered by the user is smaller/larger than the number of voices in the piece
+    print(args.piece)
     input_doc = documentFromFile(args.piece).getMeiDocument()
     stavesDef = input_doc.getElementsByName('staffDef')
     if len(mensurationList) < len(stavesDef):
