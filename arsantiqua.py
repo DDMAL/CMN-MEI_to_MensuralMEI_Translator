@@ -1,18 +1,19 @@
-from pymei import *
+# Module arsantiqua
+#
+# Contains all the relevant functions for processing Ars Antiqua pieces written in CMN-MEI and translated to Mensural-MEI
+# Ars Antiqua is characterized by:
+# Doesn't have 'minims'
+# There is no 'prolatio'
+# The 'breve' can't be identified as 'perfect' or 'imperfect'. 
+# It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves, 
+# or it is equal to 2 equal duration semibreves.
+# The fact that the 'breve' can't be catalogued as 'perfect' or 'imperfect', implies that the 'semibreve' can't be 'altered.
+# It just can't be 'major' or 'minor'.
+# There are no 'maximas' just 'duplex longas'.
 from fractions import *
 
+from pymei import *
 
-# --------- #
-# FUNCTIONS #
-# --------- #
-
-# This is for ARS ANTIQUA, so:
-# NO MINIMS
-# NO PROLATIO
-# The BREVE CAN'T be PERFECT or IMPERFECT
-# It is just 3 MINOR SEMIBREVES LONG
-# The SEMIBREVE CAN'T be ALTERED
-# It is MAJOR or MINOR
 
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
@@ -136,7 +137,7 @@ def noterest_to_mensural(notes, rests, modusminor):
             mens_dur = "semibrevis"
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
-                durges_num = int(rest.getAttribute('dur.ges').value[:-1]) 
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 if durges_num != 1024:
                     print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 1024p\n")
         # Breve rest
@@ -298,7 +299,6 @@ def sb_major_minor(children_of_voiceStaff):
             else:
                 print("This shouldn't happen! \nThere is an odd number of semibreves between two perfect breves (or tuplets that are equivalent to a perfect breve), \nwhich doesn't allow to form minor-major (or major-minor) pairs of semibreves.")
                 print("You can find these breves between the " + str(start_element.name) + " with id " + str(start_element.id) + " and the " + str(end_element.name) + " with id " + str(end_element.id))
-
 
 
 def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choice):

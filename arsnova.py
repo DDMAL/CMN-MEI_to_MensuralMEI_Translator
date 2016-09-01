@@ -1,12 +1,11 @@
-from pymei import *
+# Module arsnova
+#
+# Contains all the relevant functions for processing Ars Nova pieces written in CMN-MEI and translated to Mensural-MEI
+# Ars Nova is characterized by: the use of minims and the presence of prolatio.
 from fractions import *
 
+from pymei import *
 
-# --------- #
-# FUNCTIONS #
-# --------- #
-
-# This is for ARS NOVA, which is characterized by the presence of MINIMS and the use of PROLATIO.
 
 # Identifies the relative values of the notes (its performed values) according to the mensuration
 def relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio):
@@ -20,6 +19,7 @@ def relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio):
     maxima_default_val = modusmaior * longa_default_val
 
     return [semibrevis_default_val, brevis_default_val, longa_default_val, maxima_default_val]
+
 
 # Returns the imperfect and perfect values of the notes
 def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio):
@@ -39,6 +39,7 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     maxima_imp = longa_default_val * 2
     maxima_perf = longa_default_val * 3
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
+
 
 # Partial Imperfection:
 def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
@@ -82,6 +83,7 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
         note.addAttribute('numbase', str(ratio.numerator))
 
     return partial_imperf
+
 
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
@@ -354,7 +356,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
             mens_dur = "semibrevis"
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
-                durges_num = int(rest.getAttribute('dur.ges').value[:-1]) 
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 if durges_num != sb_def:
                     print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(sb_def) + "p;")
                     print("i.e., instead of being " + str(prolatio) + " times a MINIM, it is " + str(float(durges_num * prolatio)/ sb_def) + " times a MINIM")
@@ -421,7 +423,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         rest.getAttribute('dur').setValue(mens_dur)
 
 
-# Filling the section element with the musical content of each voice        # PROPER
+# Filling the section element with the musical content of each voice
 def fill_section(out_section, all_voices, ids_removeList, input_doc):
     flag_triplet_minims = False
     for ind_voice in all_voices:

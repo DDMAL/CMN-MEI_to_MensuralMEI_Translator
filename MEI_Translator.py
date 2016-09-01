@@ -1,10 +1,25 @@
-from pymei import *
-import arsnova
-import arsantiqua
+"""
+MEI_Translator Module
+Translate a CMN-MEI document to a Mensural-MEI document.
+
+Functions:
+separate_staves_per_voice -- return a list of lists with all the <staff> elements for each voice.
+merge_ties -- Merge tied-notes into one and return the lists of <note> elements that shouldn't be included in the Mensural MEI file based on this.
+remove_non_mensural_attributes -- remove/replace attributes from <note> and <rest> that are not part of the Mensural-MEI schema.
+
+Classes:
+MensuralMeiTranslatedDocument -- Create the translated Mensural-MEI document.
+"""
 import argparse
 
+from pymei import *
+
+import arsnova
+import arsantiqua
+
+
 def separate_staves_per_voice(doc):
-    """Return a list of lists, each of which contains all the <staff> elements of a voice in the MeiDocument (doc)."""
+    """Return a list of lists, each of which contains all the <staff> elements of a voice in the pymei.MeiDocument object 'doc'."""
     num_voices = len(doc.getElementsByName('staffDef'))
     all_voices = []
     for i in range(0, num_voices):
@@ -18,12 +33,14 @@ def separate_staves_per_voice(doc):
 
     return all_voices
 
-def merge_ties(doc):
-    """Join into one the notes that are tied together in the MeiDocument (doc)
 
-    Set the @dur of the first note of the tied notes to the value 'TiedNote!'
-    And set its @dur.ges (perform3ed duration) to the sum of the performed duration of the individual notes that make up the tie
-    Return a list of the other notes that make up the tie (the ones after the first), which shouldn't be included in the output file"""
+def merge_ties(doc):
+    """Join into one the notes that are tied together in the pymei.MeiDocument object 'doc'.
+
+    Set the @dur of the first note of the tied notes to the value 'TiedNote!'.
+    And set its @dur.ges (perform3ed duration) to the sum of the performed duration of the individual notes that make up the tie.
+    Return a list of the other notes that make up the tie (the ones after the first), which shouldn't be included in the output file.
+    """
     ids_removeList = []
     ties_list = doc.getElementsByName('tie')
     for i in range (len(ties_list)-1, -1, -1):
@@ -54,8 +71,9 @@ def merge_ties(doc):
 
     return ids_removeList
 
-def remove_CMNattributes(doc):
-    # Remove/Replace extraneous attributes on the notes
+
+def remove_non_mensural_attributes(doc):
+    """Remove/Replace attributes inside <note> and <rest> elments on the pymei.MeiDocument object 'doc', that are not part of the Mensural-MEI schema."""
     notes = doc.getElementsByName('note')
     for note in notes:
         # Remove extraneous attributes in the <note> element
@@ -97,7 +115,9 @@ def remove_CMNattributes(doc):
         if rest.hasAttribute('dots'):
             rest.removeAttribute('dots')
 
+
 def num(mensurationString):
+    """Transform the characters 'p' and 'i' (mensurationString) to the values '3' and '2', respectively, and return the appropriate numeric value."""
     strings_for_mensuration = ['p', 'i']
     numbers_for_mensuration = ['3', '2']
     mensurationNumber = numbers_for_mensuration[strings_for_mensuration.index(mensurationString)]
@@ -105,8 +125,27 @@ def num(mensurationString):
 
 
 class MensuralMeiTranslatedDocument(MeiDocument):
+    """Translate a CMN-MEI document to Mensural-MEI.
 
-    def __init__(self, input_doc, all_voices, ids_removeList, ars_type, mensuration_list):
+    Variable: output_doc -- pymei.MeiDocument object that stores the translated (to mensural) MEI-document.
+    Methods: toFile -- create a file with the information of the MEI translated document output_doc.
+    """
+
+    def __init__(self, input_doc, ars_type, mensuration_list):
+        """Create the Mensural-MEI document that contains the translation of the input CMN-MEI document.
+
+        Keyword arguments:
+        input_doc -- a pymei.MeiDocument object that contains the CMN-MEI document intended to be translated to mensural
+        ars_type -- stringthat indicatesif the piece belongs to the Ars Nova or Ars Antiqua repertoire. It has two values: 'nova' or 'antiqua'
+        mensuration_list -- list in which each element is a list that encodes the mensuration for each voice. 
+        For Ars Nova each sublist has 4 elements (with values 'p' or 'i') that indicate the mensuration of the voice (in the order: modusmaior, modusminor, tempus and prolatio).
+        For Ars Antiqua each sublist has 2 elemnts (the first is '3' or '2' -indicating the division of the breve-, and the second is 'p' or 'i' -indicating the modusminor-).
+        """
+        # Getting necessary information from the input (CMN-MEI) file
+        all_voices = separate_staves_per_voice(input_doc)
+        ids_removeList = merge_ties(input_doc)
+
+        # Output (Mensural-MEI) file Part:
         self.output_doc = MeiDocument()
         self.output_doc.root = input_doc.getRootElement()
 
@@ -182,10 +221,16 @@ class MensuralMeiTranslatedDocument(MeiDocument):
                 else:
                     pass
 
-        remove_CMNattributes(self.output_doc)
+        remove_non_mensural_attributes(self.output_doc)
 
     def toFile(self, filename):
+        """Create a file with the information of the MEI translated document output_doc.
+
+        Keyword arguments:
+        filename -- string that gives the name of the file saving the translated (mensural) MEI document.
+        """
         documentToFile(self.output_doc, filename)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -235,6 +280,6 @@ if __name__ == "__main__":
         pass
 
     # Translation step: use of the MensuralMeiTranslatedDocument class
-    mensuralDoc = MensuralMeiTranslatedDocument(input_doc, separate_staves_per_voice(input_doc), merge_ties(input_doc), args.ars, mensurationList)
+    mensuralDoc = MensuralMeiTranslatedDocument(input_doc, args.ars, mensurationList)
     mensuralDoc.toFile(args.piece[:-4]+"_output.mei")
 
