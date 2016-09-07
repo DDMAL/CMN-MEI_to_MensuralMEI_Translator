@@ -1,15 +1,22 @@
-# Module arsantiqua
-#
-# Contains all the relevant functions for processing Ars Antiqua pieces written in CMN-MEI and translated to Mensural-MEI
-# Ars Antiqua is characterized by:
-# Doesn't have 'minims'
-# There is no 'prolatio'
-# The 'breve' can't be identified as 'perfect' or 'imperfect'. 
-# It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves, 
-# or it is equal to 2 equal duration semibreves.
-# The fact that the 'breve' can't be catalogued as 'perfect' or 'imperfect', implies that the 'semibreve' can't be 'altered.
-# It just can't be 'major' or 'minor'.
-# There are no 'maximas' just 'duplex longas'.
+"""
+arsantiqua module
+
+Contains all the relevant functions for translating Ars Antiqua pieces written in CMN-MEI to Mensural-MEI
+
+Functions:
+noterest_to_mensural -- Perform the actual change, in notes and rests, from contemporary to mensural notation
+sb_major_minor -- Identify 'major semibreves' by adding @num, @numbase and @quality attributes to the note-element
+fill_section -- Fill the output <section> element with the appropriate musical content
+"""
+# Ars Antiqua is characterized by the following:
+# 1. Absence of 'minims' 
+# 2. Absence of 'prolatio'
+# 3. The 'breve' can't be identified as 'perfect' or 'imperfect'. 
+#    It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves, 
+#    or it is equal to 2 equal duration semibreves.
+# 4. The fact that the 'breve' can't be catalogued as 'perfect' or 'imperfect', implies that the 'semibreve' can't be 'altered.
+#    It just can't be 'major' or 'minor'.
+# 5. There are no 'maximas' just 'duplex longas'
 from fractions import *
 
 from pymei import *
@@ -19,7 +26,14 @@ from pymei import *
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
 def noterest_to_mensural(notes, rests, modusminor):
+    """
+    Change the @dur attribute within the <note> and <rest> elements to a mensural-value; and add @num, @numbase and @quality attributes when appropriate.
 
+    Arguments:
+    notes -- list of all the <note> elements from a particular voice
+    rests -- list of all the <rest> elements from a particular voice
+    modusminor -- integer value of the modusminor from a particular voice
+    """
     # Default values for notes according to the mensuration
     b_def = 2048
     
@@ -200,8 +214,14 @@ def noterest_to_mensural(notes, rests, modusminor):
         rest.getAttribute('dur').setValue(mens_dur)
 
 
-# Finds and indicates which Semibreves are Major, completing the encoding of the "Note's Actual Duration" part
+# Finds and indicates which Semibreves are Major, completing the encoding of the "Note's Actual Duration" part.
 def sb_major_minor(children_of_voiceStaff):
+    """
+    Add @quality, @num and @numbase attributes to indicate a 'major semibreve' (as opposed to a 'minor semibreve').
+
+    Arguments:
+    children_of_voiceStaff -- list of all the MeiElement objects contained in the <staff> element of a single voice, this includes: <tuplet>, <note> and <rest> elements.
+    """
     indices_BrevesOrTuplets = [-1]
     for element in children_of_voiceStaff:
         if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa' or element.getAttribute('dur').value == 'maxima')):
@@ -302,6 +322,19 @@ def sb_major_minor(children_of_voiceStaff):
 
 
 def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choice):
+    """
+    Fill the <section> element of the Mensural-MEI document with the appropriate musical content.
+
+    This function calls the other two functions (noterest_to_mensural and sb_major_minor) to fill the <section> element with the right note (and rest) values.
+    The appropriate musical content for the <section> in a Mensural-MEI document includes <note> and <rest> elements, but not <tuplet> or <tie> elements.
+
+    Arguments:
+    out_section -- the <section> element to be filled in
+    all_voices -- list of lists, each sublist represents a particular voice in the CMN-MEI document and contains all the <staff> elements from that voice
+    ids_removeList -- list of <note> elements that shouldn't be included in the Mensural-MEI output document (generally notes that are part of a tie)
+    input_doc -- the pymei.MeiDocument that has all the CMN-MEI file information
+    breve_choice -- string that indicates the division of the breve: '3' or '2'
+    """
     # List of lists, each of them with all the elements of one voice
     voices_elements = []
     # Filling the section element:

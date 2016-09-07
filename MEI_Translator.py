@@ -3,23 +3,27 @@ MEI_Translator Module
 Translate a CMN-MEI document to a Mensural-MEI document.
 
 Functions:
-separate_staves_per_voice -- return a list of lists with all the <staff> elements for each voice.
+separate_staves_per_voice -- Return a list of lists, each sublist contains all the <staff> elements for a particular voice.
 merge_ties -- Merge tied-notes into one and return the lists of <note> elements that shouldn't be included in the Mensural MEI file based on this.
-remove_non_mensural_attributes -- remove/replace attributes from <note> and <rest> that are not part of the Mensural-MEI schema.
+remove_non_mensural_attributes -- Remove/Replace attributes from <note> and <rest> that are not part of the Mensural-MEI schema.
 
 Classes:
-MensuralMeiTranslatedDocument -- Create the translated Mensural-MEI document.
+MensuralTranslation -- Create the translated Mensural-MEI document.
 """
 import argparse
 
-from pymei import *
+from pymei import documentFromFile, documentToFile, MeiDocument, MeiElement
 
 import arsnova
 import arsantiqua
 
 
 def separate_staves_per_voice(doc):
-    """Return a list of lists, each of which contains all the <staff> elements of a voice in the pymei.MeiDocument object 'doc'."""
+    """Return a list of lists, each of which contains all the <staff> elements of a voice in the pymei.MeiDocument object.
+
+    Arguments:
+    doc -- the pymei.MeiDocument object to be translated to Mensural-MEI
+    """
     num_voices = len(doc.getElementsByName('staffDef'))
     all_voices = []
     for i in range(0, num_voices):
@@ -35,11 +39,14 @@ def separate_staves_per_voice(doc):
 
 
 def merge_ties(doc):
-    """Join into one the notes that are tied together in the pymei.MeiDocument object 'doc'.
+    """Join into one the notes that are tied together in the pymei.MeiDocument object.
 
     Set the @dur of the first note of the tied notes to the value 'TiedNote!'.
     And set its @dur.ges (perform3ed duration) to the sum of the performed duration of the individual notes that make up the tie.
     Return a list of the other notes that make up the tie (the ones after the first), which shouldn't be included in the output file.
+    
+    Arguments:
+    doc -- the pymei.MeiDocument object to be translated to Mensural-MEI
     """
     ids_removeList = []
     ties_list = doc.getElementsByName('tie')
@@ -73,7 +80,11 @@ def merge_ties(doc):
 
 
 def remove_non_mensural_attributes(doc):
-    """Remove/Replace attributes inside <note> and <rest> elments on the pymei.MeiDocument object 'doc', that are not part of the Mensural-MEI schema."""
+    """Remove/Replace attributes inside <note> and <rest> elments on the pymei.MeiDocument object, that are not part of the Mensural-MEI schema.
+
+    Arguments:
+    doc -- the pymei.MeiDocument object to be translated to Mensural-MEI
+    """
     notes = doc.getElementsByName('note')
     for note in notes:
         # Remove extraneous attributes in the <note> element
@@ -117,44 +128,52 @@ def remove_non_mensural_attributes(doc):
 
 
 def num(mensurationString):
-    """Transform the characters 'p' and 'i' (mensurationString) to the values '3' and '2', respectively, and return the appropriate numeric value."""
+    """Transform the characters 'p' and 'i' to the values '3' and '2', respectively, and return the appropriate numeric value.
+
+    Arguments:
+    mensurationString -- one-character string with two possible values: 'i' or 'p'
+    """
     strings_for_mensuration = ['p', 'i']
     numbers_for_mensuration = ['3', '2']
     mensurationNumber = numbers_for_mensuration[strings_for_mensuration.index(mensurationString)]
     return mensurationNumber
 
 
-class MensuralMeiTranslatedDocument(MeiDocument):
-    """Translate a CMN-MEI document to Mensural-MEI.
+class MensuralTranslation(MeiDocument):
+    """Translate a CMN-MEI document to a Mensural-MEI document.
 
-    Variable: output_doc -- pymei.MeiDocument object that stores the translated (to mensural) MEI-document.
-    Methods: toFile -- create a file with the information of the MEI translated document output_doc.
+    MensuralTranslation is a subclass of MeiDocument. It inherits all its methods, without any modification to any of them. 
+    The constructor is the only extended method, as not only the MeiDocument which would contain the Mensural-translation is created here, but also the translation process itself is done here. 
+    And there is only one additional method (getModifiedNotes) to deal with the peculiarities of mensural notation.
+    
+    Methods:
+    getModifiedNotes -- gets a list of notes which value has been modified from the original (the default value given by the mensuration)
     """
 
-    def __init__(self, input_doc, ars_type, mensuration_list):
-        """Create the Mensural-MEI document that contains the translation of the input CMN-MEI document.
+    def __init__(self, cmn_meidoc, ars_type, mensuration_list):
+        """Create the Mensural-MEI document that contains the translation of the CMN-MEI document.
 
-        Keyword arguments:
-        input_doc -- a pymei.MeiDocument object that contains the CMN-MEI document intended to be translated to mensural
-        ars_type -- stringthat indicatesif the piece belongs to the Ars Nova or Ars Antiqua repertoire. It has two values: 'nova' or 'antiqua'
-        mensuration_list -- list in which each element is a list that encodes the mensuration for each voice. 
+        Arguments:
+        cmn_meidoc -- the pymei.MeiDocument object that contains the CMN-MEI document intended to be translated to Mensural-MEI
+        ars_type -- string that indicates if the piece belongs to the Ars Nova or the Ars Antiqua repertoire. It has two values: 'nova' or 'antiqua'
+        mensuration_list -- list in which each element is a list that encodes the mensuration for each voice.
         For Ars Nova each sublist has 4 elements (with values 'p' or 'i') that indicate the mensuration of the voice (in the order: modusmaior, modusminor, tempus and prolatio).
         For Ars Antiqua each sublist has 2 elemnts (the first is '3' or '2' -indicating the division of the breve-, and the second is 'p' or 'i' -indicating the modusminor-).
         """
         # Getting necessary information from the input (CMN-MEI) file
-        all_voices = separate_staves_per_voice(input_doc)
-        ids_removeList = merge_ties(input_doc)
+        all_voices = separate_staves_per_voice(cmn_meidoc)
+        ids_removeList = merge_ties(cmn_meidoc)
 
         # Output (Mensural-MEI) file Part:
-        self.output_doc = MeiDocument()
-        self.output_doc.root = input_doc.getRootElement()
+        MeiDocument.__init__(self)
+        self.root = cmn_meidoc.getRootElement()
 
         # ScoreDef Part of the <score> element:
         out_scoreDef = MeiElement('scoreDef')
         # Make it share the id (@xml:id) it has in the input file
-        out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
+        out_scoreDef.id = cmn_meidoc.getElementsByName('scoreDef')[0].id
         # Add as its child the <staffGrp> element, with all the <staffDef> elements and the right mensuration (@modusmaior, @modusminor, @tempus and @prolatio) for each one
-        out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]
+        out_staffGrp = cmn_meidoc.getElementsByName('staffGrp')[-1]
         # The [-1] guarantees that the <staffGrp> element taken is the one which contains the <staffDef> elements (previous versions of the plugin stored a <staffGrp> element inside another <staffGrp>)
         stavesDef = out_staffGrp.getChildren()
         # Mensuration added to the staves definition <staffDef>
@@ -177,19 +196,19 @@ class MensuralMeiTranslatedDocument(MeiDocument):
 
         # Section Part of the <score> element:
         out_section = MeiElement('section')
-        out_section.id = input_doc.getElementsByName('section')[0].id
+        out_section.id = cmn_meidoc.getElementsByName('section')[0].id
 
         # Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up
-        score = self.output_doc.getElementsByName('score')[0]
+        score = self.getElementsByName('score')[0]
         score.deleteAllChildren()
         score.addChild(out_scoreDef)
         score.addChild(out_section)
 
         # Fill the section element with the information of each voice (contained in all_voices)
         if ars_type == "nova":
-            tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, input_doc)
-            staffDefs = self.output_doc.getElementsByName('staffDef')
-            staves = self.output_doc.getElementsByName('staff')
+            tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc)
+            staffDefs = self.getElementsByName('staffDef')
+            staves = self.getElementsByName('staff')
             for i in range(0, len(staffDefs)):
                 staffDef = staffDefs[i]
                 modusmaior = int(staffDef.getAttribute('modusmaior').value)
@@ -203,9 +222,9 @@ class MensuralMeiTranslatedDocument(MeiDocument):
                 arsnova.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
         else:
             breve = mensuration_list[0][0]
-            voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, input_doc, breve)
-            staffDefs = self.output_doc.getElementsByName('staffDef')
-            staves = self.output_doc.getElementsByName('staff')
+            voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, breve)
+            staffDefs = self.getElementsByName('staffDef')
+            staves = self.getElementsByName('staff')
             for i in range(0, len(staffDefs)):
                 staffDef = staffDefs[i]
                 modusminor = int(staffDef.getAttribute('modusminor').value)
@@ -221,15 +240,41 @@ class MensuralMeiTranslatedDocument(MeiDocument):
                 else:
                     pass
 
-        remove_non_mensural_attributes(self.output_doc)
+        remove_non_mensural_attributes(self)
 
-    def toFile(self, filename):
-        """Create a file with the information of the MEI translated document output_doc.
+    def getModifiedNotes(self, modification_type=None):
+        """Return a list of tuplets that indicate the note and the modification it has experienced from its default value.
 
-        Keyword arguments:
-        filename -- string that gives the name of the file saving the translated (mensural) MEI document.
+        Arguments:
+        modification_type -- string with 5 possible values: 'alteration', 'imperfection', 'perfection', 'partial imperfection', 'major semibreve'. (Default value: None)
+
+        Return:
+        List of tuplets. 
+        First element of the tuplet indicates a note that has been modified from its default value (the value given by the mensuration).
+        Second element indicates the modification that note has experienced ('i' for imperfection, 'a' for alteration, 'p' for perfection, etc).
         """
-        documentToFile(self.output_doc, filename)
+        if modification_type is None:
+            modifications_list = ['i', 'a', 'p', 'major', 'immediate_imp', 'remote_imp', 'imperfection + immediate_imp', 'imperfection + remote_imp']
+        elif modification_type == "alteration":
+            modifications_list = ['a']
+        elif modification_type == "imperfection":
+            modifications_list = ['i']
+        elif modification_type == "perfection":
+            modifications_list = ['p']
+        elif modification_type == "partial imperfection":
+            modifications_list = ['immediate_imp', 'remote_imp', 'imperfection + immediate_imp', 'imperfection + remote_imp']
+        elif modification_type == "major semibreve":
+            modifications_list = ['major']
+        else:
+            return "Invalid argument. The argument modification_type can only have the following 5 values: 'alteration', 'imperfection', 'perfection', 'partial imperfection' and 'major semibreve'; or no-arguments at all."
+        
+        notes = self.getElementsByName('note')
+        all_modified_notes = []
+        for note in notes:
+            if note.hasAttribute("quality") and (note.getAttribute("quality").value in modifications_list):
+                all_modified_notes.append((note, note.getAttribute("quality")))
+
+        return all_modified_notes
 
 
 if __name__ == "__main__":
@@ -280,6 +325,6 @@ if __name__ == "__main__":
         pass
 
     # Translation step: use of the MensuralMeiTranslatedDocument class
-    mensuralDoc = MensuralMeiTranslatedDocument(input_doc, args.ars, mensurationList)
-    mensuralDoc.toFile(args.piece[:-4]+"_output.mei")
+    mensural_meidoc = MensuralTranslation(input_doc, args.ars, mensurationList)
+    documentToFile(mensural_meidoc, args.piece[:-4] + "_output.mei")
 

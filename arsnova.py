@@ -1,14 +1,34 @@
-# Module arsnova
-#
-# Contains all the relevant functions for processing Ars Nova pieces written in CMN-MEI and translated to Mensural-MEI
-# Ars Nova is characterized by: the use of minims and the presence of prolatio.
+"""
+arsnova module
+
+Contains all the relevant functions for translating Ars Nova pieces written in CMN-MEI to Mensural-MEI
+
+Functions:
+relative_vals -- Return a list of the default performed duration of the different notes
+imp_perf_vals -- Return a list of the default / imperfect / perfect performed duration of the different notes
+partial_imperfection -- Identify when a note experimented a partial imperfection and return True/False
+noterest_to_mensural -- Perform the actual change, in notes and rests, from contemporary to mensural notation
+fill_section -- Fill the output <section> element with the appropriate musical content
+"""
+# Ars Nova is characterized by: 
+# 1. Presence of 'minims' 
+# 2. Presence of 'prolatio'
 from fractions import *
 
 from pymei import *
 
 
-# Identifies the relative values of the notes (its performed values) according to the mensuration
 def relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio):
+    """
+    Return a list of the (default) performed duration of the notes on one voice according to the mensuration of the voice and the presence/absence of triplet of minims.
+
+    Arguments:
+    modusmaior, modusminor, tempus, prolatio -- integer values (3 or 2) that give the mensuration of the voice
+    triplet_of_minims -- boolean flag that indicates the presence of a 'triplet of minims' in the piece (all voices)
+
+    Return value:
+    List of the default performed duration of the notes in the following order: semibreve, breve, long and maxima.
+    """
     if triplet_of_minims:
         semibrevis_default_val = 1024
     else:
@@ -21,8 +41,17 @@ def relative_vals(triplet_of_minims, modusmaior, modusminor, tempus, prolatio):
     return [semibrevis_default_val, brevis_default_val, longa_default_val, maxima_default_val]
 
 
-# Returns the imperfect and perfect values of the notes
 def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio):
+    """
+    Return a list of lists with the performed duration of each note in its different states (default / imperfect / perfect).
+
+    Arguments:
+    modusmaior, modusminor, tempus, prolatio -- integer values (3 or 2) that give the mensuration of the voice
+    triplet_of_minims -- boolean flag that indicates the presence of a 'triplet of minims' in the piece (all voices)
+
+    Return value:
+    List of four, 3-element, sublists. Each sublist belongs to one note type (semibrevis, brevis, longa and maxima), and indicates the performed duration of the particular note in 3 states: default, imperfect and perfect.
+    """
     semibrevis_default_val, brevis_default_val, longa_default_val, maxima_default_val = relative_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio)
     if prolatio == 2:
         semibrevis_imp = semibrevis_default_val
@@ -41,8 +70,19 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
 
 
-# Partial Imperfection:
 def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
+    """Identify when a note experimented a partial imperfection and return True in that case, otherwise return False.
+
+    When a note experimented a partial imperfection, besides returning True, this function adds the appropriate @quality, @num and @numbase attributes.
+
+    Arguments:
+    note -- A <note> element in a particular voice on the mei document
+    ratio -- The ratio between the actual performed duration of the <note> and its default performed duration
+    modusminor, tempus, prolatio -- Integer values (3 or 2) that give the mensuration of the voice. The last argument is optional (default None).
+    When the note is a 'longa' these exact arguments are used: modusminor, tempus and prolatio. 
+    When the note is a 'maxima', these arguments stand for: modusmaior, modusminor and tempus, respectively.
+    When the note is a breve, these arguments stand for: tempus, prolatio and None (the last argument is left blank).
+    """
     # From the beginning, we assume there is a partial imperfection.
     # But if none of the 'partial imperfection' conditions are satisfied, the partial_imperf flag would change to False.
     partial_imperf = True
@@ -89,6 +129,15 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
 def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio, triplet_of_minims_flag):
+    """
+    Change the @dur attribute within the <note> and <rest> elements to a mensural-value; and add @num, @numbase and @quality attributes when appropriate.
+
+    Arguments:
+    notes -- list of all the <note> elements from a particular voice
+    rests -- list of all the <rest> elements from a particular voice
+    modusmaior, modusminor, tempus, prolatio -- integer values (3 or 2) that give the mensuration of the voice
+    triplet_of_minims -- boolean flag that indicates the presence of a 'triplet of minims' in the piece (all voices)
+    """
     list_values = imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio)
     sb_def, sb_imp, sb_perf = list_values[0]
     b_def, b_imp, b_perf = list_values[1]
@@ -423,8 +472,19 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         rest.getAttribute('dur').setValue(mens_dur)
 
 
-# Filling the section element with the musical content of each voice
 def fill_section(out_section, all_voices, ids_removeList, input_doc):
+    """
+    Fill the <section> element of the Mensural-MEI document with the appropriate musical content.
+
+    This function calls the noterest_to_mensural function to fill the <section> element with the right note (and rest) values.
+    The appropriate musical content for the <section> in a Mensural-MEI document includes <note> and <rest> elements, but not <tuplet> or <tie> elements.
+
+    Arguments:
+    out_section -- the <section> element to be filled in
+    all_voices -- list of lists, each sublist represents a particular voice in the CMN-MEI document and contains all the <staff> elements from that voice
+    ids_removeList -- list of <note> elements that shouldn't be included in the Mensural-MEI output document (generally notes that are part of a tie)
+    input_doc -- the pymei.MeiDocument that has all the CMN-MEI file information
+    """
     flag_triplet_minims = False
     for ind_voice in all_voices:
         # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
