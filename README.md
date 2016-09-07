@@ -20,20 +20,54 @@ The parameters to run the script depend on the musical style of the piece intend
  
 The other parameters indicate the mensuration for each of the voices in the piece. There are two flags to enter the mensuration information for each voice: -NewVoiceN and -NewVoiceA. The -NewVoiceN flag is use exclusively for Ars Nova pieces (musical style = "nova"); while the -NewVoiceA flag is use only for Ars Antiqua pieces (musical style = "antiqua").
 
-New voice flag in Ars Nova: '-NewVoiceN'
+**New voice flag in Ars Nova: '-NewVoiceN'**
+
 Use this flag for each new voice (in Ars Nova) that you are entering. After the flag, use the characters 'p' or 'i' to indicate the mensuration of one voice in the order: modusmajor, modusminor, tempus and prolatio.
 
-Example:
+**Example:**  
 
 _`-NewVoiceN i p i p`_ 
+
 Indicates a voice with imperfect modusmajor and tempus, and perfect modusminor and prolatio.
 
+**New voice flag in Ars Antiqua: '-NewVoiceA'**
 
+Use this flag for each new voice (in Ars Antiqua) that you are entering. After the flag, use the characters '2' or '3' to indicate the 'division of the breve', which can be duple or triple, and then use the characters 'p' or 'i' to indicte the 'modusminor'.
 
-For Ars Nova, the instruction is:
+**Example:**  
 
-`$ python MEI_Translator.py <piece> nova -NewVoiceN modusmaior modusminor tempus prolatio -NewVoiceN modusmaior modusminor tempus prolatio`
+_`-NewVoiceA 3 i`_ 
 
-For Ars Antiqua, the instruction is:
+Indicates a voice with 3 minor semibreves per breve (triple division) and imperfect modusminor.
 
-$ python MEI_Translator.py \<piece\> antiqua -NewVoiceA breve_division
+The order in which you enter the mensuration of the voices using the new voice flags (-NewVoiceN or -NewVoiceA) should be the same as the order of the voices in the CMN MEI file (or the Sibelius file).
+
+**Examples:**
+
+1. _`-NewVoiceN i i p p -NewVoice i p i p -NewVoiceN p i i i`_
+
+Ars Nova 3-voice piece with different mensurations for each voice.
+
+2. _`-NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p`_
+
+Ars Antiqua 4-voice piece with the same mensuration for all its voices (duple divison of the breve and perfect modusminor).
+
+### Examples:
+
+Here there are two pieces, one for ars nova and one for ars antiqua, on which the translator can be run through. This pieces are included in this repository, on the TestFiles directory, so at the moment of downloading the whole repository you will be able to actually run any of the following examples.
+
+Ars Nova piece: Zodiacum from the IvTrem
+
+`$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p`
+
+Ars Antiqua piece: Sicut from the Fauvel
+
+`$ python MEI_Translator.py TestFiles/Fauv/sicut.mei antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p`
+
+You can also go to the TestFiles directory and run:
+`$ python processing.py`
+
+This script will run all the instructions contained in the IvTremPieces.txt and/or FauvPieces.txt files, which will run the MEI_Translator over all the pieces in the IvTrem and/or Fauv directories, respectively.
+
+## Using the module
+The MEI_Translator can be run as a script, but it is a module, and you can take advantage of this functionality.
