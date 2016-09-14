@@ -341,11 +341,15 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
     for ind_voice in all_voices:
         # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
         staff = MeiElement('staff')
-        staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
+        old_staff = input_doc.getElementsByName('staff')[all_voices.index(ind_voice)]
+        staff.setId(old_staff.id)
+        staff.addAttribute(old_staff.getAttribute('n'))
         out_section.addChild(staff)
         # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
         layer = MeiElement('layer')
-        layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
+        old_layer = input_doc.getElementsByName('layer')[all_voices.index(ind_voice)]
+        layer.setId(old_layer.id)
+        layer.addAttribute(old_layer.getAttribute('n'))
         staff.addChild(layer)
         # Ordered list of all the elements of one voice (<note>, <rest> and <tuplet>), useful for identifying the 'Major Semibreves' of the voice
         elements_per_voice = []

@@ -326,5 +326,5 @@ if __name__ == "__main__":
 
     # Translation step: use of the MensuralMeiTranslatedDocument class
     mensural_meidoc = MensuralTranslation(input_doc, args.ars, mensurationList)
-    documentToFile(mensural_meidoc, args.piece[:-4] + "_output.mei")
+    documentToFile(mensural_meidoc, args.piece[:-4] + "_MENSURAL.mei")
 
