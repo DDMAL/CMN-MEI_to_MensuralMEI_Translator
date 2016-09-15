@@ -22,117 +22,130 @@ Parameters are set according to a composition's musical style. The two parameter
  
 Other parameters indicate the mensuration for each of the voices in a composition. USe the following two flags to enter the mensuration definition for each voice: ```-NewVoiceN``` and ```-NewVoiceA```. The ```-NewVoiceN``` flag is used exclusively for _Ars nova_ pieces (musical style = "nova"), while the ```-NewVoiceA``` flag is use only for _Ars antiqua_ pieces (musical style = "antiqua").
 
-**New voice flag in Ars Nova: '-NewVoiceN'**
+#### New voice flag in _Ars nova_: ```-NewVoiceN```
 
-Use this flag for each new voice (in Ars Nova) that you are entering. After the flag, use the characters 'p' or 'i' to indicate the mensuration of one voice in the order: modusmajor, modusminor, tempus and prolatio.
+Use this flag for each new voice (_Ars nova_) that you are entering. After the flag, use the characters ```p``` or ```i``` to indicate the mensuration of one voice in the order: _modus major_, _modus minor_, _tempus_ and _prolatio_.
 
-**Example:**  _`-NewVoiceN i p i p`_ 
+##### Example:
 
- Indicates a voice with imperfect modusmajor and tempus, and perfect modusminor and prolatio.
+> ``` -NewVoiceN i p i p``` indicates a voice with _imperfect modus major_ and _tempus_, and _perfect modus minor_ and _prolatio_.
 
-**New voice flag in Ars Antiqua: '-NewVoiceA'**
+#### New voice flag in Ars Antiqua: ```-NewVoiceA```
 
-Use this flag for each new voice (in Ars Antiqua) that you are entering. After the flag, use the characters '2' or '3' to indicate the 'division of the breve', which can be duple or triple, and then use the characters 'p' or 'i' to indicte the 'modusminor'.
+Use this flag for each new voice (_Ars antiqua_) that you are entering. After the flag, use the characters ```2``` or ```3``` to indicate the _division of the breve_, which can be _duple_ or _triple_, and then use the characters ```p``` or ```i``` to indicte the _modus minor_.
 
-**Example:**  _`-NewVoiceA 3 i`_ 
+##### Example: 
 
- Indicates a voice with 3 minor semibreves per breve (triple division) and imperfect modusminor.
+> ```-NewVoiceA 3 i``` indicates a voice with 3 minor semibreves per breve (triple division) and _imperfect modus minor_.
 
-The order in which you enter the mensuration of the voices using the new voice flags (-NewVoiceN or -NewVoiceA) should be the same as the order of the voices in the CMN MEI file (or the Sibelius file).
+The order in which you enter the mensuration of the voices using the new voice flags (```-NewVoiceN``` or ```-NewVoiceA```) should be the same as the order of the voices in the CMN MEI file (or the Sibelius file).
 
-**Examples with more than one voice:**
+##### Examples with more than one voice:
 
-- _`-NewVoiceN i i p p -NewVoice i p i p -NewVoiceN p i i i`_
+> ```-NewVoiceN i i p p -NewVoice i p i p -NewVoiceN p i i i``` is used for an _Ars nova_ 3-voice piece with different mensurations for each voice.
 
- Ars Nova 3-voice piece with different mensurations for each voice.
+> ```-NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p``` is used for and _Ars antiqua_ 4-voice piece with the same mensuration for all its voices (duple divison of the breve and _perfect modus minor_).
 
-- _`-NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p`_
+### Examples of running scripts from the command line
 
- Ars Antiqua 4-voice piece with the same mensuration for all its voices (duple divison of the breve and perfect modusminor).
+Here are two pieces, one for _Ars nova_ and one for _Ars antiqua_. The composition are included in this repository (_TestFiles_ directory).
 
-### Examples:
+_Ars nova_ piece: _Zodiacum_ from the IvTrem
+> ```$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p```
 
-Here there are two pieces, one for ars nova and one for ars antiqua, on which the translator can be run through. This pieces are included in this repository, on the TestFiles directory, so at the moment of downloading the whole repository you will be able to actually run any of the following examples.
+_Ars antiqua_ piece: _Sicut_ from the Fauvel
+> ```$ python MEI_Translator.py TestFiles/Fauv/sicut.mei antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p```
 
-Ars Nova piece: Zodiacum from the IvTrem
+You can also go to the ```TestFiles``` directory and run:
+> ```$ python processing.py```
 
-`$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p`
-
-Ars Antiqua piece: Sicut from the Fauvel
-
-`$ python MEI_Translator.py TestFiles/Fauv/sicut.mei antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p`
-
-You can also go to the TestFiles directory and run:
-`$ python processing.py`
-
-This script will run all the instructions contained in the IvTremPieces.txt and/or FauvPieces.txt files, which will run the MEI_Translator over all the pieces in the IvTrem and/or Fauv directories, respectively.
+The script above script runs all the instructions contained in the ```IvTremPieces.txt``` and/or ```FauvPieces.txt``` files, and runs the MEI\_Translator over all the pieces in the ```IvTrem``` and/or ```Fauv``` directories, respectively.
 
 ## Using the module
-As we saw in the previous section, the MEI\_Translator can be run as a script. But the MEI\_Translator is a module, and it also can be used in this way.
+As we saw in the previous section how to run the MEI\_Translator as a script. But the MEI\_Translator can also be used as a module.
 
-Here are the steps to follow in order to use the MEI\_Translator as a module, to illustrate each step we are using as input file for the MEI Translator the piece _bona.mei_ from the IvTrem. To obtain the Mensural MEI file for this piece directly, you could also run the MEI\_Translator as a script with the following instruction: `python MEI_Translator.py TestFiles/IvTrem/bona.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i i i p`.
+Here are the steps to follow in order to use the MEI\_Translator as a module. To illustrate each step we are using ```bona.mei``` from the ```IvTrem``` as an input file.<sup>[2](#two)<sup>
 
-1) On your python shell, import the pymei module and convert your piece into an pymei.MeiDocument object
+1) On your python shell, import the ```pymei``` module and convert your piece into a ```pymei.MeiDocument``` object:
 
-`import pymei`
+```
+import pymei
 
-`cmn\_meidoc = pymei.documentFromFile("TestFiles/IvTrem/bona.mei").getMeiDocument()`
+cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/bona.mei").getMeiDocument()
+```
 
-2) Import the MEI_Translator module and create a MensuralTranslation object, which will inherit all the methods from the pymei.MeiDocument class
+2) Import the ```MEI_Translator``` module and create a ```MensuralTranslation``` object, which will inherit all the methods from the ```pymei.MeiDocument``` class:
 
-`from MEI_Translator import MensuralTranslation`
+```
+from MEI_Translator import MensuralTranslation`
 
-`mensural\_meidoc = MensuralTranslation(cmn\_meidoc, "nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "i", "i", "p"]])`
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "i", "i", "p"]])
+```
 
-Now you will be able to use all the pymei.MeiDocument methods (_getElementsByName_, _getElementById_, etc.) and a new method included in the MensuralTranslation class (_getModifiedNotes_) to be able to access elements in the file and edit them before you call the function _documentToFile_ to create the file containing the Mensural MEI document.
+Now you will be able to use all the ```pymei.MeiDocument``` methods (```getElementsByName```, ```getElementById```, etc.) and the ```MensuralTranslation``` class (```getModifiedNotes```) to be able to access elements in the file and edit them before you call the function ```documentToFile``` to create the file containing the Mensural MEI document.
 
-### MeiDocument inherited methods:
+### ```MeiDocument``` inherited methods:
 
-We can use the inherited methods from pymei.MeiDocument to check that certain _MEI elements_ were actually removed in the translation process, like 'tie' and 'mRest' elements. Mensural notation doesn't use ties and, as it doesn't have measures, the Mensural-MEI module doesn't recognize 'mRest' elements (measure rests). So we can check if the 'tie' elements present in the CMN MEI document are still present in the Mensural MEI document by doing:
+We can use the inherited methods from ```pymei.MeiDocument``` to check that _MEI elements_ were actually removed in the translation process, like the ```tie``` and ```mRest``` elements. Since mensural notation does not use ties nor have measures, the Mensural-MEI module doesn't recognize ```mRest``` elements (measure rests). We can check if the ```tie``` elements present in the CMN-MEI document are still present in the Mensural MEI document by using:
 
-`cmn_meidoc.getElementsByName('tie')`
+```
+cmn_meidoc.getElementsByName('tie')
 
-`mensural\_meidoc.getElementsByName('tie')`
+mensural_meidoc.getElementsByName('tie')
+```
 
-As you notice, the second instruction returns a blank list. Same thing will happen with the 'mRest' elements. Actually, the script converts all 'mRest' elements into simple 'rest' elements. You can actually verify if this was done by writing the following instruction (it should return _True_):
+The second method returns a blank list with either the ```tie``` and ```mRest``` elements provided as argumetns. The script converts all ```mRest``` elements into simple ```rest``` elements. You can actually verify the outcome by using the following code (which should return ```True```):
 
-`len(cmn\_meidoc.getElementsByName('rest')) + len(cmn\_meidoc.getElementsByName('mRest')) == len(mensural_meidoc.getElementsByName('rest'))`
+```
+len(cmn\_meidoc.getElementsByName('rest')) + len(cmn\_meidoc.getElementsByName('mRest')) == len(mensural_meidoc.getElementsByName('rest'))
+```
 
 ### Additional methods:
 
-The additional method _getModifiedNotes()_ returns a list of notes that have been modified from its default value (the value given by the mensuration); i.e., it returns a list of notes that have experienced _"imperfection"_, _"alteration"_, _"perfection"_, _"partial imperfection"_ or _"major semibreve"_. You can give any of these 5 string-values as a parameter to the method in order to return just the list of notes that experimented that specific modificaton type, or no-parameter at all in order to get the full list of notes modified by any of those five types.
+The ```getModifiedNotes()``` method returns a list of notes that have been modified from its default value (the value given by the mensuration), and returns a list of notes along with its mensural parameters: _"imperfection"_, _"alteration"_, _"perfection"_, _"partial imperfection"_ or _"major semibreve"_. You can pass any 5 string-values as a parameters to the method in order to return a list of notes with its mensural modificaton type, or you can omit the parameters to get a list of notes modified by any of those five modification types.
 
-Since _"major semibreve"_ is a modification available only in Ars Antiqua, you could run the following instructions to see the method working:
+Since _"major semibreve"_ is a modification that occurs only in _Ars antiqua_, you could run the following code to see whether the method works:
 
-`import pymei`
+```
+import pymei
 
-`cmn_meidoc = pymei.documentFromFile("TestFiles/Fauv/fauvel_nous.mei").getMeiDocument()`
+cmn_meidoc = pymei.documentFromFile("TestFiles/Fauv/fauvel_nous.mei").getMeiDocument()
 
-`from MEI_Translator import MensuralTranslation`
+from MEI_Translator import MensuralTranslation
 
-`mensural_meidoc = MensuralTranslation(cmn_meidoc, "antiqua", [["3", "p"], ["3", "p"], ["3", "p"]])`
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "antiqua", [["3", "p"], ["3", "p"], ["3", "p"]])
 
-`mensural_meidoc.getModifiedNotes('major semibreve')`
+mensural_meidoc.getModifiedNotes('major semibreve')
 
-Also, _"partial imperfection"_ is a modification available only in Ars Nova pieces, if you want to see an example of it run the following code in your python shell, you will find some interesting results.
+```
 
-`import pymei`
+The _"partial imperfection"_ modification only occurd in _Ars nova_ pieces. Here is an example:
 
-`cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/zodiacum.mei").getMeiDocument()`
+```
+import pymei
 
-`from MEI_Translator import MensuralTranslation`
+cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/zodiacum.mei").getMeiDocument()
 
-`mensural_meidoc = MensuralTranslation(cmn_meidoc, "nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "p", "i", "p"]])`
+from MEI_Translator import MensuralTranslation
 
-`mensural_meidoc.getModifiedNotes('partial imperfection')`
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "p", "i", "p"]])
 
-### Getting the Mensural MEI File: the _documentToFile_ function
+mensural_meidoc.getModifiedNotes('partial imperfection')
+```
 
-You have already instantiated a MensuralTranslated object, that behaves just like a regular MeiDocument. You have played around with this document, getting its elements, you could also edit these elements. But you haven't actually generated any file, in order to do so you should use the __documentToFile__ function from the __pymei__ module (which you have already imported at the beginning of this section). Then, to get your Mensural MEI file from your MensuralTranslated object `mensural_meidoc`, you do:
+### Getting the Mensural MEI File: the ```documentToFile``` function
 
-`pymei.documentToFile(mensural_meidoc)`
+Because the ```MensuralTranslated``` object is already instantiated, it behaves just like a regular MeiDocument. You can also edit any of the elements. To generate a file use the ```documentToFile``` function from the ```pymei``` module (already imported). To obtain the Mensural MEI file from your ```MensuralTranslated``` object ```mensural_meidoc``` use the following code:
 
-With this instruction you will have the same output as if you have ran the MEI\_Translator as a script, the only difference is that you are still able to modify the Mensural MEI document (the MensuralTranslated object) as you wish and convert it to a file -_pymei.documentToFile()_- again.
+```
+pymei.documentToFile(mensural_meidoc)
+```
+
+You receive the same outcome as from the MEI\_Translator script, except that you are still able to modify the Mensural MEI document (with the ```MensuralTranslated``` object), and convert it to a file with ```pymei.documentToFile()```.
 
 ## Notes
-<a name="on">1</a>: _Common Music Notation_ here refers to music notation in current use, aside from graphic music notation, and not the Lisp-based open-source music notation software.
+
+<a name="one">1</a>: _Common Music Notation_ here refers to music notation in current use, aside from graphic music notation, and not the Lisp-based open-source music notation software.
+
+<a name="two">2</a>: Alternatively, you could run the MEI\_Translator as a script on the command line to obtain the Mensural MEI file for this piece directly by entering: 
+```python MEI_Translator.py TestFiles/IvTrem/bona.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i i i p```
