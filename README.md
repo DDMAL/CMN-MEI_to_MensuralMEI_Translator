@@ -154,4 +154,6 @@ You receive the same outcome as from the MEI\_Translator script, except that you
 <a name="one">1</a>: _Common Music Notation_ here refers to music notation in current use, aside from graphic music notation, and not the Lisp-based open-source music notation software.
 
 <a name="two">2</a>: Alternatively, you could run the MEI\_Translator as a script on the command line to obtain the Mensural MEI file for this piece directly by entering: 
-```python MEI_Translator.py TestFiles/IvTrem/bona.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i i i p```
+```
+python MEI_Translator.py TestFiles/IvTrem/bona.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i i i p
+```
