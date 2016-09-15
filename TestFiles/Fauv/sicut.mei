@@ -1,0 +1,2813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mei xml:id="m-1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.music-encoding.org/ns/mei" meiversion="3.0.0">
+	<meiHead xml:id="m-2">
+		<fileDesc xml:id="m-3">
+			<titleStmt xml:id="m-4">
+				<title xml:id="m-10">Inflammatis/Sicut</title>
+				<composer xml:id="m-11">Anonymous</composer>
+				<respStmt xml:id="m-13">
+					<persName xml:id="m-14" />
+				</respStmt>
+			</titleStmt>
+			<pubStmt xml:id="m-15">
+				<availability xml:id="m-16">
+					<useRestrict xml:id="m-17">Copyright © </useRestrict>
+				</availability>
+			</pubStmt>
+		</fileDesc>
+		<encodingDesc xml:id="m-18">
+			<appInfo xml:id="m-19">
+				<application xml:id="sibelius" isodate="2016-4-29T12:43:09Z" version="7510">
+					<name xml:id="m-21" type="operating-system">Mac OS X Mountain Lion</name>
+				</application>
+				<application xml:id="sibmei" type="plugin" version="2.0.0b3">
+					<name xml:id="m-23">Sibelius to MEI Exporter (2.0.0b3)</name>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<workDesc xml:id="m-5">
+			<work xml:id="m-6">
+				<titleStmt xml:id="m-7">
+					<title xml:id="m-8">Inflammatis/Sicut</title>
+					<respStmt xml:id="m-9">
+						<persName xml:id="m-12" role="composer">Anonymous</persName>
+					</respStmt>
+				</titleStmt>
+			</work>
+		</workDesc>
+	</meiHead>
+	<music xml:id="m-24">
+		<body xml:id="m-25">
+			<mdiv xml:id="m-26">
+				<score xml:id="m-27">
+					<scoreDef xml:id="m-28" lyric.name="Opus Text Std" meter.count="6" meter.unit="1" music.name="Opus Std" page.botmar="15mm" page.height="279.4mm" page.leftmar="15mm" page.rightmar="15mm" page.topmar="15mm" page.width="215.9mm" ppq="256" text.name="Plantin MT Std">
+						<staffGrp xml:id="m-29">
+							<staffGrp xml:id="m-39" n="1" symbol="bracket">
+								<staffDef xml:id="m-30" clef.dis="8" clef.dis.place="below" clef.line="2" clef.shape="G" key.mode="major" key.sig="0" label="triplum" lines="5" n="1">
+									<!-- voice.male.tenor.ah -->
+									<instrDef xml:id="m-32" midi.channel="1" midi.pan="26" midi.volume="100" />
+								</staffDef>
+								<staffDef xml:id="m-33" clef.dis="8" clef.dis.place="below" clef.line="2" clef.shape="G" key.mode="major" key.sig="0" label="motetus" lines="5" n="2">
+									<!-- voice.male.tenor.ah -->
+									<instrDef xml:id="m-35" midi.channel="1" midi.pan="26" midi.volume="100" />
+								</staffDef>
+								<staffDef xml:id="m-36" clef.dis="8" clef.dis.place="below" clef.line="2" clef.shape="G" key.mode="major" key.sig="0" label="tenor" lines="5" n="3">
+									<!-- voice.male.tenor.ah -->
+									<instrDef xml:id="m-38" midi.channel="1" midi.pan="46" midi.volume="100" />
+								</staffDef>
+							</staffGrp>
+						</staffGrp>
+					</scoreDef>
+					<section xml:id="m-40">
+						<measure xml:id="m-41" label="1" n="1" right="single">
+							<staff xml:id="m-42" n="1">
+								<layer xml:id="m-43" n="1">
+									<note xml:id="m-44" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-77" n="1">
+											<syl xml:id="m-78" wordpos="i">In</syl>
+										</verse>
+									</note>
+									<note xml:id="m-45" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-79" n="1">
+											<syl xml:id="m-80" wordpos="m">flam</syl>
+										</verse>
+									</note>
+									<note xml:id="m-47" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-81" n="1">
+											<syl xml:id="m-82" wordpos="m">ma</syl>
+										</verse>
+									</note>
+									<note xml:id="m-48" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-49" n="2">
+								<layer xml:id="m-50" n="1">
+									<note xml:id="m-51" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-57" n="1">
+											<syl xml:id="m-58" wordpos="i">Si</syl>
+										</verse>
+									</note>
+									<note xml:id="m-53" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-59" n="1">
+											<syl xml:id="m-60" con="u" wordpos="t">cut</syl>
+										</verse>
+									</note>
+									<note xml:id="m-54" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up" />
+									<note xml:id="m-55" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="2" stem.dir="up">
+										<verse xml:id="m-61" n="1">
+											<syl xml:id="m-62" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-56" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up">
+										<verse xml:id="m-90" n="1">
+											<syl xml:id="m-91" wordpos="i">lig</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-63" n="3">
+								<layer xml:id="m-64" n="1">
+									<note xml:id="m-65" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up">
+										<verse xml:id="m-67" n="1">
+											<syl xml:id="m-68" wordpos="i">Tenor</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<tie xml:id="m-66" endid="#m-96" startid="#m-65" />
+							<line xml:id="m-46" dur.ges="1292p" layer="1" staff="1" tstamp="5" tstamp2="6.2617" type="bracket" vo="0.875mm" />
+							<line xml:id="m-52" dur.ges="1358p" layer="1" staff="2" tstamp="3" tstamp2="4.3262" type="bracket" vo="0.875mm" />
+						</measure>
+						<measure xml:id="m-69" n="2">
+							<staff xml:id="m-70" n="1">
+								<layer xml:id="m-71" n="1">
+									<note xml:id="m-72" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-83" n="1">
+											<syl xml:id="m-84" wordpos="t">tis</syl>
+										</verse>
+									</note>
+									<note xml:id="m-73" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-107" n="1">
+											<syl xml:id="m-108" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-74" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up">
+										<verse xml:id="m-109" n="1">
+											<syl xml:id="m-110" wordpos="m">ui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-75" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="f" pnum="42" staff="1" stem.dir="up">
+										<accid xml:id="m-76" accid="s" />
+										<verse xml:id="m-111" n="1">
+											<syl xml:id="m-112" wordpos="m">di</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-85" n="2">
+								<layer xml:id="m-86" n="1">
+									<note xml:id="m-87" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-92" n="1">
+											<syl xml:id="m-93" wordpos="t">no</syl>
+										</verse>
+									</note>
+									<note xml:id="m-88" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-128" n="1">
+											<syl xml:id="m-129" wordpos="i">par</syl>
+										</verse>
+									</note>
+									<note xml:id="m-89" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-130" n="1">
+											<syl xml:id="m-131" wordpos="m">uu</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-94" n="3">
+								<layer xml:id="m-95" n="1">
+									<note xml:id="m-96" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-97" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-98" n="3">
+							<staff xml:id="m-99" n="1">
+								<layer xml:id="m-100" n="1">
+									<note xml:id="m-101" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up">
+										<verse xml:id="m-113" n="1">
+											<syl xml:id="m-114" wordpos="t">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-102" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up">
+										<verse xml:id="m-115" n="1">
+											<syl xml:id="m-116" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-103" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-117" n="1">
+											<syl xml:id="m-118" wordpos="t">mon</syl>
+										</verse>
+									</note>
+									<note xml:id="m-105" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-147" n="1">
+											<syl xml:id="m-148" wordpos="i">su</syl>
+										</verse>
+									</note>
+									<note xml:id="m-106" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-119" n="2">
+								<layer xml:id="m-120" n="1">
+									<note xml:id="m-121" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-132" n="1">
+											<syl xml:id="m-133" wordpos="t">lus</syl>
+										</verse>
+									</note>
+									<note xml:id="m-123" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-157" n="1">
+											<syl xml:id="m-158" wordpos="i">ge</syl>
+										</verse>
+									</note>
+									<note xml:id="m-124" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up" />
+									<note xml:id="m-125" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-159" n="1">
+											<syl xml:id="m-160" wordpos="m">ne</syl>
+										</verse>
+									</note>
+									<note xml:id="m-127" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-161" n="1">
+											<syl xml:id="m-162" wordpos="m">ra</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-134" n="3">
+								<layer xml:id="m-135" n="1">
+									<note xml:id="m-136" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="c" pnum="36" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-104" dur.ges="1460p" layer="1" staff="1" tstamp="5" tstamp2="6.4258" type="bracket" vo="0.875mm" />
+							<line xml:id="m-122" dur.ges="1416p" layer="1" staff="2" tstamp="3" tstamp2="4.3828" type="bracket" vo="0.875mm" />
+							<fermata xml:id="m-126" form="norm" layer="1" shape="angular" staff="2" startid="#m-125" />
+						</measure>
+						<measure xml:id="m-137" n="4">
+							<staff xml:id="m-138" n="1">
+								<layer xml:id="m-139" n="1">
+									<note xml:id="m-140" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-149" n="1">
+											<syl xml:id="m-150" wordpos="t">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-143" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-173" n="1">
+											<syl xml:id="m-174" wordpos="i">ma</syl>
+										</verse>
+									</note>
+									<note xml:id="m-144" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-145" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-175" n="1">
+											<syl xml:id="m-176" wordpos="m">li</syl>
+										</verse>
+									</note>
+									<note xml:id="m-146" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-177" n="1">
+											<syl xml:id="m-178" wordpos="m">ci</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-151" n="2">
+								<layer xml:id="m-152" n="1">
+									<note xml:id="m-153" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-163" n="1">
+											<syl xml:id="m-164" wordpos="t">tur</syl>
+										</verse>
+									</note>
+									<note xml:id="m-154" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-184" n="1">
+											<syl xml:id="m-185" wordpos="i">uer</syl>
+										</verse>
+									</note>
+									<note xml:id="m-155" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-186" n="1">
+											<syl xml:id="m-187" wordpos="m">mi</syl>
+										</verse>
+									</note>
+									<note xml:id="m-156" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-188" n="1">
+											<syl xml:id="m-189" wordpos="m">cu</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-165" n="3">
+								<layer xml:id="m-166" n="1">
+									<note xml:id="m-167" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-141" form="norm" layer="1" shape="angular" staff="1" startid="#m-140" />
+							<line xml:id="m-142" dur.ges="1285p" layer="1" staff="1" tstamp="3" tstamp2="4.2549" type="bracket" vo="0.875mm" />
+							<barLine xml:id="m-168" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-169" n="5">
+							<staff xml:id="m-170" n="1">
+								<layer xml:id="m-171" n="1">
+									<note xml:id="m-172" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-179" n="1">
+											<syl xml:id="m-180" wordpos="t">a</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-181" n="2">
+								<layer xml:id="m-182" n="1">
+									<note xml:id="m-183" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-190" n="1">
+											<syl xml:id="m-191" wordpos="t">lus</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-192" n="3">
+								<layer xml:id="m-193" n="1">
+									<note xml:id="m-194" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-195" endid="#m-230" startid="#m-194" />
+						</measure>
+						<measure xml:id="m-196" n="6">
+							<staff xml:id="m-197" n="1">
+								<layer xml:id="m-198" n="1">
+									<note xml:id="m-199" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-206" n="1">
+											<syl xml:id="m-207" wordpos="i">pri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-200" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-208" n="1">
+											<syl xml:id="m-209" wordpos="t">mo</syl>
+										</verse>
+									</note>
+									<note xml:id="m-201" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-241" n="1">
+											<syl xml:id="m-242" wordpos="i">pa</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-203" endid="#m-205" num="3" num.format="ratio" numbase="2" startid="#m-202">
+										<note xml:id="m-202" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+											<verse xml:id="m-243" n="1">
+												<syl xml:id="m-244" wordpos="m">ren</syl>
+											</verse>
+										</note>
+										<note xml:id="m-204" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+										<note xml:id="m-205" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-210" n="2">
+								<layer xml:id="m-211" n="1">
+									<note xml:id="m-212" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-218" n="1">
+											<syl xml:id="m-219" wordpos="i">qui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-213" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-220" n="1">
+											<syl xml:id="m-221" wordpos="i">post</syl>
+										</verse>
+									</note>
+									<note xml:id="m-214" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-222" n="1">
+											<syl xml:id="m-223" wordpos="i">hoc</syl>
+										</verse>
+									</note>
+									<note xml:id="m-215" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-224" n="1">
+											<syl xml:id="m-225" wordpos="i">i</syl>
+										</verse>
+									</note>
+									<note xml:id="m-216" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-226" n="1">
+											<syl xml:id="m-227" wordpos="t">dem</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-228" n="3">
+								<layer xml:id="m-229" n="1">
+									<note xml:id="m-230" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-217" form="norm" layer="1" shape="angular" staff="2" startid="#m-216" />
+							<barLine xml:id="m-231" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-232" n="7">
+							<staff xml:id="m-233" n="1">
+								<layer xml:id="m-234" n="1">
+									<note xml:id="m-235" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-245" n="1">
+											<syl xml:id="m-246" wordpos="t">tes</syl>
+										</verse>
+									</note>
+									<note xml:id="m-236" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-259" n="1">
+											<syl xml:id="m-260" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-238" endid="#m-240" num="3" num.format="ratio" numbase="2" startid="#m-237">
+										<note xml:id="m-237" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+											<verse xml:id="m-261" n="1">
+												<syl xml:id="m-262" wordpos="m">ci</syl>
+											</verse>
+										</note>
+										<note xml:id="m-239" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-240" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-247" n="2">
+								<layer xml:id="m-248" n="1">
+									<note xml:id="m-249" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" stem.mod="1slash">
+										<verse xml:id="m-269" n="1">
+											<syl xml:id="m-270" wordpos="i">co</syl>
+										</verse>
+									</note>
+									<note xml:id="m-250" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-271" n="1">
+											<syl xml:id="m-272" wordpos="m">me</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-251" n="3">
+								<layer xml:id="m-252" n="1">
+									<note xml:id="m-253" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-254" n="8">
+							<staff xml:id="m-255" n="1">
+								<layer xml:id="m-256" n="1">
+									<note xml:id="m-257" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-263" n="1">
+											<syl xml:id="m-264" wordpos="t">pit</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-258" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-265" n="2">
+								<layer xml:id="m-266" n="1">
+									<note xml:id="m-267" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-273" n="1">
+											<syl xml:id="m-274" wordpos="t">dit</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-268" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-275" n="3">
+								<layer xml:id="m-276" n="1">
+									<note xml:id="m-277" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-278" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-279" n="9">
+							<staff xml:id="m-280" n="1">
+								<layer xml:id="m-281" n="1">
+									<note xml:id="m-282" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-289" n="1">
+											<syl xml:id="m-290" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-284" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-310" n="1">
+											<syl xml:id="m-311" wordpos="i">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-285" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-287" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-288" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+								</layer>
+							</staff>
+							<staff xml:id="m-291" n="2">
+								<layer xml:id="m-292" n="1">
+									<note xml:id="m-293" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-296" n="1">
+											<syl xml:id="m-297" wordpos="i">e</syl>
+										</verse>
+									</note>
+									<note xml:id="m-294" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-298" n="1">
+											<syl xml:id="m-299" wordpos="t">o</syl>
+										</verse>
+									</note>
+									<note xml:id="m-295" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-318" n="1">
+											<syl xml:id="m-319" wordpos="i">mo</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-300" n="3">
+								<layer xml:id="m-301" n="1">
+									<note xml:id="m-302" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-303" endid="#m-324" startid="#m-302" />
+							<line xml:id="m-283" dur.ges="1244p" layer="1" staff="1" tstamp="3" tstamp2="4.2148" type="bracket" vo="0.875mm" />
+							<line xml:id="m-286" dur.ges="1239p" layer="1" staff="1" tstamp="5" tstamp2="6.21" type="bracket" vo="0.875mm" />
+						</measure>
+						<measure xml:id="m-304" n="10">
+							<staff xml:id="m-305" n="1">
+								<layer xml:id="m-306" n="1">
+									<note xml:id="m-307" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="44" staff="1" stem.dir="up">
+										<accid xml:id="m-308" accid="s" />
+										<verse xml:id="m-312" n="1">
+											<syl xml:id="m-313" wordpos="t">bel</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-314" n="2">
+								<layer xml:id="m-315" n="1">
+									<note xml:id="m-316" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="2" stem.dir="down">
+										<accid xml:id="m-317" accid="s" />
+										<verse xml:id="m-320" n="1">
+											<syl xml:id="m-321" wordpos="t">do</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-322" n="3">
+								<layer xml:id="m-323" n="1">
+									<note xml:id="m-324" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-309" form="norm" layer="1" shape="angular" staff="1" startid="#m-307" />
+							<barLine xml:id="m-325" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-326" n="11">
+							<staff xml:id="m-327" n="1">
+								<layer xml:id="m-328" n="1">
+									<note xml:id="m-329" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-356" n="1">
+											<syl xml:id="m-357" wordpos="i">sa</syl>
+										</verse>
+									</note>
+									<note xml:id="m-331" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-358" n="1">
+											<syl xml:id="m-359" wordpos="m">cri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-332" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="1" stem.dir="down">
+										<accid xml:id="m-333" accid="s" />
+									</note>
+									<note xml:id="m-335" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									<note xml:id="m-336" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-337" n="2">
+								<layer xml:id="m-338" n="1">
+									<note xml:id="m-339" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-343" n="1">
+											<syl xml:id="m-344" wordpos="i">li</syl>
+										</verse>
+									</note>
+									<note xml:id="m-340" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="2" stem.dir="down">
+										<accid xml:id="m-341" accid="s" />
+										<verse xml:id="m-345" n="1">
+											<syl xml:id="m-346" wordpos="t">uor</syl>
+										</verse>
+									</note>
+									<note xml:id="m-342" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-369" n="1">
+											<syl xml:id="m-370" wordpos="i">le</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-347" n="3">
+								<layer xml:id="m-348" n="1">
+									<note xml:id="m-349" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-330" dur.ges="1326p" layer="1" staff="1" tstamp="3" tstamp2="4.2949" type="bracket" vo="0.875mm" />
+							<line xml:id="m-334" dur.ges="1368p" layer="1" staff="1" tstamp="5" tstamp2="6.3359" type="bracket" vo="0.875mm" />
+						</measure>
+						<measure xml:id="m-350" n="12">
+							<staff xml:id="m-351" n="1">
+								<layer xml:id="m-352" n="1">
+									<note xml:id="m-353" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-360" n="1">
+											<syl xml:id="m-361" wordpos="m">fi</syl>
+										</verse>
+									</note>
+									<note xml:id="m-354" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-362" n="1">
+											<syl xml:id="m-363" wordpos="m">ci</syl>
+										</verse>
+									</note>
+									<note xml:id="m-355" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-364" n="1">
+											<syl xml:id="m-365" wordpos="t">a</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-366" n="2">
+								<layer xml:id="m-367" n="1">
+									<note xml:id="m-368" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-371" n="1">
+											<syl xml:id="m-372" wordpos="t">dit</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-373" n="3">
+								<layer xml:id="m-374" n="1">
+									<note xml:id="m-375" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-376" ho="0.5469mm" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-377" n="13">
+							<staff xml:id="m-378" n="1">
+								<layer xml:id="m-379" n="1">
+									<note xml:id="m-380" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-384" n="1">
+											<syl xml:id="m-385" wordpos="i">fe</syl>
+										</verse>
+									</note>
+									<note xml:id="m-382" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-386" n="1">
+											<syl xml:id="m-387" con="u" wordpos="t">rens</syl>
+										</verse>
+									</note>
+									<note xml:id="m-383" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-388" n="2">
+								<layer xml:id="m-389" n="1">
+									<note xml:id="m-390" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-394" n="1">
+											<syl xml:id="m-395" wordpos="i">om</syl>
+										</verse>
+									</note>
+									<note xml:id="m-392" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-396" n="1">
+											<syl xml:id="m-397" wordpos="t">nes</syl>
+										</verse>
+									</note>
+									<note xml:id="m-393" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-421" n="1">
+											<syl xml:id="m-422" wordpos="i">su</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-398" n="3">
+								<layer xml:id="m-399" n="1">
+									<note xml:id="m-400" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-401" endid="#m-427" startid="#m-400" />
+							<line xml:id="m-381" dur.ges="1346p" layer="1" staff="1" tstamp="5" tstamp2="6.3145" type="bracket" vo="0.875mm" />
+							<fermata xml:id="m-391" form="norm" layer="1" shape="angular" staff="2" startid="#m-390" />
+						</measure>
+						<pb xml:id="m-403" n="2" />
+						<measure xml:id="m-402" n="14">
+							<staff xml:id="m-404" n="1">
+								<layer xml:id="m-405" n="1">
+									<note xml:id="m-406" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-408" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-469" n="1">
+											<syl xml:id="m-470" wordpos="i">ac</syl>
+										</verse>
+									</note>
+									<note xml:id="m-409" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-411" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-471" n="1">
+											<syl xml:id="m-472" wordpos="m">cep</syl>
+										</verse>
+									</note>
+									<note xml:id="m-412" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-413" n="2">
+								<layer xml:id="m-414" n="1">
+									<note xml:id="m-415" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-423" n="1">
+											<syl xml:id="m-424" wordpos="t">os</syl>
+										</verse>
+									</note>
+									<note xml:id="m-416" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-447" n="1">
+											<syl xml:id="m-448" wordpos="i">pos</syl>
+										</verse>
+									</note>
+									<note xml:id="m-418" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-449" n="1">
+											<syl xml:id="m-450" wordpos="m">ses</syl>
+										</verse>
+									</note>
+									<note xml:id="m-419" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down" />
+									<note xml:id="m-420" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-451" n="1">
+											<syl xml:id="m-452" wordpos="m">so</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-425" n="3">
+								<layer xml:id="m-426" n="1">
+									<note xml:id="m-427" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-407" dur.ges="1271p" layer="1" staff="1" tstamp="3" tstamp2="4.2412" type="bracket" vo="0.875mm" />
+							<line xml:id="m-410" dur.ges="1231p" layer="1" staff="1" tstamp="5" tstamp2="6.2021" type="bracket" vo="0.875mm" />
+							<line xml:id="m-417" dur.ges="1312p" layer="1" staff="2" tstamp="3" tstamp2="4.2812" type="bracket" vo="0.875mm" />
+							<barLine xml:id="m-428" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-429" n="15">
+							<staff xml:id="m-430" n="1">
+								<layer xml:id="m-431" n="1">
+									<note xml:id="m-432" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-473" n="1">
+											<syl xml:id="m-474" wordpos="m">ta</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-434" endid="#m-436" num="3" num.format="ratio" numbase="2" startid="#m-433">
+										<note xml:id="m-433" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+											<verse xml:id="m-475" n="1">
+												<syl xml:id="m-476" wordpos="m">bi</syl>
+											</verse>
+										</note>
+										<note xml:id="m-435" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-436" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+									<tuplet xml:id="m-438" endid="#m-440" num="3" num.format="ratio" numbase="2" startid="#m-437">
+										<note xml:id="m-437" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+											<verse xml:id="m-477" n="1">
+												<syl xml:id="m-478" wordpos="m">li</syl>
+											</verse>
+										</note>
+										<note xml:id="m-439" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+										<note xml:id="m-440" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-441" n="2">
+								<layer xml:id="m-442" n="1">
+									<note xml:id="m-443" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-453" n="1">
+											<syl xml:id="m-454" wordpos="t">res</syl>
+										</verse>
+									</note>
+									<note xml:id="m-444" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-455" n="1">
+											<syl xml:id="m-456" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-445" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-491" n="1">
+											<syl xml:id="m-492" wordpos="i">e</syl>
+										</verse>
+									</note>
+									<note xml:id="m-446" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-493" n="1">
+											<syl xml:id="m-494" wordpos="m">o</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-457" n="3">
+								<layer xml:id="m-458" n="1">
+									<note xml:id="m-459" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-460" n="16">
+							<staff xml:id="m-461" n="1">
+								<layer xml:id="m-462" n="1">
+									<note xml:id="m-463" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-479" n="1">
+											<syl xml:id="m-480" wordpos="t">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-465" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-481" n="1">
+											<syl xml:id="m-482" wordpos="i">mor</syl>
+										</verse>
+									</note>
+									<note xml:id="m-466" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-483" n="1">
+											<syl xml:id="m-484" con="u" wordpos="t">tem</syl>
+										</verse>
+									</note>
+									<note xml:id="m-467" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-485" n="2">
+								<layer xml:id="m-486" n="1">
+									<note xml:id="m-487" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-495" n="1">
+											<syl xml:id="m-496" wordpos="t">rum</syl>
+										</verse>
+									</note>
+									<note xml:id="m-489" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-523" n="1">
+											<syl xml:id="m-524" wordpos="i">bo</syl>
+										</verse>
+									</note>
+									<note xml:id="m-490" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-497" n="3">
+								<layer xml:id="m-498" n="1">
+									<note xml:id="m-499" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-464" dur.ges="1383p" layer="1" staff="1" tstamp="3" tstamp2="4.3506" type="bracket" vo="0.875mm" />
+							<fermata xml:id="m-468" form="norm" layer="1" shape="angular" staff="1" startid="#m-467" />
+							<line xml:id="m-488" dur.ges="1383p" layer="1" staff="2" tstamp="5" tstamp2="6.3506" type="bracket" vo="0.875mm" />
+							<fermata xml:id="m-500" form="norm" layer="1" shape="angular" staff="3" startid="#m-499" />
+							<barLine xml:id="m-501" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-502" n="17">
+							<staff xml:id="m-503" n="1">
+								<layer xml:id="m-504" n="1">
+									<note xml:id="m-505" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-510" n="1">
+											<syl xml:id="m-511" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-507" endid="#m-509" num="3" num.format="ratio" numbase="2" startid="#m-506">
+										<note xml:id="m-506" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+											<verse xml:id="m-542" n="1">
+												<syl xml:id="m-543" wordpos="i">fer</syl>
+											</verse>
+										</note>
+										<note xml:id="m-508" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+										<note xml:id="m-509" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-512" n="2">
+								<layer xml:id="m-513" n="1">
+									<note xml:id="m-514" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-525" n="1">
+											<syl xml:id="m-526" wordpos="t">nos</syl>
+										</verse>
+									</note>
+									<note xml:id="m-516" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-550" n="1">
+											<syl xml:id="m-551" wordpos="i">mo</syl>
+										</verse>
+									</note>
+									<note xml:id="m-517" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down" />
+									<tuplet xml:id="m-520" endid="#m-522" num="3" num.format="ratio" numbase="2" startid="#m-519">
+										<note xml:id="m-519" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down" />
+										<note xml:id="m-521" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+										<note xml:id="m-522" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-527" n="3">
+								<layer xml:id="m-528" n="1">
+									<note xml:id="m-529" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-530" endid="#m-556" startid="#m-529" />
+							<line xml:id="m-515" dur.ges="1453p" layer="1" staff="2" tstamp="3" tstamp2="4.4189" type="bracket" vo="11.4844mm" />
+							<fermata xml:id="m-518" form="norm" layer="1" shape="angular" staff="2" startid="#m-517" />
+						</measure>
+						<measure xml:id="m-531" n="18">
+							<staff xml:id="m-532" n="1">
+								<layer xml:id="m-533" n="1">
+									<note xml:id="m-534" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-544" n="1">
+											<syl xml:id="m-545" wordpos="t">re</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-536" endid="#m-538" num="3" num.format="ratio" numbase="2" startid="#m-535">
+										<note xml:id="m-535" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+											<verse xml:id="m-575" n="1">
+												<syl xml:id="m-576" wordpos="i">re</syl>
+											</verse>
+										</note>
+										<note xml:id="m-537" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-538" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+									<note xml:id="m-540" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-541" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-546" n="2">
+								<layer xml:id="m-547" n="1">
+									<note xml:id="m-548" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-552" n="1">
+											<syl xml:id="m-553" wordpos="t">res</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-549" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-554" n="3">
+								<layer xml:id="m-555" n="1">
+									<note xml:id="m-556" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-539" dur.ges="1341p" layer="1" staff="1" tstamp="5" tstamp2="6.3096" type="bracket" vo="7.8203mm" />
+							<barLine xml:id="m-557" ho="0.4375mm" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-558" n="19">
+							<staff xml:id="m-559" n="1">
+								<layer xml:id="m-560" n="1">
+									<note xml:id="m-561" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-577" n="1">
+											<syl xml:id="m-578" wordpos="m">ci</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-562" n="2">
+								<layer xml:id="m-563" n="1">
+									<note xml:id="m-564" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-588" n="1">
+											<syl xml:id="m-589" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-565" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="g" pnum="44" staff="2" stem.dir="up">
+										<accid xml:id="m-566" accid="s" />
+										<verse xml:id="m-590" n="1">
+											<syl xml:id="m-591" wordpos="m">ui</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-567" n="3">
+								<layer xml:id="m-568" n="1">
+									<note xml:id="m-569" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-570" n="20">
+							<staff xml:id="m-571" n="1">
+								<layer xml:id="m-572" n="1">
+									<note xml:id="m-573" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-579" n="1">
+											<syl xml:id="m-580" wordpos="t">pit</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-574" dur="long" dur.ges="4096p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-581" n="2">
+								<layer xml:id="m-582" n="1">
+									<note xml:id="m-583" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-592" n="1">
+											<syl xml:id="m-593" wordpos="t">dus</syl>
+										</verse>
+									</note>
+									<note xml:id="m-584" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-594" n="1">
+											<syl xml:id="m-595" wordpos="i">est</syl>
+										</verse>
+									</note>
+									<note xml:id="m-585" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="2" stem.dir="up">
+										<verse xml:id="m-596" n="1">
+											<syl xml:id="m-597" wordpos="i">to</syl>
+										</verse>
+									</note>
+									<note xml:id="m-586" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="2" stem.dir="up">
+										<verse xml:id="m-598" n="1">
+											<syl xml:id="m-599" wordpos="t">tus</syl>
+										</verse>
+									</note>
+									<note xml:id="m-587" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="2" stem.dir="up">
+										<verse xml:id="m-628" n="1">
+											<syl xml:id="m-629" wordpos="i">ce</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-600" n="3">
+								<layer xml:id="m-601" n="1">
+									<note xml:id="m-602" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-603" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-604" n="21">
+							<staff xml:id="m-605" n="1">
+								<layer xml:id="m-606" n="1">
+									<note xml:id="m-608" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-616" n="1">
+											<syl xml:id="m-617" wordpos="i">io</syl>
+										</verse>
+									</note>
+									<note xml:id="m-609" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-611" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-618" n="1">
+											<syl xml:id="m-619" con="u" wordpos="t">seph</syl>
+										</verse>
+									</note>
+									<note xml:id="m-612" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+									<note xml:id="m-614" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									<note xml:id="m-615" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+								</layer>
+							</staff>
+							<staff xml:id="m-620" n="2">
+								<layer xml:id="m-621" n="1">
+									<note xml:id="m-622" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="2" stem.dir="up">
+										<verse xml:id="m-630" n="1">
+											<syl xml:id="m-631" wordpos="t">cus</syl>
+										</verse>
+									</note>
+									<note xml:id="m-623" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-632" n="1">
+											<syl xml:id="m-633" wordpos="i">ig</syl>
+										</verse>
+									</note>
+									<note xml:id="m-624" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-634" n="1">
+											<syl xml:id="m-635" wordpos="t">nis</syl>
+										</verse>
+									</note>
+									<note xml:id="m-626" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-636" n="1">
+											<syl xml:id="m-637" wordpos="i">est</syl>
+										</verse>
+									</note>
+									<note xml:id="m-627" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up">
+										<verse xml:id="m-638" n="1">
+											<syl xml:id="m-639" wordpos="i">in</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-640" n="3">
+								<layer xml:id="m-641" n="1">
+									<note xml:id="m-642" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-643" endid="#m-654" startid="#m-642" />
+							<line xml:id="m-607" dur.ges="1341p" layer="1" staff="1" tstamp="1" tstamp2="2.3096" type="bracket" vo="7.5469mm" />
+							<line xml:id="m-610" dur.ges="1261p" layer="1" staff="1" tstamp="3" tstamp2="4.2314" type="bracket" vo="8.8047mm" />
+							<line xml:id="m-613" dur.ges="1485p" layer="1" staff="1" tstamp="5" tstamp2="6.4502" type="bracket" vo="7.5469mm" />
+							<fermata xml:id="m-625" form="norm" layer="1" shape="angular" staff="2" startid="#m-624" />
+						</measure>
+						<measure xml:id="m-644" n="22">
+							<staff xml:id="m-645" n="1">
+								<layer xml:id="m-646" n="1">
+									<note xml:id="m-647" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-648" n="2">
+								<layer xml:id="m-649" n="1">
+									<note xml:id="m-650" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="42" staff="2" stem.dir="up">
+										<accid xml:id="m-651" accid="s" />
+										<verse xml:id="m-678" n="1">
+											<syl xml:id="m-679" wordpos="i">e</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-652" n="3">
+								<layer xml:id="m-653" n="1">
+									<note xml:id="m-654" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-655" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-656" n="23">
+							<staff xml:id="m-657" n="1">
+								<layer xml:id="m-658" n="1">
+									<note xml:id="m-660" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-668" n="1">
+											<syl xml:id="m-669" wordpos="i">que</syl>
+										</verse>
+									</note>
+									<note xml:id="m-661" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									<note xml:id="m-663" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-664" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-666" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-670" n="1">
+											<syl xml:id="m-671" wordpos="i">non</syl>
+										</verse>
+									</note>
+									<note xml:id="m-667" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up" />
+								</layer>
+							</staff>
+							<staff xml:id="m-672" n="2">
+								<layer xml:id="m-673" n="1">
+									<note xml:id="m-674" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up">
+										<verse xml:id="m-680" n="1">
+											<syl xml:id="m-681" wordpos="t">o</syl>
+										</verse>
+									</note>
+									<note xml:id="m-676" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-699" n="1">
+											<syl xml:id="m-700" wordpos="i">gre</syl>
+										</verse>
+									</note>
+									<note xml:id="m-677" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-682" n="3">
+								<layer xml:id="m-683" n="1">
+									<note xml:id="m-684" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="c" pnum="36" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-659" dur.ges="1422p" layer="1" staff="1" tstamp="1" tstamp2="2.3887" type="bracket" vo="8.2031mm" />
+							<line xml:id="m-662" dur.ges="1355p" layer="1" staff="1" tstamp="3" tstamp2="4.3232" type="bracket" vo="8.4766mm" />
+							<line xml:id="m-665" dur.ges="1434p" layer="1" staff="1" tstamp="5" tstamp2="6.4004" type="bracket" vo="7.2188mm" />
+							<line xml:id="m-675" dur.ges="1291p" layer="1" staff="2" tstamp="5" tstamp2="6.2607" type="bracket" vo="8.2578mm" />
+						</measure>
+						<measure xml:id="m-685" n="24">
+							<staff xml:id="m-686" n="1">
+								<layer xml:id="m-687" n="1">
+									<note xml:id="m-688" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-718" n="1">
+											<syl xml:id="m-719" wordpos="i">pe</syl>
+										</verse>
+									</note>
+									<note xml:id="m-689" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-720" n="1">
+											<syl xml:id="m-721" wordpos="m">per</syl>
+										</verse>
+									</note>
+									<note xml:id="m-690" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-722" n="1">
+											<syl xml:id="m-723" wordpos="m">ce</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-692" n="2">
+								<layer xml:id="m-693" n="1">
+									<note xml:id="m-694" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-701" n="1">
+											<syl xml:id="m-702" wordpos="t">cus</syl>
+										</verse>
+									</note>
+									<note xml:id="m-695" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-703" n="1">
+											<syl xml:id="m-704" wordpos="i">ar</syl>
+										</verse>
+									</note>
+									<note xml:id="m-696" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-705" n="1">
+											<syl xml:id="m-706" wordpos="t">dens</syl>
+										</verse>
+									</note>
+									<note xml:id="m-697" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-707" n="1">
+											<syl xml:id="m-708" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-698" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-733" n="1">
+											<syl xml:id="m-734" wordpos="i">a</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-709" n="3">
+								<layer xml:id="m-710" n="1">
+									<note xml:id="m-711" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-691" form="norm" layer="1" shape="angular" staff="1" startid="#m-690" />
+							<barLine xml:id="m-712" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-713" n="25">
+							<staff xml:id="m-714" n="1">
+								<layer xml:id="m-715" n="1">
+									<note xml:id="m-716" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-724" n="1">
+											<syl xml:id="m-725" wordpos="t">runt</syl>
+										</verse>
+									</note>
+									<note xml:id="m-717" artic="stacc" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-752" n="1">
+											<syl xml:id="m-753" wordpos="i">fra</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-726" n="2">
+								<layer xml:id="m-727" n="1">
+									<note xml:id="m-728" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-735" n="1">
+											<syl xml:id="m-736" wordpos="t">quis</syl>
+										</verse>
+									</note>
+									<note xml:id="m-731" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-768" n="1">
+											<syl xml:id="m-769" wordpos="i">gra</syl>
+										</verse>
+									</note>
+									<note xml:id="m-732" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-737" n="3">
+								<layer xml:id="m-738" n="1">
+									<note xml:id="m-739" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-740" endid="#m-776" startid="#m-739" />
+							<fermata xml:id="m-729" form="norm" layer="1" shape="angular" staff="2" startid="#m-728" />
+							<line xml:id="m-730" dur.ges="1223p" layer="1" staff="2" tstamp="5" tstamp2="6.1943" type="bracket" vo="6.0703mm" />
+						</measure>
+						<pb xml:id="m-742" n="3" />
+						<measure xml:id="m-741" n="26">
+							<staff xml:id="m-743" n="1">
+								<layer xml:id="m-744" n="1">
+									<note xml:id="m-745" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-754" n="1">
+											<syl xml:id="m-755" con="u" wordpos="t">tres</syl>
+										</verse>
+									</note>
+									<note xml:id="m-747" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-748" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-750" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-782" n="1">
+											<syl xml:id="m-783" wordpos="i">sui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-751" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-756" n="2">
+								<layer xml:id="m-757" n="1">
+									<note xml:id="m-759" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-770" n="1">
+											<syl xml:id="m-771" wordpos="m">ci</syl>
+										</verse>
+									</note>
+									<note xml:id="m-760" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down" />
+									<note xml:id="m-762" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down" />
+									<note xml:id="m-763" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									<tuplet xml:id="m-765" endid="#m-767" num="3" num.format="ratio" numbase="2" startid="#m-764">
+										<note xml:id="m-764" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+											<verse xml:id="m-772" n="1">
+												<syl xml:id="m-773" con="u" wordpos="t">e</syl>
+											</verse>
+										</note>
+										<note xml:id="m-766" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down" />
+										<note xml:id="m-767" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-774" n="3">
+								<layer xml:id="m-775" n="1">
+									<note xml:id="m-776" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-746" dur.ges="1200p" layer="1" staff="1" tstamp="3" tstamp2="4.1719" type="bracket" vo="7.5469mm" />
+							<line xml:id="m-749" dur.ges="1155p" layer="1" staff="1" tstamp="5" tstamp2="6.1279" type="bracket" vo="7.6016mm" />
+							<line xml:id="m-758" dur.ges="1310p" layer="1" staff="2" tstamp="1" tstamp2="2.2793" type="bracket" vo="6.0156mm" />
+							<line xml:id="m-761" dur.ges="1344p" layer="1" staff="2" tstamp="3" tstamp2="4.3125" type="bracket" vo="5.7422mm" />
+							<barLine xml:id="m-777" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-778" n="27">
+							<staff xml:id="m-779" n="1">
+								<layer xml:id="m-780" n="1">
+									<note xml:id="m-781" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-784" n="1">
+											<syl xml:id="m-785" wordpos="t">i</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-786" n="2">
+								<layer xml:id="m-787" n="1">
+									<note xml:id="m-788" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-789" n="1">
+											<syl xml:id="m-790" wordpos="i">et</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-791" n="3">
+								<layer xml:id="m-792" n="1">
+									<note xml:id="m-793" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-794" n="28">
+							<staff xml:id="m-795" n="1">
+								<layer xml:id="m-796" n="1">
+									<mRest xml:id="m-797" />
+								</layer>
+							</staff>
+							<staff xml:id="m-798" n="2">
+								<layer xml:id="m-799" n="1">
+									<note xml:id="m-800" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down" />
+									<note xml:id="m-801" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-805" n="1">
+											<syl xml:id="m-806" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-802" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-807" n="1">
+											<syl xml:id="m-808" wordpos="i">un</syl>
+										</verse>
+									</note>
+									<note xml:id="m-803" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-809" n="1">
+											<syl xml:id="m-810" wordpos="t">dis</syl>
+										</verse>
+									</note>
+									<note xml:id="m-804" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+										<verse xml:id="m-869" n="1">
+											<syl xml:id="m-870" wordpos="i">iu</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-811" n="3">
+								<layer xml:id="m-812" n="1">
+									<note xml:id="m-813" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-814" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-815" n="29">
+							<staff xml:id="m-816" n="1">
+								<layer xml:id="m-817" n="1">
+									<note xml:id="m-818" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-823" n="1">
+											<syl xml:id="m-824" wordpos="i">uen</syl>
+										</verse>
+									</note>
+									<note xml:id="m-819" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-825" n="1">
+											<syl xml:id="m-826" wordpos="m">di</syl>
+										</verse>
+									</note>
+									<note xml:id="m-820" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-827" n="1">
+											<syl xml:id="m-828" wordpos="m">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-821" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-829" n="1">
+											<syl xml:id="m-830" wordpos="t">runt</syl>
+										</verse>
+									</note>
+									<note xml:id="m-822" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-831" n="1">
+											<syl xml:id="m-832" wordpos="i">hunc</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-833" n="2">
+								<layer xml:id="m-834" n="1">
+									<note xml:id="m-835" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-871" n="1">
+											<syl xml:id="m-872" wordpos="m">sti</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-836" n="3">
+								<layer xml:id="m-837" n="1">
+									<note xml:id="m-838" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-839" endid="#m-854" startid="#m-838" />
+						</measure>
+						<measure xml:id="m-840" n="30">
+							<staff xml:id="m-841" n="1">
+								<layer xml:id="m-842" n="1">
+									<note xml:id="m-843" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="g" pnum="56" staff="1" stem.dir="down">
+										<accid xml:id="m-844" accid="s" />
+										<verse xml:id="m-859" n="1">
+											<syl xml:id="m-860" wordpos="i">tri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-845" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="g" pnum="56" staff="1" stem.dir="down">
+										<accid xml:id="m-846" accid="s" />
+										<verse xml:id="m-861" n="1">
+											<syl xml:id="m-862" wordpos="m">gin</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-848" n="2">
+								<layer xml:id="m-849" n="1">
+									<note xml:id="m-850" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="2" stem.dir="down">
+										<accid xml:id="m-851" accid="s" />
+										<verse xml:id="m-873" n="1">
+											<syl xml:id="m-874" wordpos="m">ci</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-852" n="3">
+								<layer xml:id="m-853" n="1">
+									<note xml:id="m-854" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-847" form="norm" layer="1" shape="angular" staff="1" startid="#m-845" />
+						</measure>
+						<measure xml:id="m-855" n="31">
+							<staff xml:id="m-856" n="1">
+								<layer xml:id="m-857" n="1">
+									<note xml:id="m-858" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="1" stem.dir="down">
+										<verse xml:id="m-863" n="1">
+											<syl xml:id="m-864" wordpos="t">ta</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-865" n="2">
+								<layer xml:id="m-866" n="1">
+									<note xml:id="m-867" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-875" n="1">
+											<syl xml:id="m-876" wordpos="t">e.</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-868" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-877" n="3">
+								<layer xml:id="m-878" n="1">
+									<note xml:id="m-880" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-879" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-881" n="32">
+							<staff xml:id="m-882" n="1">
+								<layer xml:id="m-883" n="1">
+									<note xml:id="m-885" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="1" stem.dir="down">
+										<verse xml:id="m-917" n="1">
+											<syl xml:id="m-918" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-886" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down" />
+									<note xml:id="m-888" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-919" n="1">
+											<syl xml:id="m-920" wordpos="m">na</syl>
+										</verse>
+									</note>
+									<note xml:id="m-889" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down" />
+									<tuplet xml:id="m-891" endid="#m-893" num="3" num.format="ratio" numbase="2" startid="#m-890">
+										<note xml:id="m-890" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+											<verse xml:id="m-921" n="1">
+												<syl xml:id="m-922" wordpos="m">ri</syl>
+											</verse>
+										</note>
+										<note xml:id="m-892" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+										<note xml:id="m-893" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="1" stem.dir="down">
+											<accid xml:id="m-894" accid="s" />
+										</note>
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-895" n="2">
+								<layer xml:id="m-896" n="1">
+									<note xml:id="m-897" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-906" n="1">
+											<syl xml:id="m-907" wordpos="i">Qui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-899" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-928" n="1">
+											<syl xml:id="m-929" wordpos="i">ac</syl>
+										</verse>
+									</note>
+									<note xml:id="m-900" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									<note xml:id="m-903" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-930" n="1">
+											<syl xml:id="m-931" wordpos="m">cen</syl>
+										</verse>
+									</note>
+									<note xml:id="m-904" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="54" staff="2" stem.dir="down">
+										<accid xml:id="m-905" accid="s" />
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-908" n="3">
+								<layer xml:id="m-909" n="1">
+									<note xml:id="m-910" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-884" dur.ges="1347p" layer="1" staff="1" tstamp="1" tstamp2="2.3154" type="bracket" vo="9.8438mm" />
+							<line xml:id="m-887" dur.ges="1333p" layer="1" staff="1" tstamp="3" tstamp2="4.3018" type="bracket" vo="8.4219mm" />
+							<line xml:id="m-898" dur.ges="1369p" layer="1" staff="2" tstamp="3" tstamp2="4.3369" type="bracket" vo="11.4844mm" />
+							<fermata xml:id="m-901" form="norm" layer="1" shape="angular" staff="2" startid="#m-900" />
+							<line xml:id="m-902" dur.ges="1365p" layer="1" staff="2" tstamp="5" tstamp2="6.333" type="bracket" vo="10.0078mm" />
+							<barLine xml:id="m-911" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-912" n="33">
+							<staff xml:id="m-913" n="1">
+								<layer xml:id="m-914" n="1">
+									<note xml:id="m-915" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-923" n="1">
+											<syl xml:id="m-924" wordpos="t">is</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-916" dur="long" dur.ges="4096p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-925" n="2">
+								<layer xml:id="m-926" n="1">
+									<note xml:id="m-927" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-932" n="1">
+											<syl xml:id="m-933" wordpos="t">sus</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-934" n="3">
+								<layer xml:id="m-935" n="1">
+									<note xml:id="m-936" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-937" endid="#m-972" startid="#m-936" />
+						</measure>
+						<measure xml:id="m-938" n="34">
+							<staff xml:id="m-939" n="1">
+								<layer xml:id="m-940" n="1">
+									<note xml:id="m-941" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-948" n="1">
+											<syl xml:id="m-949" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-942" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-950" n="1">
+											<syl xml:id="m-951" wordpos="i">Ihe</syl>
+										</verse>
+									</note>
+									<note xml:id="m-943" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-952" n="1">
+											<syl xml:id="m-953" wordpos="i">sum</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-945" endid="#m-947" num="3" num.format="ratio" numbase="2" startid="#m-944">
+										<note xml:id="m-944" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+											<verse xml:id="m-1008" n="1">
+												<syl xml:id="m-1009" wordpos="i">cru</syl>
+											</verse>
+										</note>
+										<note xml:id="m-946" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-947" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-954" n="2">
+								<layer xml:id="m-955" n="1">
+									<note xml:id="m-957" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-966" n="1">
+											<syl xml:id="m-967" wordpos="i">est</syl>
+										</verse>
+									</note>
+									<note xml:id="m-958" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									<note xml:id="m-960" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-968" n="1">
+											<syl xml:id="m-969" wordpos="i">hoc</syl>
+										</verse>
+									</note>
+									<note xml:id="m-961" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="2" stem.dir="down" />
+									<tuplet xml:id="m-963" endid="#m-965" num="3" num.format="ratio" numbase="2" startid="#m-962">
+										<note xml:id="m-962" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+											<verse xml:id="m-991" n="1">
+												<syl xml:id="m-992" wordpos="i">ig</syl>
+											</verse>
+										</note>
+										<note xml:id="m-964" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down" />
+										<note xml:id="m-965" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-970" n="3">
+								<layer xml:id="m-971" n="1">
+									<note xml:id="m-972" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-956" dur.ges="1375p" layer="1" staff="2" tstamp="1" tstamp2="2.3428" type="bracket" vo="7.875mm" />
+							<line xml:id="m-959" dur.ges="1409p" layer="1" staff="2" tstamp="3" tstamp2="4.376" type="bracket" vo="9.3516mm" />
+							<barLine xml:id="m-973" ho="0.0547mm" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-974" n="35">
+							<staff xml:id="m-975" n="1">
+								<layer xml:id="m-976" n="1">
+									<note xml:id="m-978" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1010" n="1">
+											<syl xml:id="m-1011" wordpos="m">ci</syl>
+										</verse>
+									</note>
+									<note xml:id="m-979" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-981" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1012" n="1">
+											<syl xml:id="m-1013" wordpos="m">fi</syl>
+										</verse>
+									</note>
+									<note xml:id="m-982" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<tuplet xml:id="m-984" endid="#m-986" num="3" num.format="ratio" numbase="2" startid="#m-983">
+										<note xml:id="m-983" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+											<verse xml:id="m-1014" n="1">
+												<syl xml:id="m-1015" wordpos="m">xe</syl>
+											</verse>
+										</note>
+										<note xml:id="m-985" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+										<note xml:id="m-986" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-987" n="2">
+								<layer xml:id="m-988" n="1">
+									<note xml:id="m-989" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-993" n="1">
+											<syl xml:id="m-994" wordpos="t">ne</syl>
+										</verse>
+									</note>
+									<note xml:id="m-990" artic="stop" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1027" n="1">
+											<syl xml:id="m-1028" wordpos="i">ma</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-995" n="3">
+								<layer xml:id="m-996" n="1">
+									<note xml:id="m-997" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-977" dur.ges="1211p" layer="1" staff="1" tstamp="1" tstamp2="2.1826" type="bracket" vo="0.875mm" />
+							<line xml:id="m-980" dur.ges="1194p" layer="1" staff="1" tstamp="3" tstamp2="4.166" type="bracket" vo="0.875mm" />
+						</measure>
+						<measure xml:id="m-998" n="36">
+							<staff xml:id="m-999" n="1">
+								<layer xml:id="m-1000" n="1">
+									<note xml:id="m-1001" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1016" n="1">
+											<syl xml:id="m-1017" wordpos="t">runt</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1003" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1043" n="1">
+											<syl xml:id="m-1044" wordpos="i">iu</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1004" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-1006" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1045" n="1">
+											<syl xml:id="m-1046" wordpos="m">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1007" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1018" n="2">
+								<layer xml:id="m-1019" n="1">
+									<note xml:id="m-1020" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1029" n="1">
+											<syl xml:id="m-1030" wordpos="m">cre</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1021" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1031" n="1">
+											<syl xml:id="m-1032" wordpos="t">scit</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1022" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1033" n="1">
+											<syl xml:id="m-1034" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1023" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1053" n="1">
+											<syl xml:id="m-1054" wordpos="i">ping</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1025" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1055" n="1">
+											<syl xml:id="m-1056" wordpos="m">ri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1026" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-1057" n="1">
+											<syl xml:id="m-1058" wordpos="m">di</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1035" n="3">
+								<layer xml:id="m-1036" n="1">
+									<note xml:id="m-1037" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-1002" dur.ges="1273p" layer="1" staff="1" tstamp="3" tstamp2="4.2432" type="bracket" vo="8.75mm" />
+							<line xml:id="m-1005" dur.ges="1295p" layer="1" staff="1" tstamp="5" tstamp2="6.2646" type="bracket" vo="8.1484mm" />
+							<fermata xml:id="m-1024" form="norm" layer="1" shape="angular" staff="2" startid="#m-1023" />
+						</measure>
+						<measure xml:id="m-1038" n="37">
+							<staff xml:id="m-1039" n="1">
+								<layer xml:id="m-1040" n="1">
+									<note xml:id="m-1041" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1047" n="1">
+											<syl xml:id="m-1048" wordpos="t">i</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1049" n="2">
+								<layer xml:id="m-1050" n="1">
+									<note xml:id="m-1051" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1059" n="1">
+											<syl xml:id="m-1060" wordpos="t">ne</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-1052" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1061" n="3">
+								<layer xml:id="m-1062" n="1">
+									<note xml:id="m-1064" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1065" endid="#m-1100" startid="#m-1064" />
+							<fermata xml:id="m-1042" form="norm" layer="1" shape="angular" staff="1" startid="#m-1041" />
+							<barLine xml:id="m-1063" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1066" n="38">
+							<staff xml:id="m-1067" n="1">
+								<layer xml:id="m-1068" n="1">
+									<note xml:id="m-1070" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1076" n="1">
+											<syl xml:id="m-1077" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1071" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down" />
+									<note xml:id="m-1073" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1110" n="1">
+											<syl xml:id="m-1111" wordpos="i">ir</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1074" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+									<note xml:id="m-1075" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1112" n="1">
+											<syl xml:id="m-1113" wordpos="m">ri</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1078" n="2">
+								<layer xml:id="m-1079" n="1">
+									<note xml:id="m-1080" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1088" n="1">
+											<syl xml:id="m-1089" wordpos="i">so</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1081" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1090" n="1">
+											<syl xml:id="m-1091" wordpos="m">ci</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1082" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1092" n="1">
+											<syl xml:id="m-1093" wordpos="m">o</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1083" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-1094" n="1">
+											<syl xml:id="m-1095" wordpos="t">rum</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-1085" endid="#m-1087" num="3" num.format="ratio" numbase="2" startid="#m-1084">
+										<note xml:id="m-1084" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up">
+											<verse xml:id="m-1096" n="1">
+												<syl xml:id="m-1097" wordpos="i">et</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1086" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="2" stem.dir="up" />
+										<note xml:id="m-1087" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="2" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1098" n="3">
+								<layer xml:id="m-1099" n="1">
+									<note xml:id="m-1100" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-1069" dur.ges="1296p" layer="1" staff="1" tstamp="1" tstamp2="2.2656" type="bracket" vo="8.5312mm" />
+							<line xml:id="m-1072" dur.ges="1491p" layer="1" staff="1" tstamp="3" tstamp2="4.4561" type="bracket" vo="9.3516mm" />
+						</measure>
+						<pb xml:id="m-1102" n="4" />
+						<measure xml:id="m-1101" n="39">
+							<staff xml:id="m-1103" n="1">
+								<layer xml:id="m-1104" n="1">
+									<tuplet xml:id="m-1106" endid="#m-1108" num="3" num.format="ratio" numbase="2" startid="#m-1105">
+										<note xml:id="m-1105" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+											<verse xml:id="m-1114" n="1">
+												<syl xml:id="m-1115" wordpos="m">se</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1107" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down" />
+										<note xml:id="m-1108" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down" />
+									</tuplet>
+									<note xml:id="m-1109" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-1116" n="1">
+											<syl xml:id="m-1117" wordpos="t">runt</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1118" n="2">
+								<layer xml:id="m-1119" n="1">
+									<note xml:id="m-1120" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-1143" n="1">
+											<syl xml:id="m-1144" wordpos="i">pro</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1121" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="2" stem.dir="down">
+										<accid xml:id="m-1122" accid="s" />
+										<verse xml:id="m-1145" n="1">
+											<syl xml:id="m-1146" wordpos="m">di</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1123" n="3">
+								<layer xml:id="m-1124" n="1">
+									<note xml:id="m-1125" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1126" n="40">
+							<staff xml:id="m-1127" n="1">
+								<layer xml:id="m-1128" n="1">
+									<rest xml:id="m-1129" dur="breve" dur.ges="2048p" />
+									<note xml:id="m-1130" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1133" n="1">
+											<syl xml:id="m-1134" wordpos="i">ma</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1131" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1135" n="1">
+											<syl xml:id="m-1136" wordpos="m">xi</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1132" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1137" n="1">
+											<syl xml:id="m-1138" wordpos="t">mis</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1139" n="2">
+								<layer xml:id="m-1140" n="1">
+									<note xml:id="m-1141" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1147" n="1">
+											<syl xml:id="m-1148" wordpos="t">tor</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1142" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1149" n="1">
+											<syl xml:id="m-1150" wordpos="i">est</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1151" n="3">
+								<layer xml:id="m-1152" n="1">
+									<note xml:id="m-1154" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-1153" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1155" n="41">
+							<staff xml:id="m-1156" n="1">
+								<layer xml:id="m-1157" n="1">
+									<note xml:id="m-1158" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1191" n="1">
+											<syl xml:id="m-1192" wordpos="i">con</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1159" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1193" n="1">
+											<syl xml:id="m-1194" wordpos="m">tu</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1160" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1195" n="1">
+											<syl xml:id="m-1196" wordpos="m">me</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1161" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1197" n="1">
+											<syl xml:id="m-1198" wordpos="m">li</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1162" n="2">
+								<layer xml:id="m-1163" n="1">
+									<note xml:id="m-1164" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1171" n="1">
+											<syl xml:id="m-1172" wordpos="i">iam</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1166" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1173" n="1">
+											<syl xml:id="m-1174" wordpos="i">cre</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1167" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1175" n="1">
+											<syl xml:id="m-1176" wordpos="t">dit</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1168" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1177" n="1">
+											<syl xml:id="m-1178" wordpos="i">es</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1169" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1179" n="1">
+											<syl xml:id="m-1180" wordpos="t">se</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1170" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-1207" n="1">
+											<syl xml:id="m-1208" wordpos="i">uic</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1181" n="3">
+								<layer xml:id="m-1182" n="1">
+									<note xml:id="m-1184" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1185" endid="#m-1219" startid="#m-1184" />
+							<fermata xml:id="m-1165" form="norm" layer="1" shape="angular" staff="2" startid="#m-1164" />
+							<barLine xml:id="m-1183" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1186" n="42">
+							<staff xml:id="m-1187" n="1">
+								<layer xml:id="m-1188" n="1">
+									<note xml:id="m-1189" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1199" n="1">
+											<syl xml:id="m-1200" wordpos="t">is</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-1190" dur="long" dur.ges="4096p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1201" n="2">
+								<layer xml:id="m-1202" n="1">
+									<note xml:id="m-1203" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="2" stem.dir="down">
+										<verse xml:id="m-1209" n="1">
+											<syl xml:id="m-1210" wordpos="t">tor</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1204" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1211" n="1">
+											<syl xml:id="m-1212" wordpos="i">quan</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1205" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1213" n="1">
+											<syl xml:id="m-1214" wordpos="t">do</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1206" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1215" n="1">
+											<syl xml:id="m-1216" wordpos="i">per</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1217" n="3">
+								<layer xml:id="m-1218" n="1">
+									<note xml:id="m-1219" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-1220" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-1221" n="43">
+							<staff xml:id="m-1222" n="1">
+								<layer xml:id="m-1223" n="1">
+									<note xml:id="m-1225" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1249" n="1">
+											<syl xml:id="m-1250" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1226" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									<note xml:id="m-1229" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1251" n="1">
+											<syl xml:id="m-1252" wordpos="m">ui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1230" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<tuplet xml:id="m-1232" endid="#m-1234" num="3" num.format="ratio" numbase="2" startid="#m-1231">
+										<note xml:id="m-1231" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up">
+											<verse xml:id="m-1253" n="1">
+												<syl xml:id="m-1254" wordpos="m">di</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1233" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+										<note xml:id="m-1234" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1235" n="2">
+								<layer xml:id="m-1236" n="1">
+									<note xml:id="m-1237" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-1261" n="1">
+											<syl xml:id="m-1262" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1238" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-1263" n="1">
+											<syl xml:id="m-1264" wordpos="m">trac</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1239" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1265" n="1">
+											<syl xml:id="m-1266" wordpos="m">ti</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1240" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1267" n="1">
+											<syl xml:id="m-1268" wordpos="m">o</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1241" n="3">
+								<layer xml:id="m-1242" n="1">
+									<note xml:id="m-1243" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="c" pnum="36" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-1224" dur.ges="1445p" layer="1" staff="1" tstamp="1" tstamp2="2.4111" type="bracket" vo="10.9922mm" />
+							<fermata xml:id="m-1227" form="norm" layer="1" shape="angular" staff="1" startid="#m-1226" />
+							<line xml:id="m-1228" dur.ges="1246p" layer="1" staff="1" tstamp="3" tstamp2="4.2168" type="bracket" vo="10.7188mm" />
+						</measure>
+						<measure xml:id="m-1244" n="44">
+							<staff xml:id="m-1245" n="1">
+								<layer xml:id="m-1246" n="1">
+									<note xml:id="m-1247" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1255" n="1">
+											<syl xml:id="m-1256" wordpos="t">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1248" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1286" n="1">
+											<syl xml:id="m-1287" wordpos="i">de</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1257" n="2">
+								<layer xml:id="m-1258" n="1">
+									<note xml:id="m-1259" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1269" n="1">
+											<syl xml:id="m-1270" wordpos="t">nes</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1271" n="3">
+								<layer xml:id="m-1272" n="1">
+									<note xml:id="m-1273" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-1260" form="norm" layer="1" shape="angular" staff="2" startid="#m-1259" />
+							<fermata xml:id="m-1274" form="norm" layer="1" shape="angular" staff="3" startid="#m-1273" />
+							<barLine xml:id="m-1275" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-1276" n="45">
+							<staff xml:id="m-1277" n="1">
+								<layer xml:id="m-1278" n="1">
+									<note xml:id="m-1280" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1288" n="1">
+											<syl xml:id="m-1289" wordpos="m">te</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1281" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-1283" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+										<verse xml:id="m-1290" n="1">
+											<syl xml:id="m-1291" wordpos="m">sta</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1284" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<note xml:id="m-1285" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1292" n="1">
+											<syl xml:id="m-1293" wordpos="t">ri</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1294" n="2">
+								<layer xml:id="m-1295" n="1">
+									<note xml:id="m-1296" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1331" n="1">
+											<syl xml:id="m-1332" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1297" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1333" n="1">
+											<syl xml:id="m-1334" wordpos="m">pri</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1298" n="3">
+								<layer xml:id="m-1299" n="1">
+									<note xml:id="m-1300" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1301" endid="#m-1343" startid="#m-1300" />
+							<line xml:id="m-1279" dur.ges="1183p" layer="1" staff="1" tstamp="1" tstamp2="2.1553" type="bracket" vo="7.8203mm" />
+							<line xml:id="m-1282" dur.ges="1171p" layer="1" staff="1" tstamp="3" tstamp2="4.1436" type="bracket" vo="9.3516mm" />
+						</measure>
+						<measure xml:id="m-1302" n="46">
+							<staff xml:id="m-1303" n="1">
+								<layer xml:id="m-1304" n="1">
+									<tuplet xml:id="m-1306" endid="#m-1308" num="4" num.format="ratio" numbase="2" startid="#m-1305">
+										<note xml:id="m-1305" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+											<verse xml:id="m-1315" n="1">
+												<syl xml:id="m-1316" wordpos="i">de</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1307" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+										<note xml:id="m-1308" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+									<tuplet xml:id="m-1310" endid="#m-1314" num="4" num.format="ratio" numbase="2" startid="#m-1309">
+										<note xml:id="m-1309" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-1312" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+											<verse xml:id="m-1319" n="1">
+												<syl xml:id="m-1320" wordpos="i">que</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1313" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+										<note xml:id="m-1314" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+									</tuplet>
+									<note xml:id="m-1311" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1317" n="1">
+											<syl xml:id="m-1318" wordpos="t">bet</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1321" n="2">
+								<layer xml:id="m-1322" n="1">
+									<note xml:id="m-1323" artic="ten" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1335" n="1">
+											<syl xml:id="m-1336" con="u" wordpos="t">mit</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-1325" endid="#m-1326" num="2" num.format="ratio" numbase="1" startid="#m-1324">
+										<note xml:id="m-1324" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+										<note xml:id="m-1326" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									</tuplet>
+									<note xml:id="m-1327" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1337" n="1">
+											<syl xml:id="m-1338" wordpos="i">fra</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1328" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="2" stem.dir="down">
+										<verse xml:id="m-1339" n="1">
+											<syl xml:id="m-1340" wordpos="t">trum</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1329" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down">
+										<verse xml:id="m-1361" n="1">
+											<syl xml:id="m-1362" wordpos="i">ho</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1330" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1363" n="1">
+											<syl xml:id="m-1364" wordpos="m">no</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1341" n="3">
+								<layer xml:id="m-1342" n="1">
+									<note xml:id="m-1343" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-1344" layer="1" staff="3" tstamp="6.9922" tstamp2="6.9922" />
+						</measure>
+						<measure xml:id="m-1345" n="47">
+							<staff xml:id="m-1346" n="1">
+								<layer xml:id="m-1347" n="1">
+									<note xml:id="m-1348" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1355" n="1">
+											<syl xml:id="m-1356" wordpos="i">hox</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1349" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1382" n="1">
+											<syl xml:id="m-1383" wordpos="i">o</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1350" dur="breve" dur.ges="2048p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1384" n="1">
+											<syl xml:id="m-1385" wordpos="m">pe</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-1352" endid="#m-1354" num="3" num.format="ratio" numbase="2" startid="#m-1351">
+										<note xml:id="m-1351" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+											<verse xml:id="m-1386" n="1">
+												<syl xml:id="m-1387" wordpos="m">ra</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1353" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-1354" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1357" n="2">
+								<layer xml:id="m-1358" n="1">
+									<note xml:id="m-1359" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1365" n="1">
+											<syl xml:id="m-1366" wordpos="t">res</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-1360" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1367" n="3">
+								<layer xml:id="m-1368" n="1">
+									<note xml:id="m-1369" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1370" n="48">
+							<staff xml:id="m-1371" n="1">
+								<layer xml:id="m-1372" n="1">
+									<note xml:id="m-1373" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1388" n="1">
+											<syl xml:id="m-1389" wordpos="t">ri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1376" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1390" n="1">
+											<syl xml:id="m-1391" wordpos="i">fe</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1377" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down" />
+									<tuplet xml:id="m-1379" endid="#m-1381" num="3" num.format="ratio" numbase="2" startid="#m-1378">
+										<note xml:id="m-1378" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up">
+											<verse xml:id="m-1392" n="1">
+												<syl xml:id="m-1393" con="u" wordpos="t">cit</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1380" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="1" stem.dir="up" />
+										<note xml:id="m-1381" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="1" stem.dir="up" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1394" n="2">
+								<layer xml:id="m-1395" n="1">
+									<note xml:id="m-1396" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1399" n="1">
+											<syl xml:id="m-1400" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1397" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1401" n="1">
+											<syl xml:id="m-1402" wordpos="i">est</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1398" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1434" n="1">
+											<syl xml:id="m-1435" wordpos="i">so</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1403" n="3">
+								<layer xml:id="m-1404" n="1">
+									<note xml:id="m-1405" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-1374" form="norm" layer="1" shape="angular" staff="1" startid="#m-1373" />
+							<line xml:id="m-1375" dur.ges="1421p" layer="1" staff="1" tstamp="3" tstamp2="4.3877" type="bracket" vo="7.6016mm" />
+							<barLine xml:id="m-1406" ho="0.2734mm" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<pb xml:id="m-1408" n="5" />
+						<measure xml:id="m-1407" n="49">
+							<staff xml:id="m-1409" n="1">
+								<layer xml:id="m-1410" n="1">
+									<note xml:id="m-1412" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1417" n="1">
+											<syl xml:id="m-1418" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1413" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down" />
+									<note xml:id="m-1414" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-1419" n="1">
+											<syl xml:id="m-1420" wordpos="i">a</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1415" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1421" n="1">
+											<syl xml:id="m-1422" wordpos="m">li</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1416" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-1423" n="1">
+											<syl xml:id="m-1424" wordpos="t">a</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1425" n="2">
+								<layer xml:id="m-1426" n="1">
+									<note xml:id="m-1427" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1436" n="1">
+											<syl xml:id="m-1437" wordpos="m">ci</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1428" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1438" n="1">
+											<syl xml:id="m-1439" wordpos="t">us</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1429" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1440" n="1">
+											<syl xml:id="m-1441" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1431" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1442" n="1">
+											<syl xml:id="m-1443" wordpos="m">mo</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1432" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1444" n="1">
+											<syl xml:id="m-1445" wordpos="t">num</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1433" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1461" n="1">
+											<syl xml:id="m-1462" wordpos="i">a</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1446" n="3">
+								<layer xml:id="m-1447" n="1">
+									<note xml:id="m-1448" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1449" endid="#m-1467" startid="#m-1448" />
+							<line xml:id="m-1411" dur.ges="1345p" layer="1" staff="1" tstamp="1" tstamp2="2.3135" type="bracket" vo="9.6797mm" />
+							<fermata xml:id="m-1430" form="norm" layer="1" shape="angular" staff="2" startid="#m-1429" />
+						</measure>
+						<measure xml:id="m-1450" n="50">
+							<staff xml:id="m-1451" n="1">
+								<layer xml:id="m-1452" n="1">
+									<note xml:id="m-1453" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="1" stem.dir="down">
+										<accid xml:id="m-1454" accid="s" />
+										<verse xml:id="m-1473" n="1">
+											<syl xml:id="m-1474" wordpos="i">plu</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1455" n="2">
+								<layer xml:id="m-1456" n="1">
+									<note xml:id="m-1457" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="g" pnum="56" staff="2" stem.dir="down">
+										<accid xml:id="m-1458" accid="s" />
+										<verse xml:id="m-1463" n="1">
+											<syl xml:id="m-1464" wordpos="t">mans</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1459" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="g" pnum="56" staff="2" stem.dir="down">
+										<accid xml:id="m-1460" accid="s" />
+										<verse xml:id="m-1480" n="1">
+											<syl xml:id="m-1481" wordpos="i">ma</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1465" n="3">
+								<layer xml:id="m-1466" n="1">
+									<note xml:id="m-1467" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1468" n="51">
+							<staff xml:id="m-1469" n="1">
+								<layer xml:id="m-1470" n="1">
+									<note xml:id="m-1471" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1475" n="1">
+											<syl xml:id="m-1476" wordpos="t">ra</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-1472" dur="long" dur.ges="4096p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1477" n="2">
+								<layer xml:id="m-1478" n="1">
+									<note xml:id="m-1479" artic="stacc" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="2" stem.dir="down">
+										<verse xml:id="m-1482" n="1">
+											<syl xml:id="m-1483" wordpos="t">lum</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1484" n="3">
+								<layer xml:id="m-1485" n="1">
+									<note xml:id="m-1487" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-1486" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1488" n="52">
+							<staff xml:id="m-1489" n="1">
+								<layer xml:id="m-1490" n="1">
+									<note xml:id="m-1491" color="rgba(0,0,255,1)" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1492" n="2">
+								<layer xml:id="m-1493" n="1">
+									<note xml:id="m-1494" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="2" stem.dir="down">
+										<verse xml:id="m-1497" n="1">
+											<syl xml:id="m-1498" wordpos="i">et</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1495" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-1499" n="1">
+											<syl xml:id="m-1500" wordpos="i">non</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1496" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1523" n="1">
+											<syl xml:id="m-1524" wordpos="i">bo</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1501" n="3">
+								<layer xml:id="m-1502" n="1">
+									<note xml:id="m-1503" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="a" pnum="45" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1504" n="53">
+							<staff xml:id="m-1505" n="1">
+								<layer xml:id="m-1506" n="1">
+									<note xml:id="m-1507" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1512" n="1">
+											<syl xml:id="m-1513" wordpos="i">pre</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1508" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1514" n="1">
+											<syl xml:id="m-1515" wordpos="t">cor</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1510" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-1516" n="1">
+											<syl xml:id="m-1517" wordpos="i">quod</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1511" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1518" n="2">
+								<layer xml:id="m-1519" n="1">
+									<note xml:id="m-1520" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+										<verse xml:id="m-1525" n="1">
+											<syl xml:id="m-1526" wordpos="t">num</syl>
+										</verse>
+									</note>
+									<rest xml:id="m-1521" dur="breve" dur.ges="2048p" />
+								</layer>
+							</staff>
+							<staff xml:id="m-1527" n="3">
+								<layer xml:id="m-1528" n="1">
+									<note xml:id="m-1530" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1531" endid="#m-1556" startid="#m-1530" />
+							<line xml:id="m-1509" dur.ges="1307p" layer="1" staff="1" tstamp="5" tstamp2="6.2764" type="bracket" vo="9.0234mm" />
+							<fermata xml:id="m-1522" form="norm" layer="1" shape="angular" staff="2" startid="#m-1521" />
+							<barLine xml:id="m-1529" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1532" n="54">
+							<staff xml:id="m-1533" n="1">
+								<layer xml:id="m-1534" n="1">
+									<note xml:id="m-1535" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down">
+										<verse xml:id="m-1539" n="1">
+											<syl xml:id="m-1540" wordpos="i">hanc</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1536" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="1" stem.dir="down">
+										<verse xml:id="m-1541" n="1">
+											<syl xml:id="m-1542" wordpos="i">in</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1538" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down">
+										<verse xml:id="m-1568" n="1">
+											<syl xml:id="m-1569" wordpos="i">in</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1543" n="2">
+								<layer xml:id="m-1544" n="1">
+									<note xml:id="m-1545" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1548" n="1">
+											<syl xml:id="m-1549" wordpos="i">quod</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1546" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1550" n="1">
+											<syl xml:id="m-1551" wordpos="i">ual</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1547" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1552" n="1">
+											<syl xml:id="m-1553" wordpos="t">de</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1554" n="3">
+								<layer xml:id="m-1555" n="1">
+									<note xml:id="m-1556" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-1537" form="norm" layer="1" shape="angular" staff="1" startid="#m-1536" />
+						</measure>
+						<measure xml:id="m-1557" n="55">
+							<staff xml:id="m-1558" n="1">
+								<layer xml:id="m-1559" n="1">
+									<note xml:id="m-1561" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1570" n="1">
+											<syl xml:id="m-1571" wordpos="m">ta</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1562" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="1" stem.dir="down" />
+									<tuplet xml:id="m-1564" endid="#m-1566" num="3" num.format="ratio" numbase="2" startid="#m-1563">
+										<note xml:id="m-1563" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+											<verse xml:id="m-1572" n="1">
+												<syl xml:id="m-1573" con="u" wordpos="t">ri</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1565" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-1566" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+									<note xml:id="m-1567" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1574" n="1">
+											<syl xml:id="m-1575" wordpos="i">non</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1576" n="2">
+								<layer xml:id="m-1577" n="1">
+									<note xml:id="m-1578" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1587" n="1">
+											<syl xml:id="m-1588" wordpos="i">dic</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1579" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1589" n="1">
+											<syl xml:id="m-1590" wordpos="t">tum</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1581" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1606" n="1">
+											<syl xml:id="m-1607" wordpos="i">ui</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1582" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down" />
+									<tuplet xml:id="m-1584" endid="#m-1586" num="3" num.format="ratio" numbase="2" startid="#m-1583">
+										<note xml:id="m-1583" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+											<verse xml:id="m-1608" n="1">
+												<syl xml:id="m-1609" wordpos="m">ci</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1585" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+										<note xml:id="m-1586" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1591" n="3">
+								<layer xml:id="m-1592" n="1">
+									<note xml:id="m-1594" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<line xml:id="m-1560" dur.ges="1416p" layer="1" staff="1" tstamp="1" tstamp2="2.3828" type="bracket" vo="11.4844mm" />
+							<line xml:id="m-1580" dur.ges="1365p" layer="1" staff="2" tstamp="3" tstamp2="4.333" type="bracket" vo="10.0078mm" />
+							<barLine xml:id="m-1593" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1595" n="56">
+							<staff xml:id="m-1596" n="1">
+								<layer xml:id="m-1597" n="1">
+									<note xml:id="m-1598" dur="long" dur.ges="4096p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1621" n="1">
+											<syl xml:id="m-1622" wordpos="i">ue</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-1600" endid="#m-1602" num="3" num.format="ratio" numbase="2" startid="#m-1599">
+										<note xml:id="m-1599" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+											<verse xml:id="m-1623" n="1">
+												<syl xml:id="m-1624" wordpos="m">li</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1601" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down" />
+										<note xml:id="m-1602" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1603" n="2">
+								<layer xml:id="m-1604" n="1">
+									<note xml:id="m-1605" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1610" n="1">
+											<syl xml:id="m-1611" wordpos="t">um</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1612" n="3">
+								<layer xml:id="m-1613" n="1">
+									<note xml:id="m-1614" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="g" pnum="43" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1615" n="57">
+							<staff xml:id="m-1616" n="1">
+								<layer xml:id="m-1617" n="1">
+									<note xml:id="m-1618" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1625" n="1">
+											<syl xml:id="m-1626" wordpos="t">tis</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1619" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1627" n="1">
+											<syl xml:id="m-1628" wordpos="i">sed</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1620" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1651" n="1">
+											<syl xml:id="m-1652" wordpos="i">or</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1629" n="2">
+								<layer xml:id="m-1630" n="1">
+									<note xml:id="m-1631" dur="long" dur.ges="4096p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down">
+										<verse xml:id="m-1670" n="1">
+											<syl xml:id="m-1671" wordpos="i">ca</syl>
+										</verse>
+									</note>
+									<tuplet xml:id="m-1633" endid="#m-1635" num="3" num.format="ratio" numbase="2" startid="#m-1632">
+										<note xml:id="m-1632" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="g" pnum="55" staff="2" stem.dir="down">
+											<verse xml:id="m-1672" n="1">
+												<syl xml:id="m-1673" wordpos="m">ri</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1634" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="2" stem.dir="down" />
+										<note xml:id="m-1635" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down" />
+									</tuplet>
+								</layer>
+							</staff>
+							<staff xml:id="m-1636" n="3">
+								<layer xml:id="m-1637" n="1">
+									<note xml:id="m-1639" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<tie xml:id="m-1640" endid="#m-1680" startid="#m-1639" />
+							<barLine xml:id="m-1638" layer="1" staff="3" tstamp="1" tstamp2="1" />
+						</measure>
+						<measure xml:id="m-1641" n="58">
+							<staff xml:id="m-1642" n="1">
+								<layer xml:id="m-1643" n="1">
+									<note xml:id="m-1644" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1653" n="1">
+											<syl xml:id="m-1654" wordpos="m">na</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1645" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1655" n="1">
+											<syl xml:id="m-1656" wordpos="t">ri</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1646" dur="1" dur.ges="1024p" layer="1" oct="3" oct.ges="2" pname="b" pnum="47" staff="1" stem.dir="down">
+										<verse xml:id="m-1657" n="1">
+											<syl xml:id="m-1658" wordpos="i">de</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1647" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="1" stem.dir="down">
+										<verse xml:id="m-1659" n="1">
+											<syl xml:id="m-1660" wordpos="t">i</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1649" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="1" stem.dir="down">
+										<verse xml:id="m-1690" n="1">
+											<syl xml:id="m-1691" wordpos="i">ca</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1650" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="f" pnum="53" staff="1" stem.dir="down">
+										<verse xml:id="m-1692" n="1">
+											<syl xml:id="m-1693" wordpos="m">ri</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1661" n="2">
+								<layer xml:id="m-1662" n="1">
+									<tuplet xml:id="m-1664" endid="#m-1666" num="3" num.format="ratio" numbase="2" startid="#m-1663">
+										<note xml:id="m-1663" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+											<verse xml:id="m-1674" n="1">
+												<syl xml:id="m-1675" wordpos="m">ta</syl>
+											</verse>
+										</note>
+										<note xml:id="m-1665" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="c" pnum="48" staff="2" stem.dir="down" />
+										<note xml:id="m-1666" artic="stacc" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down" />
+									</tuplet>
+									<note xml:id="m-1667" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1676" n="1">
+											<syl xml:id="m-1677" wordpos="t">ti</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1668" dur="1" dur.ges="1024p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="2" stem.dir="down">
+										<verse xml:id="m-1716" n="1">
+											<syl xml:id="m-1717" wordpos="i">con</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1669" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1718" n="1">
+											<syl xml:id="m-1719" wordpos="m">tra</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1678" n="3">
+								<layer xml:id="m-1679" n="1">
+									<note xml:id="m-1680" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="f" pnum="41" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<fermata xml:id="m-1648" form="norm" layer="1" shape="angular" staff="1" startid="#m-1647" />
+							<barLine xml:id="m-1681" layer="1" staff="3" tstamp="6.999" tstamp2="6.999" />
+						</measure>
+						<measure xml:id="m-1682" n="59">
+							<staff xml:id="m-1683" n="1">
+								<layer xml:id="m-1684" n="1">
+									<note xml:id="m-1685" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="e" pnum="52" staff="1" stem.dir="down">
+										<verse xml:id="m-1694" n="1">
+											<syl xml:id="m-1695" wordpos="m">ta</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1686" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="f" pnum="54" staff="1" stem.dir="down">
+										<accid xml:id="m-1687" accid="s" />
+										<verse xml:id="m-1696" n="1">
+											<syl xml:id="m-1697" wordpos="t">te</syl>
+										</verse>
+									</note>
+									<note xml:id="m-1688" dur="breve" dur.ges="2048p" layer="1" oct="4" oct.ges="3" pname="g" pnum="56" staff="1" stem.dir="down">
+										<accid xml:id="m-1689" accid="s" />
+										<verse xml:id="m-1709" n="1">
+											<syl xml:id="m-1710" wordpos="i">pu</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1698" n="2">
+								<layer xml:id="m-1699" n="1">
+									<note xml:id="m-1700" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="c" pnum="49" staff="2" stem.dir="down">
+										<accid xml:id="m-1701" accid="s" />
+										<verse xml:id="m-1720" n="1">
+											<syl xml:id="m-1721" wordpos="m">ri</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1702" n="3">
+								<layer xml:id="m-1703" n="1">
+									<note xml:id="m-1704" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="e" pnum="40" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+						</measure>
+						<measure xml:id="m-1705" n="60" right="end">
+							<staff xml:id="m-1706" n="1">
+								<layer xml:id="m-1707" n="1">
+									<note xml:id="m-1708" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="a" pnum="57" staff="1" stem.dir="down">
+										<verse xml:id="m-1711" n="1">
+											<syl xml:id="m-1712" wordpos="t">ra</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1713" n="2">
+								<layer xml:id="m-1714" n="1">
+									<note xml:id="m-1715" dots="1" dur="long" dur.ges="6144p" layer="1" oct="4" oct.ges="3" pname="d" pnum="50" staff="2" stem.dir="down">
+										<verse xml:id="m-1722" n="1">
+											<syl xml:id="m-1723" wordpos="t">um.</syl>
+										</verse>
+									</note>
+								</layer>
+							</staff>
+							<staff xml:id="m-1724" n="3">
+								<layer xml:id="m-1725" n="1">
+									<note xml:id="m-1726" dots="1" dur="long" dur.ges="6144p" layer="1" oct="3" oct.ges="2" pname="d" pnum="38" staff="3" stem.dir="up" />
+								</layer>
+							</staff>
+							<barLine xml:id="m-1727" ho="1.3672mm" layer="1" staff="3" tstamp="6.9219" tstamp2="6.9219" />
+							<barLine xml:id="m-1728" ho="2.7344mm" layer="1" staff="3" tstamp="6.9219" tstamp2="6.9219" />
+						</measure>
+					</section>
+				</score>
+			</mdiv>
+		</body>
+	</music>
+</mei>

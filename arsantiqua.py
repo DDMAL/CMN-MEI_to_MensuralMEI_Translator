@@ -1,24 +1,39 @@
-from pymei import *
+"""
+arsantiqua module
+
+Contains all the relevant functions for translating Ars Antiqua pieces written in CMN-MEI to Mensural-MEI
+
+Functions:
+noterest_to_mensural -- Perform the actual change, in notes and rests, from contemporary to mensural notation
+sb_major_minor -- Identify 'major semibreves' by adding @num, @numbase and @quality attributes to the note-element
+fill_section -- Fill the output <section> element with the appropriate musical content
+"""
+# Ars Antiqua is characterized by the following:
+# 1. Absence of 'minims' 
+# 2. Absence of 'prolatio'
+# 3. The 'breve' can't be identified as 'perfect' or 'imperfect'. 
+#    It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves, 
+#    or it is equal to 2 equal duration semibreves.
+# 4. The fact that the 'breve' can't be catalogued as 'perfect' or 'imperfect', implies that the 'semibreve' can't be 'altered.
+#    It just can't be 'major' or 'minor'.
+# 5. There are no 'maximas' just 'duplex longas'
 from fractions import *
 
+from pymei import *
 
-# --------- #
-# FUNCTIONS #
-# --------- #
-
-# This is for ARS ANTIQUA, so:
-# NO MINIMS
-# NO PROLATIO
-# The BREVE CAN'T be PERFECT or IMPERFECT
-# It is just 3 MINOR SEMIBREVES LONG
-# The SEMIBREVE CAN'T be ALTERED
-# It is MAJOR or MINOR
 
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
 def noterest_to_mensural(notes, rests, modusminor):
+    """
+    Change the @dur attribute within the <note> and <rest> elements to a mensural-value; and add @num, @numbase and @quality attributes when appropriate.
 
+    Arguments:
+    notes -- list of all the <note> elements from a particular voice
+    rests -- list of all the <rest> elements from a particular voice
+    modusminor -- integer value of the modusminor from a particular voice
+    """
     # Default values for notes according to the mensuration
     b_def = 2048
     
@@ -136,7 +151,7 @@ def noterest_to_mensural(notes, rests, modusminor):
             mens_dur = "semibrevis"
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
-                durges_num = int(rest.getAttribute('dur.ges').value[:-1]) 
+                durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 if durges_num != 1024:
                     print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 1024p\n")
         # Breve rest
@@ -199,8 +214,14 @@ def noterest_to_mensural(notes, rests, modusminor):
         rest.getAttribute('dur').setValue(mens_dur)
 
 
-# Finds and indicates which Semibreves are Major, completing the encoding of the "Note's Actual Duration" part
+# Finds and indicates which Semibreves are Major, completing the encoding of the "Note's Actual Duration" part.
 def sb_major_minor(children_of_voiceStaff):
+    """
+    Add @quality, @num and @numbase attributes to indicate a 'major semibreve' (as opposed to a 'minor semibreve').
+
+    Arguments:
+    children_of_voiceStaff -- list of all the MeiElement objects contained in the <staff> element of a single voice, this includes: <tuplet>, <note> and <rest> elements.
+    """
     indices_BrevesOrTuplets = [-1]
     for element in children_of_voiceStaff:
         if (element.name == 'tuplet') or (element.hasAttribute('dur') and (element.getAttribute('dur').value == 'brevis' or element.getAttribute('dur').value == 'longa' or element.getAttribute('dur').value == 'maxima')):
@@ -300,232 +321,98 @@ def sb_major_minor(children_of_voiceStaff):
                 print("You can find these breves between the " + str(start_element.name) + " with id " + str(start_element.id) + " and the " + str(end_element.name) + " with id " + str(end_element.id))
 
 
-# ----------- #
-# MAIN SCRIPT #
-# ----------- #
+def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choice):
+    """
+    Fill the <section> element of the Mensural-MEI document with the appropriate musical content.
 
-path = raw_input("Input the path to the MEI file you want to transform into mensural-mei: ")
-breve_choice = raw_input("Is the breve equal to:\n(A) 3 minor semibreves (or, equivalently, a pair of minor-major semibreves) or \n(B) 2 semibreves of equal duration \nNote: Option (A) is generally the case in Ars Antiqua.\nWrite the number of semibreves of equal duration (3 or 2) to which the breve is equivalent to: ")
+    This function calls the other two functions (noterest_to_mensural and sb_major_minor) to fill the <section> element with the right note (and rest) values.
+    The appropriate musical content for the <section> in a Mensural-MEI document includes <note> and <rest> elements, but not <tuplet> or <tie> elements.
 
-# Input file part - Separates individual voice information for the parser part
-input_doc = documentFromFile(path).getMeiDocument()
-staffDef_list = input_doc.getElementsByName('staffDef')
-num_voices = len(staffDef_list)
-all_voices = []
-for i in range(0, num_voices):
-    measures_list = input_doc.getElementsByName('measure')
-    ind_voice = []
-    for measure in measures_list:
-        staves_in_measure = measure.getChildrenByName('staff')
-        staff = staves_in_measure[i]
-        ind_voice.append(staff)
-    all_voices.append(ind_voice)
-
-# Ties part
-# Join into one the notes that are tied together:
-# 1. Sets the @dur of the first note of the tied notes to the value 'TiedNote!'
-# 2. And its @dur.ges to the result of the sum of the performance duration (@dur.ges) of the individual notes that make up the tie
-# Store a list of the other notes that make up the tie (the ones after the first) to remove them from the output document.
-ids_removeList = []
-ties_list = input_doc.getElementsByName('tie')
-for i in range (len(ties_list)-1, -1, -1):
-    tie = ties_list[i]
-    
-    # Start note
-    startid = tie.getAttribute('startid').value
-    note_startid = startid[1:]  # Removing the '#' character from the startid value, to have the id of the note
-    start_note = input_doc.getElementById(note_startid)
-    start_dur = start_note.getAttribute('dur').value    # Value of the form: 'long', 'breve', '1' or '2'
-    start_durGes_number = int(start_note.getAttribute('dur.ges').value[:-1])    # Value of the form: 1024
-
-    # End note
-    endid = tie.getAttribute('endid').value
-    note_endid = endid[1:]
-    end_note = input_doc.getElementById(note_endid)
-    end_dur = end_note.getAttribute('dur').value
-    end_durGes_number = int(end_note.getAttribute('dur.ges').value[:-1])
-
-    # Calculation of the @dur.ges
-    durGes_number = start_durGes_number + end_durGes_number
-    durGes = str(durGes_number) + "p"
-    start_note.getAttribute('dur.ges').setValue(durGes)
-    ids_removeList.append(end_note.id)
-
-    # Sets @dur = 'TiedNote!'
-    start_note.getAttribute('dur').setValue('TiedNote!')
-#print(ids_removeList)
-
-
-# Output File - Parser Part
-output_doc = MeiDocument()
-output_doc.root = input_doc.getRootElement()
-
-# ScoreDef Part of the <score> element:
-out_scoreDef = MeiElement('scoreDef')
-# Make it share the id (@xml:id) it has in the input file
-out_scoreDef.id = input_doc.getElementsByName('scoreDef')[0].id
-# Add as its child the <staffGrp> element, with all the <staffDef> elements and the right mensuration (@modusmaior, @modusminor and @tempus) for each one
-out_staffGrp = input_doc.getElementsByName('staffGrp')[-1]
-# The [-1] guarantees that the <staffGrp> element taken is the one which contains the <staffDef> elements (previous versions of the plugin stored a <staffGrp> element inside another <staffGrp>)
-stavesDef = out_staffGrp.getChildren()
-# Mensuration added to the staves definition <staffDef>
-for staffDef in stavesDef:
-    voice = staffDef.getAttribute('label').value
-    print("Give the mensuration for the " + voice + ":")
-    modusminor = raw_input("Modus minor (3 or 2): ")
-    staffDef.addAttribute('modusmaior', '2')
-    staffDef.addAttribute('modusminor', modusminor)
-    staffDef.addAttribute('tempus', breve_choice)
-out_scoreDef.addChild(out_staffGrp)
-
-# Section Part of the <score> element:
-out_section = MeiElement('section')
-out_section.id = input_doc.getElementsByName('section')[0].id
-
-# Add the new <scoreDef> and empty <section> elements to the <score> element after cleaning it up
-score = output_doc.getElementsByName('score')[0]
-score.deleteAllChildren()
-score.addChild(out_scoreDef)
-score.addChild(out_section)
-
-# list of lists, each of them with all the elements of one voice
-voices_elements = []
-# Filling the section element:
-for ind_voice in all_voices:
-    # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
-    staff = MeiElement('staff')
-    staff.setId(input_doc.getElementsByName('staff')[all_voices.index(ind_voice)].id)
-    out_section.addChild(staff)
-    # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
-    layer = MeiElement('layer')
-    layer.setId(input_doc.getElementsByName('layer')[all_voices.index(ind_voice)].id)
-    staff.addChild(layer)
-    # Ordered list of all the elements of one voice (<note>, <rest> and <tuplet>), useful for identifying the 'Major Semibreves' of the voice
-    elements_per_voice = []
-    # Fill each voice (fill the <layer> of each <staff>) with musical information (notes/rests)
-    for i in range(0, len(ind_voice)):
-        musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
-        # Add the elements of each measure into the <layer> and a <barLine/> element after the measure-content
-        for element in musical_content:
-            # Tied notes
-            # If the element is a tied note (other than the first note of the tie: <note @dur = 'TiedNote!'>), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
-            if element.id in ids_removeList:
-                pass
-            # Tuplets
-            elif element.name == 'tuplet':
-                # Add the <tuplet> to the list of elements in the voice
-                elements_per_voice.append(element)
-                # The only tuplets present in Ars Antiqua are tuplets of semibreves
-                tuplet = element
-                num = int(tuplet.getAttribute('num').value)
-                numbase = int(tuplet.getAttribute('numbase').value)
-                # @numbase is usually '2', because generally a breve = 3 minor semibreves, so tuplets of 3:2 are frequently used to represent 3 (minor) semibreves per breve.
-                # There are also other cases in which we have more than 3 semibreves per breve: 4:2, 5:2, 6:2 and 7:2
-                if numbase == 2:
-                    base = int(breve_choice)
-                # There is also the case of 2:1 tuplets, in which case @numbase = '1', to indicate a group of two semibreves which should be interpreted as one minor semibreve
-                elif numbase == 1:
-                    base = 1
-                else:
-                    print("Shouldn't happen!")
-                # Find the simplified ratio between @numbase and @num 
-                notes_grouped = tuplet.getChildren()
-                durRatio = Fraction(base, num)
-                # If the ratio isn't 1, add the simplified @num and @numbase attributes to each of the notes in the tuplet
-                # And add each note to the <layer> of the voice
-                if durRatio == 1:
-                    for note in notes_grouped:
-                        layer.addChild(note)
-                else:
+    Arguments:
+    out_section -- the <section> element to be filled in
+    all_voices -- list of lists, each sublist represents a particular voice in the CMN-MEI document and contains all the <staff> elements from that voice
+    ids_removeList -- list of <note> elements that shouldn't be included in the Mensural-MEI output document (generally notes that are part of a tie)
+    input_doc -- the pymei.MeiDocument that has all the CMN-MEI file information
+    breve_choice -- string that indicates the division of the breve: '3' or '2'
+    """
+    # List of lists, each of them with all the elements of one voice
+    voices_elements = []
+    # Filling the section element:
+    for ind_voice in all_voices:
+        # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
+        staff = MeiElement('staff')
+        old_staff = input_doc.getElementsByName('staff')[all_voices.index(ind_voice)]
+        staff.setId(old_staff.id)
+        staff.addAttribute(old_staff.getAttribute('n'))
+        out_section.addChild(staff)
+        # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
+        layer = MeiElement('layer')
+        old_layer = input_doc.getElementsByName('layer')[all_voices.index(ind_voice)]
+        layer.setId(old_layer.id)
+        layer.addAttribute(old_layer.getAttribute('n'))
+        staff.addChild(layer)
+        # Ordered list of all the elements of one voice (<note>, <rest> and <tuplet>), useful for identifying the 'Major Semibreves' of the voice
+        elements_per_voice = []
+        # Fill each voice (fill the <layer> of each <staff>) with musical information (notes/rests)
+        for i in range(0, len(ind_voice)):
+            musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
+            # Add the elements of each measure into the <layer> and a <barLine/> element after the measure-content
+            for element in musical_content:
+                # Tied notes
+                # If the element is a tied note (other than the first note of the tie: <note @dur = 'TiedNote!'>), it is not included in the output file (as only the first tied note will be included with the right note shape and duration -@dur.ges-)
+                if element.id in ids_removeList:
+                    pass
+                # Tuplets
+                elif element.name == 'tuplet':
+                    # Add the <tuplet> to the list of elements in the voice
+                    elements_per_voice.append(element)
+                    # The only tuplets present in Ars Antiqua are tuplets of semibreves
+                    tuplet = element
+                    num = int(tuplet.getAttribute('num').value)
+                    numbase = int(tuplet.getAttribute('numbase').value)
+                    # @numbase is usually '2', because generally a breve = 3 minor semibreves, so tuplets of 3:2 are frequently used to represent 3 (minor) semibreves per breve.
+                    # There are also other cases in which we have more than 3 semibreves per breve: 4:2, 5:2, 6:2 and 7:2
+                    if numbase == 2:
+                        base = int(breve_choice)
+                    # There is also the case of 2:1 tuplets, in which case @numbase = '1', to indicate a group of two semibreves which should be interpreted as one minor semibreve
+                    elif numbase == 1:
+                        base = 1
+                    else:
+                        print("Shouldn't happen!")
+                    # Find the simplified ratio between @numbase and @num 
                     notes_grouped = tuplet.getChildren()
-                    for note in notes_grouped:
-                        note.addAttribute('num', str(durRatio.denominator))
-                        note.addAttribute('numbase', str(durRatio.numerator))
-                        layer.addChild(note)
-            # mRests
-            elif element.name == 'mRest':
-                # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
-                rest = MeiElement('rest')
-                rest.id = element.id
-                rest.setAttributes(element.getAttributes())
-                layer.addChild(rest)
-                # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
-                if rest.hasAttribute('dur') == False:
-                    rest.addAttribute('dur', 'long')
-                # Add the <rest> to the list of elements in the voice
-                elements_per_voice.append(rest)
-            # Notes and simple rests
-            else:
-                layer.addChild(element)
-                # Add the <note> or <rest> to the list of elements in the voice
-                elements_per_voice.append(element)
-        # Add barline
-        layer.addChild(MeiElement('barLine'))
-    # Completing the list of lists with the mei-elements of each voice
-    voices_elements.append(elements_per_voice)
+                    durRatio = Fraction(base, num)
+                    # If the ratio isn't 1, add the simplified @num and @numbase attributes to each of the notes in the tuplet
+                    # And add each note to the <layer> of the voice
+                    if durRatio == 1:
+                        for note in notes_grouped:
+                            layer.addChild(note)
+                    else:
+                        notes_grouped = tuplet.getChildren()
+                        for note in notes_grouped:
+                            note.addAttribute('num', str(durRatio.denominator))
+                            note.addAttribute('numbase', str(durRatio.numerator))
+                            layer.addChild(note)
+                # mRests
+                elif element.name == 'mRest':
+                    # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
+                    rest = MeiElement('rest')
+                    rest.id = element.id
+                    rest.setAttributes(element.getAttributes())
+                    layer.addChild(rest)
+                    # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
+                    if rest.hasAttribute('dur') == False:
+                        rest.addAttribute('dur', 'long')
+                    # Add the <rest> to the list of elements in the voice
+                    elements_per_voice.append(rest)
+                # Notes and simple rests
+                else:
+                    layer.addChild(element)
+                    # Add the <note> or <rest> to the list of elements in the voice
+                    elements_per_voice.append(element)
+            # Add barline
+            layer.addChild(MeiElement('barLine'))
+        # Completing the list of lists with the mei-elements of each voice
+        voices_elements.append(elements_per_voice)
 
-# Modify the note shape (@dur) and set the note quality (perfect/imperfect/altered) to encode its mensural value. 
-# This is done for the notes (and rests, just the @dur part) of each voice, taking into account the mensuration of each voice.
-staffDefs = output_doc.getElementsByName('staffDef')
-staves = output_doc.getElementsByName('staff')
-for i in range(0, len(staffDefs)):
-    staffDef = staffDefs[i]
-    modusminor = int(staffDef.getAttribute('modusminor').value)
-    
-    notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
-    rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
-    elements_per_voice = voices_elements[i]
-    
-    noterest_to_mensural(notes_per_voice, rests_per_voice, modusminor)
-    # Only if the breve is triple (equal to 3 minor semibreves), we need to evaluate which semibreves are major
-    if breve_choice == '3':
-        sb_major_minor(elements_per_voice)
-    else:
-        pass
-
-# Remove/Replace extraneous attributes on the notes
-notes = output_doc.getElementsByName('note')
-for note in notes:
-    # Remove extraneous attributes in the <note> element
-    if note.hasAttribute('layer'):
-        note.removeAttribute('layer')
-    if note.hasAttribute('pnum'):
-        note.removeAttribute('pnum')
-    if note.hasAttribute('staff'):
-        note.removeAttribute('staff')
-    if note.hasAttribute('stem.dir'):
-        note.removeAttribute('stem.dir')
-    if note.hasAttribute('dots'):
-        note.removeAttribute('dots')
-    # Replace of extraneous attributes by appropriate mensural attributes in the <note> element:
-    # For plicas
-    if note.hasAttribute('stem.mod'):
-        stemmod = note.getAttribute('stem.mod')
-        if stemmod.value == "1slash":
-            note.addAttribute('plica', 'desc')
-            note.removeAttribute('stem.mod')
-        elif stemmod.value == "2slash":
-            note.addAttribute('plica', 'asc')
-            note.removeAttribute('stem.mod')
-        else:
-            pass
-    # Articulations changes
-    if note.hasAttribute('artic'):
-        artic = note.getAttribute('artic')
-        if artic.value == "stacc":
-            if not note.hasChildren('dot'):
-                note.addChild(MeiElement('dot'))
-            note.removeAttribute('artic')
-        elif artic.value == "ten":
-            note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
-            note.removeAttribute('artic')
-
-# Remove @dots from <rest> elements
-rests = output_doc.getElementsByName('rest')
-for rest in rests:
-    if rest.hasAttribute('dots'):
-        rest.removeAttribute('dots')
-
-outputfile = path[0:len(path)-4] + "_output.mei"
-documentToFile(output_doc, outputfile)
-
+    return voices_elements
