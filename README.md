@@ -52,15 +52,21 @@ Here are two pieces, one for _Ars nova_ and one for _Ars antiqua_. The compositi
 
 _Ars nova_ piece - _Zodiacum_ from the IvTrem:
 
-```$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p```
+```
+$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p
+```
 
 _Ars antiqua_ piece - _Sicut_ from the Fauvel:
 
-```$ python MEI_Translator.py TestFiles/Fauv/sicut.mei antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p```
+```
+$ python MEI_Translator.py TestFiles/Fauv/sicut.mei antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p
+```
 
 You can also go to the ```TestFiles``` directory and run:
 
-```$ python processing.py```
+```
+$ python processing.py
+```
 
 The script above script runs all the instructions contained in the ```IvTremPieces.txt``` and/or ```FauvPieces.txt``` files, and runs the MEI\_Translator over all the pieces in the ```IvTrem``` and/or ```Fauv``` directories, respectively.
 
