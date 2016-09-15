@@ -1,23 +1,26 @@
 # MEI_Translator: from CMN-MEI to Mensural-MEI
 
-The script takes a CMN (Common Music Notation) MEI file and translates it into a Mensural MEI file. It was developed for mensural pieces that are transcribed in Sibelius (following certain rules) and exported to MEI files with the [sibmei](https://github.com/music-encoding/sibmei) plugin. These MEI files retrieved from Sibelius are actually CMN MEI files. The Common Music Notation (CMN) MEI module is appropriate to encode contemporary notation; but the pieces are actually in mensural notation, thus the Mensural MEI module is more appropriate to encode them. This is where the MEI Translator script comes into play, translating the CMN MEI file obtained from Sibelius to a Mensural MEI file.
+The MEI_Translator script takes a CMN (Common Music Notation) [MEI](http://music-encoding.org) file and translates it into a Mensural MEI file.<sup>[1](#one)</sup> It was developed for mensural music that was transcribed in Sibelius, and exported to MEI files with the [sibmei](https://github.com/music-encoding/sibmei) plugin. MEI files generated with Sibelius are CMN-MEI files. The CMN-MEI module encodes music from contemporary notation. Compositions written in mensural notation should use the Mensural MEI module. The MEI Translator encodes CMN-MEI files created with Sibelius to Mensural MEI files.
 
-The Sibelius transcription of the pieces follows a set of rules developed by Dr. Karen Desmond. Examples of these rules are: using 'staccato marks' to show the 'dots' present in the manuscript (both of division or perfection), 'tenuto marks' to show downward stems in the manuscript that represent longer semibreves in ars antiqua, 'tremolo marks' for plicas, etc.
+The Sibelius transcription of the pieces follows a set of rules developed by [Karen Desmond](https://www.brandeis.edu/facultyguide/person.html?emplid=5549ea5590219e2fd526777523c96d99ba7d1908). Examples of the rules are: 
+- _staccato marks_ to show the _dots_ present in the manuscript (both of division or perfection)
+- _tenuto marks_ to show downward stems in the manuscript that represent longer semibreves in ars antiqua
+- _tremolo marks_ for plicas, etc.
 
 ## Implementation
-This project consist on three modules: arsantiqua, arsnova and MEI_Translator. The first two modules contain functions that deal with features characteristic from one of the two Medieval musical styles: Ars Antiqua and Ars Nova. For example: arsnova module deals with "partial imperfections" and also take into account "minims" and "prolatio"; arsantiqua, on the contrary, doesn't take any of these features into account, but instead it considers the presence of "major semibreves" and "duplex longas".
+The project consist on three modules: (1) arsantiqua, (2) arsnova, and (3) MEI_Translator. The first two modules contain functions that deal with features characteristic from one of the two Medieval musical styles: _Ars antiqua_ and _Ars nova_. The _arsnova_ module deals with "partial imperfections," and considers "minims" and "prolatio", while the _arsantiqua_ module considers the presence of "major semibreves" and "duplex longas."
 
-The MEI_Translator module contains the general functions for the translation, i.e., the functions that are common to both styles (antiqua and nova). This module can be used as a script for the user to run, along with certain paramenters (the piece name, the music style and the mensuration values for each voice), in order to start the translation process.
+The MEI_Translator module contains general functions for the translation, shared by both _Ars antiqua_ and _Ars nova_ styles. The user can run the module as a script, along with _piece name_, _music style_, and _mensuration value_ parameters.
 
 ## Requirements 
-Install the LibMEI library, found in: https://github.com/DDMAL/libmei. Look at the wiki for instructions on both the installation of the LibMEI C++ library, and the installation of the python bindings.
+- The [LibMEI library](https://github.com/DDMAL/libmei). The wiki contains instructions on both the installation of the LibMEI C++ library, and the installation of the python bindings.
 
 ## Running the script
-The parameters to run the script depend on the musical style of the piece intended to be translated into Mensural MEI. The two parameters that are common for both styles are: 
-- the piece name (or its path, in case the piece is in a different directory from the script)
-- the musical style, with only two values: "antiqua" and "nova"
+Parameters are set according to a composition's musical style. The two parameters that are common for both styles are: 
+- the _piece name_, or the path to the piece if the composition is in a different directory than the script
+- the _musical style_, two values: "antiqua" and "nova"
  
-The other parameters indicate the mensuration for each of the voices in the piece. There are two flags to enter the mensuration information for each voice: -NewVoiceN and -NewVoiceA. The -NewVoiceN flag is use exclusively for Ars Nova pieces (musical style = "nova"); while the -NewVoiceA flag is use only for Ars Antiqua pieces (musical style = "antiqua").
+Other parameters indicate the mensuration for each of the voices in a composition. USe the following two flags to enter the mensuration definition for each voice: ```-NewVoiceN``` and ```-NewVoiceA```. The ```-NewVoiceN``` flag is used exclusively for _Ars nova_ pieces (musical style = "nova"), while the ```-NewVoiceA``` flag is use only for _Ars antiqua_ pieces (musical style = "antiqua").
 
 **New voice flag in Ars Nova: '-NewVoiceN'**
 
@@ -130,3 +133,6 @@ You have already instantiated a MensuralTranslated object, that behaves just lik
 `pymei.documentToFile(mensural_meidoc)`
 
 With this instruction you will have the same output as if you have ran the MEI\_Translator as a script, the only difference is that you are still able to modify the Mensural MEI document (the MensuralTranslated object) as you wish and convert it to a file -_pymei.documentToFile()_- again.
+
+## Notes
+<a name="on">1</a>: _Common Music Notation_ here refers to music notation in current use, aside from graphic music notation, and not the Lisp-based open-source music notation software.
