@@ -90,14 +90,13 @@ We can use the inherited methods from ```pymei.MeiDocument``` to check that _MEI
 
 ```
 cmn_meidoc.getElementsByName('tie')
-
 mensural_meidoc.getElementsByName('tie')
 ```
 
 The second method returns a blank list with either the ```tie``` and ```mRest``` elements provided as argumetns. The script converts all ```mRest``` elements into simple ```rest``` elements. You can actually verify the outcome by using the following code (which should return ```True```):
 
 ```
-len(cmn\_meidoc.getElementsByName('rest')) + len(cmn\_meidoc.getElementsByName('mRest')) == len(mensural_meidoc.getElementsByName('rest'))
+len(cmn_meidoc.getElementsByName('rest')) + len(cmn_meidoc.getElementsByName('mRest')) == len(mensural_meidoc.getElementsByName('rest'))
 ```
 
 ### Additional methods:
@@ -114,7 +113,6 @@ cmn_meidoc = pymei.documentFromFile("TestFiles/Fauv/fauvel_nous.mei").getMeiDocu
 from MEI_Translator import MensuralTranslation
 
 mensural_meidoc = MensuralTranslation(cmn_meidoc, "antiqua", [["3", "p"], ["3", "p"], ["3", "p"]])
-
 mensural_meidoc.getModifiedNotes('major semibreve')
 
 ```
@@ -129,7 +127,6 @@ cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/zodiacum.mei").getMeiDocum
 from MEI_Translator import MensuralTranslation
 
 mensural_meidoc = MensuralTranslation(cmn_meidoc, "nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "p", "i", "p"]])
-
 mensural_meidoc.getModifiedNotes('partial imperfection')
 ```
 
