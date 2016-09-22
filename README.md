@@ -1,14 +1,16 @@
 # MEI_Translator: from CMN-MEI to Mensural-MEI
 
-The MEI_Translator script takes a CMN (Common Music Notation) [MEI](http://music-encoding.org) file and translates it into a Mensural MEI file.<sup>[1](#one)</sup> It was developed for mensural music that was transcribed in Sibelius, and exported to MEI files with the [sibmei](https://github.com/music-encoding/sibmei) plugin. MEI files generated with Sibelius are CMN-MEI files. The CMN-MEI module encodes music from contemporary notation. Compositions written in mensural notation should use the Mensural MEI module. The MEI Translator encodes CMN-MEI files created with Sibelius to Mensural MEI files.
+The MEI_Translator script takes a CMN (Common Music Notation) [MEI](http://music-encoding.org) file and translates it into a Mensural MEI file.<sup>[1](#one)</sup> It was developed for mensural music that was transcribed in Sibelius, and exported to MEI files with the [sibmei](https://github.com/music-encoding/sibmei) plugin. MEI files generated with Sibelius are CMN-MEI files. The CMN-MEI module encodes music in contemporary notation. Compositions written in mensural notation should use the Mensural MEI module. The MEI Translator translates CMN-MEI files created with Sibelius to Mensural MEI files.
 
-The Sibelius transcription of the pieces follows a set of rules developed by [Karen Desmond](https://www.brandeis.edu/facultyguide/person.html?emplid=5549ea5590219e2fd526777523c96d99ba7d1908). Examples of the rules are: 
-- _staccato marks_ to show the _dots_ present in the manuscript (both of division or perfection)
+The Sibelius transcription of the pieces follows conventions developed by [Karen Desmond](https://www.brandeis.edu/facultyguide/person.html?emplid=5549ea5590219e2fd526777523c96d99ba7d1908). For further background on the project, see http://www.arsmusicae.org/wordpress/blog/2015/07/02/digitally-encoding-early-fourteenth-century-motets/
+
+Examples of the rules are: 
+- _staccato marks_ to show the _dots_ (either dots of division or dots of perfection) present in the manuscript (both of division or perfection)
 - _tenuto marks_ to show downward stems in the manuscript that represent longer semibreves in ars antiqua
-- _tremolo marks_ for plicas, etc.
+- _tremolo marks_ represent plicas, etc.
 
 ## Implementation
-The project consist on three modules: (1) arsantiqua, (2) arsnova, and (3) MEI_Translator. The first two modules contain functions that deal with features characteristic from one of the two Medieval musical styles: _Ars antiqua_ and _Ars nova_. The _arsnova_ module deals with "partial imperfections," and considers "minims" and "prolatio", while the _arsantiqua_ module considers the presence of "major semibreves" and "duplex longas."
+The CMN-MEI_to_MensuralMEI_Translator project has three modules: (1) arsantiqua, (2) arsnova, and (3) MEI_Translator. The first two modules contain functions that deal with features characteristic from one of the two medieval styles of notation: _Ars antiqua_ and _Ars nova_. The _arsnova_ module deals with "partial imperfections," and considers "minims" and "prolatio", while the _arsantiqua_ module considers the presence of "major semibreves" and "duplex longas."
 
 The MEI_Translator module contains general functions for the translation, shared by both _Ars antiqua_ and _Ars nova_ styles. The user can run the module as a script, along with _piece name_, _music style_, and _mensuration value_ parameters.
 
@@ -20,11 +22,11 @@ Parameters are set according to a composition's musical style. The two parameter
 - the _piece name_, or the path to the piece if the composition is in a different directory than the script
 - the _musical style_, two values: "antiqua" and "nova"
  
-Other parameters indicate the mensuration for each of the voices in a composition. USe the following two flags to enter the mensuration definition for each voice: ```-NewVoiceN``` and ```-NewVoiceA```. The ```-NewVoiceN``` flag is used exclusively for _Ars nova_ pieces (musical style = "nova"), while the ```-NewVoiceA``` flag is use only for _Ars antiqua_ pieces (musical style = "antiqua").
+Other parameters indicate the mensuration for each of the voices in a composition. Use the following two flags to enter the mensuration definition for each voice: ```-NewVoiceN``` and ```-NewVoiceA```. The ```-NewVoiceN``` flag is used exclusively for _Ars nova_ pieces (musical style = "nova"), while the ```-NewVoiceA``` flag is use only for _Ars antiqua_ pieces (musical style = "antiqua").
 
 #### New voice flag in _Ars nova_: ```-NewVoiceN```
 
-Use this flag for each new voice (_Ars nova_) that you are entering. After the flag, use the characters ```p``` or ```i``` to indicate the mensuration of one voice in the order: _modus major_, _modus minor_, _tempus_ and _prolatio_.
+Use this flag for each new voice (_Ars nova_) that you are entering. After the flag, use the characters ```p``` or ```i``` to indicate the mensuration of one voice in the order: _modus major_, _modus minor_, _tempus_ and _prolatio_. Medieval theorists would refer to ternary prolation as 'major' and a binary prolation as 'minor' but the labels 'p' and 'i' are continued for prolation, for simplicity's sake.
 
 ##### Example:
 
