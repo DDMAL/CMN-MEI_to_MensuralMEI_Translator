@@ -9,8 +9,3 @@ ivtrem = open('IvTremPieces.txt', 'r')
 for piece in ivtrem:
     os.system(piece)
 ivtrem.close()
-
-# montpellier = open('MontpellierPieces.txt', 'r')
-# for piece in montpellier:
-#     os.system(piece)
-# montpellier.close()
