@@ -387,12 +387,18 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
                     if durRatio == 1:
                         for note in notes_grouped:
                             layer.addChild(note)
+                            # Adding the <dot> element after a 'staccated' note or rest element
+                            if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
+                                layer.addChild(MeiElement('dot'))
                     else:
                         notes_grouped = tuplet.getChildren()
                         for note in notes_grouped:
                             note.addAttribute('num', str(durRatio.denominator))
                             note.addAttribute('numbase', str(durRatio.numerator))
                             layer.addChild(note)
+                            # Adding the <dot> element after a 'staccated' note or rest element
+                            if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
+                                layer.addChild(MeiElement('dot'))
                 # mRests
                 elif element.name == 'mRest':
                     # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
@@ -410,6 +416,10 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
                     layer.addChild(element)
                     # Add the <note> or <rest> to the list of elements in the voice
                     elements_per_voice.append(element)
+
+                # Adding the <dot> element after a 'staccated' note or rest element
+                if element.hasAttribute('artic') and element.getAttribute('artic').value == "stacc":
+                    layer.addChild(MeiElement('dot'))
             # Add barline
             layer.addChild(MeiElement('barLine'))
         # Completing the list of lists with the mei-elements of each voice

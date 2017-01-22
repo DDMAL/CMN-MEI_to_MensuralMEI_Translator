@@ -26,8 +26,8 @@ def separate_staves_per_voice(doc):
     """
     num_voices = len(doc.getElementsByName('staffDef'))
     all_voices = []
+    measures = doc.getElementsByName('measure')
     for i in range(0, num_voices):
-        measures = doc.getElementsByName('measure')
         ind_voice = []
         for measure in measures:
             staves_in_measure = measure.getChildrenByName('staff')
@@ -114,8 +114,6 @@ def remove_non_mensural_attributes(doc):
         if note.hasAttribute('artic'):
             artic = note.getAttribute('artic')
             if artic.value == "stacc":
-                if not note.hasChildren('dot'):
-                    note.addChild(MeiElement('dot'))
                 note.removeAttribute('artic')
             elif artic.value == "ten":
                 note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value

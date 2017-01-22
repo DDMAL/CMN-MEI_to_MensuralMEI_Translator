@@ -522,6 +522,9 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                         actual_durges = str(actual_durges_num) + 'p'
                         note.getAttribute('dur.ges').setValue(actual_durges)
                         layer.addChild(note)
+                        # Adding the <dot> element after a 'staccated' note or rest element
+                        if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
+                            layer.addChild(MeiElement('dot'))
                 # mRests
                 elif element.name == 'mRest':
                     # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
@@ -535,6 +538,10 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                 # Notes and simple rests
                 else:
                     layer.addChild(element)
+
+                # Adding the <dot> element after a 'staccated' note or rest element
+                if element.hasAttribute('artic') and element.getAttribute('artic').value == "stacc":
+                    layer.addChild(MeiElement('dot'))
             # Add barline
             layer.addChild(MeiElement('barLine'))
 
