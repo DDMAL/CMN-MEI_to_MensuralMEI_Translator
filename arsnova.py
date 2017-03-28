@@ -13,6 +13,7 @@ fill_section -- Fill the output <section> element with the appropriate musical c
 # Ars Nova is characterized by: 
 # 1. Presence of 'minims' 
 # 2. Presence of 'prolatio'
+# 3. Coloration is present  (STILL HAVE TO INCLUDE IT!!! USE WHAT YOU HAVE WORKED ON THE 'WHITE_NOTATION' MODULE)
 from fractions import *
 
 from pymei import *
