@@ -142,7 +142,23 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
     b_def, b_imp, b_perf = list_values[1]
     l_def, l_imp, l_perf = list_values[2]
     max_def, max_imp, max_perf = list_values[3]
+    # Smaller notes:
+    # The dictionary's keys indicate the CMN notes (encoded in the @dur attribute), and the value for each key indicate the corresponding note in mensural notation
     smaller_notes = {'2': 'minima', '4': 'semiminima', '8': 'fusa', '16': 'semifusa'}
+    # The performed values of these notes can only be 'imperfect', which is the default value (all the notes below the semibreve are imperfect),
+    # or they may be augmented (worth 1.5 times their original imperfect value) by means of a dot of augmentation
+    # for the minim
+    min_imp = sb_imp / 2
+    min_aug = min_imp * Fraction(3,2)
+    # for the semiminim
+    smin_imp = min_imp / 2
+    smin_aug = smin_imp * Fraction(3,2)
+    # for the fusa
+    fusa_imp = smin_imp / 2
+    fusa_aug = fusa_imp * Fraction(3,2)
+    # for the semifusa
+    sfusa_imp = fusa_imp / 2
+    sfusa_aug = sfusa_imp * Fraction(3,2)
 
     # Note's Part:
     for note in notes:
@@ -153,17 +169,25 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
             # Maximas
-            if (int(max_imp * 5/6) - 1) <= durges_num and durges_num <= max_perf:
+            if l_perf < durges_num and durges_num <= max_perf:
                 dur = 'maxima'
             # Longas
-            elif (int(l_imp * 5/6) - 1) <= durges_num and durges_num <= l_perf:
+            elif b_perf < durges_num and durges_num <= l_perf:
                 dur = 'long'
             # Breves
-            elif (int(b_imp * 5/6) - 1) <= durges_num and durges_num <= b_perf:
+            elif sb_perf < durges_num and durges_num <= b_perf:
                 dur = 'breve'
             # Semibreves
-            elif (int(sb_imp * 5/6) - 1) <= durges_num and durges_num <= sb_perf:
+            elif min_aug < durges_num and durges_num <= sb_perf:
                 dur = '1'
+            elif smin_aug < durges_num and durges_num <= min_aug:
+                dur = '2'
+            elif fusa_aug < durges_num and durges_num <= smin_aug:
+                dur = '4'
+            elif sfusa_aug < durges_num and durges_num <= fusa_aug:
+                dur = '8'
+            elif sfusa_imp <= durges_num and durges_num <= sfusa_aug:
+                dur = '16'
             else:
                 print("Weird\n The tied note doesn't seem to be any note (perfect, imperfect, or afected by patial imperfection) in the range of semibreve to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
             note.getAttribute('dur').setValue(dur)
