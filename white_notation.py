@@ -152,12 +152,15 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
     min_aug = min_imp * Fraction(3,2)
     # for the semiminim
     smin_imp = min_imp / 2
+    #smin_imp = sb_imp / 4
     smin_aug = smin_imp * Fraction(3,2)
     # for the fusa
     fusa_imp = smin_imp / 2
+    #fusa_imp = sb_imp / 8
     fusa_aug = fusa_imp * Fraction(3,2)
     # for the semifusa
     sfusa_imp = fusa_imp / 2
+    #sfusa_imp = sb_imp / 16
     sfusa_aug = sfusa_imp * Fraction(3,2)
 
     # Note's Part:
@@ -426,9 +429,11 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     mens_dur = dur
                 else:
                     print("Still tied-note")
-            # If the CMN note is dotted (@dots = 1), then its value is ternary, changing the default imperfect value of these smaller notes to perfect
-            # Thus, we add @quality = 'p', and @num = '2' and @numbase = '3'
-            if note.hasAttribute('dots') and note.getAttribute('dots').value == '1':
+            # If the note has been augmented (i.e., its performed duration is equal to min_aug, smin_aug, fusa_aug, or sfusa_aug), its imperfect value has been increased
+            # by a half and, thus, the note is now perfect and worths 3/2 its original value; this effect should be encoded as follows.
+            # (The presence of @dots='1' cannot be used to determined augmentation, as some dotted notes may not be included completely in a single measure,
+            # but divided across 2 measures and, in this case, it won't be dotted (e.g., instead of a dotted-half note, you have a half note tied up with a quarter note)
+            if int(note.getAttribute('dur.ges').value[:-1]) in [min_aug, smin_aug, fusa_aug, sfusa_aug]:
                 note.addAttribute('quality', 'p')
                 note.addAttribute('num', '2')
                 note.addAttribute('numbase', '3')
