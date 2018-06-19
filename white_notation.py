@@ -601,7 +601,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                     rest.id = element.id
                     rest.setAttributes(element.getAttributes())
                     layer.addChild(rest)
-                    # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
+                    # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a breve)
                     if rest.hasAttribute('dur') == False:
                         rest.addAttribute('dur', 'breve')
                 # Notes and simple rests
