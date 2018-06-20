@@ -14,6 +14,7 @@ import argparse
 
 from pymei import documentFromFile, documentToFile, MeiDocument, MeiElement
 
+import white_notation
 import arsnova
 import arsantiqua
 
@@ -44,7 +45,7 @@ def merge_ties(doc):
     Set the @dur of the first note of the tied notes to the value 'TiedNote!'.
     And set its @dur.ges (perform3ed duration) to the sum of the performed duration of the individual notes that make up the tie.
     Return a list of the other notes that make up the tie (the ones after the first), which shouldn't be included in the output file.
-    
+
     Arguments:
     doc -- the pymei.MeiDocument object to be translated to Mensural-MEI
     """
@@ -52,7 +53,7 @@ def merge_ties(doc):
     ties_list = doc.getElementsByName('tie')
     for i in range (len(ties_list)-1, -1, -1):
         tie = ties_list[i]
-        
+
         # Start note
         startid = tie.getAttribute('startid').value
         note_startid = startid[1:]  # Removing the '#' character from the startid value, to have the id of the note
@@ -175,7 +176,8 @@ class MensuralTranslation(MeiDocument):
         # The [-1] guarantees that the <staffGrp> element taken is the one which contains the <staffDef> elements (previous versions of the plugin stored a <staffGrp> element inside another <staffGrp>)
         stavesDef = out_staffGrp.getChildren()
         # Mensuration added to the staves definition <staffDef>
-        if ars_type == "nova":
+        # -> For the new notation (ars nova or white mensural)
+        if ars_type in ["ars_nova", "white_mensural"]:
             for i in range(0, len(stavesDef)):
                 voice_staffDef = stavesDef[i]
                 voice_mensuration = mensuration_list[i]
@@ -183,6 +185,7 @@ class MensuralTranslation(MeiDocument):
                 voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
                 voice_staffDef.addAttribute('tempus', num(voice_mensuration[2]))
                 voice_staffDef.addAttribute('prolatio', num(voice_mensuration[3]))
+        # -> For the old notation (ars antiqua)
         else:
             for i in range(0, len(stavesDef)):
                 voice_staffDef = stavesDef[i]
@@ -203,7 +206,24 @@ class MensuralTranslation(MeiDocument):
         score.addChild(out_section)
 
         # Fill the section element with the information of each voice (contained in all_voices)
-        if ars_type == "nova":
+        # -> For white notation
+        if ars_type == "white_mensural":
+            tuplet_minims = white_notation.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc)
+            staffDefs = self.getElementsByName('staffDef')
+            staves = self.getElementsByName('staff')
+            for i in range(0, len(staffDefs)):
+                staffDef = staffDefs[i]
+                modusmaior = int(staffDef.getAttribute('modusmaior').value)
+                modusminor = int(staffDef.getAttribute('modusminor').value)
+                tempus = int(staffDef.getAttribute('tempus').value)
+                prolatio = int(staffDef.getAttribute('prolatio').value)
+
+                notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
+                rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
+
+                white_notation.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
+        # -> For ars nova
+        elif ars_type == "ars_nova":
             tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc)
             staffDefs = self.getElementsByName('staffDef')
             staves = self.getElementsByName('staff')
@@ -213,11 +233,12 @@ class MensuralTranslation(MeiDocument):
                 modusminor = int(staffDef.getAttribute('modusminor').value)
                 tempus = int(staffDef.getAttribute('tempus').value)
                 prolatio = int(staffDef.getAttribute('prolatio').value)
-                
+
                 notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
                 rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
 
                 arsnova.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
+        # -> For ars antiqua
         else:
             breve = mensuration_list[0][0]
             voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, breve)
@@ -226,7 +247,7 @@ class MensuralTranslation(MeiDocument):
             for i in range(0, len(staffDefs)):
                 staffDef = staffDefs[i]
                 modusminor = int(staffDef.getAttribute('modusminor').value)
-                
+
                 notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
                 rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
                 elements_per_voice = voices_elements[i]
@@ -265,7 +286,7 @@ class MensuralTranslation(MeiDocument):
             modifications_list = ['major']
         else:
             return "Invalid argument. The argument modification_type can only have the following 5 values: 'alteration', 'imperfection', 'perfection', 'partial imperfection' and 'major semibreve'; or no-arguments at all."
-        
+
         notes = self.getElementsByName('note')
         all_modified_notes = []
         for note in notes:
@@ -277,31 +298,31 @@ class MensuralTranslation(MeiDocument):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('piece', help="If the CMN-MEI file of the piece is in the same directory as the MEI_Translator module, just enter the 'name' of the piece (including its extension: '.mei'). If not, put the whole 'path' of the piece.")
-    parser.add_argument('ars', choices=['nova', 'antiqua'], help="This indicates if the piece belongs to 'ars nova' or 'ars antiqua' repertoire. If you select 'nova' you have to use the optional argument '-NewVoiceN' to add the mensuration (values for: modusmajor, modusminor, tempus and prolatio) for each voice. If you choose 'antiqua' you have to use the optional argument '-NewVoiceA' to add the mensuration (values for: breve and modusminor) for each voice.")
-    parser.add_argument('-NewVoiceN', nargs=4, action='append', choices=['p', 'i'], help="Use this flag for each new voice (in Ars Nova) that you are entering. After the flag, use 'p' or 'i' to indicate the mensuration (in the order: modusmajor + modusminor + tempus + prolatio). The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Nova 3-voice motet with different mensurations for each voice: -NewVoiceN i i p p -NewVoiceN i p i p -NewVoiceN p i i i") # for now, just 4 values per voice are allowed
-    parser.add_argument('-NewVoiceA', nargs=2, action='append', choices=['3','2', 'p', 'i'], help="Use this flag for each new voice (in Ars Antiqua) that you are entering. After the flag, use '2' or '3' to indicate the 'division of the breve' (duple of triple division) and then use 'p' or 'i' to indicate the 'modusminor'. The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Antiqua 4-voice motet with 3 minor semibreves per breve and imperfect modus: -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i") # for now, you have to add each voice
+    parser.add_argument('piece', help="If the CMN-MEI file of the piece is in the same directory as the MEI_Translator module, just enter the 'name' of the piece (including its extension: '.mei'). If not, insert the whole 'path' of the piece.")
+    parser.add_argument('style', choices=['ars_antiqua', 'ars_nova', 'white_mensural'], help="This indicates the style of the piece, whether it belongs to the 'ars antiqua', 'ars nova', or 'white notation' repertoire. If you select 'ars_nova' or 'white_mensural' you have to use the optional argument '-NewVoiceN' to add the mensuration (values for: modusmajor, modusminor, tempus, and prolatio) for each voice. If you choose 'ars_antiqua' you have to use the optional argument '-NewVoiceA' to add the mensuration (values for: breve and modusminor) for each voice.")
+    parser.add_argument('-NewVoiceA', nargs=2, action='append', choices=['3','2', 'p', 'i'], help="Use this flag for each new voice (in ars antiqua) that you are entering. After the flag, use '2' or '3' to indicate the 'division of the breve' (duple of triple division) and then use 'p' or 'i' to indicate the 'modusminor'. The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Antiqua 4-voice motet with 3 minor semibreves per breve and imperfect modus: -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i") # for now, you have to add each voice
+    parser.add_argument('-NewVoiceN', nargs=4, action='append', choices=['p', 'i'], help="Use this flag for each new voice (in ars nova or in white mensural notation) that you are entering. After the flag, use 'p' or 'i' to indicate the mensuration (in the order: modusmajor + modusminor + tempus + prolatio). The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Nova 3-voice motet with different mensurations for each voice: -NewVoiceN i i p p -NewVoiceN i p i p -NewVoiceN p i i i") # for now, just 4 values per voice are allowed
     args = parser.parse_args()
 
     # Parser errors:
-    # Case: ars nova
-    if args.ars == 'nova':
-        # Inconsistency between the ars argument and the NewVoice flag used
+    # Case: ars nova or white mensural notation
+    if args.style in ['ars_nova', 'white_mensural']:
+        # Inconsistency between the style argument and the NewVoice flag used
         if args.NewVoiceA is not None:
-            parser.error("Use of incorrect 'NewVoice' flag. For 'ars nova' use exclusively -NewVoiceN flag to add the mensuration information of each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
+            parser.error("Use of incorrect 'NewVoice' flag. For 'ars nova' and 'white mensural' use exclusively -NewVoiceN flag to add the mensuration information of each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
         # Missing information of the mensuration of the voices
         if args.NewVoiceN is None:
-            parser.error("No voice mensuration information given. Use the flag -NewVoiceN to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
+            parser.error("No voice mensuration information has been provided. Use the flag -NewVoiceN to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
         else:
             mensurationList = args.NewVoiceN
     # Case: ars antiqua
     else:
-        # Inconsistency between the ars argument and the NewVoice flag used
+        # Inconsistency between the style argument and the NewVoice flag used
         if args.NewVoiceN is not None:
             parser.error("Use of incorrect 'NewVoice' flag. For 'ars antiqua' use exclusively -NewVoiceA flag to add the mensuration information of each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
         # Missing information of the mensuration of the voices
         if args.NewVoiceA is None:
-            parser.error("No voice mensuration information given. Use the flag -NewVoiceA to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
+            parser.error("No voice mensuration information has been provided. Use the flag -NewVoiceA to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
         else:
             mensurationList = args.NewVoiceA
         # Wrong argument for 'breve division' (first argument of -NewVoiceA) in ars antiqua
@@ -323,6 +344,5 @@ if __name__ == "__main__":
         pass
 
     # Translation step: use of the MensuralMeiTranslatedDocument class
-    mensural_meidoc = MensuralTranslation(input_doc, args.ars, mensurationList)
+    mensural_meidoc = MensuralTranslation(input_doc, args.style, mensurationList)
     documentToFile(mensural_meidoc, args.piece[:-4] + "_MENSURAL.mei")
-

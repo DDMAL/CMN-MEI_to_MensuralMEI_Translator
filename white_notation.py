@@ -1,7 +1,7 @@
 """
-arsnova module
+white_notation module
 
-Contains all the relevant functions for translating Ars Nova pieces written in CMN-MEI to Mensural-MEI
+Contains all the relevant functions for translating White Mensural Notation pieces written in CMN-MEI to Mensural-MEI
 
 Functions:
 relative_vals -- Return a list of the default performed duration of the different notes
@@ -10,10 +10,9 @@ partial_imperfection -- Identify when a note experimented a partial imperfection
 noterest_to_mensural -- Perform the actual change, in notes and rests, from contemporary to mensural notation
 fill_section -- Fill the output <section> element with the appropriate musical content
 """
-# Ars Nova is characterized by: 
-# 1. Presence of 'minims' 
-# 2. Presence of 'prolatio'
-# 3. Coloration is present  (STILL HAVE TO INCLUDE IT!!! USE WHAT YOU HAVE WORKED ON THE 'WHITE_NOTATION' MODULE)
+# White mensural notation is essentially the same as the black notation from the Ars Nova.
+# The only difference is that it includes shorter note values (i.e., semiminim, fusa, and semifusa),
+# and the barring is generally done at the level of the breve (instead of the long).
 from fractions import *
 
 from pymei import *
@@ -125,7 +124,6 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
 
     return partial_imperf
 
-
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
 # 2. Note's Actual Duration part: Identifies which notes were 'perfected', 'imperfected' or 'altered' and indicates this with the attributes: @quality, @num and @numbase
@@ -144,6 +142,26 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
     b_def, b_imp, b_perf = list_values[1]
     l_def, l_imp, l_perf = list_values[2]
     max_def, max_imp, max_perf = list_values[3]
+    # Smaller notes:
+    # The dictionary's keys indicate the CMN notes (encoded in the @dur attribute), and the value for each key indicate the corresponding note in mensural notation
+    smaller_notes = {'2': 'minima', '4': 'semiminima', '8': 'fusa', '16': 'semifusa'}
+    # The performed values of these notes can only be 'imperfect', which is the default value (all the notes below the semibreve are imperfect),
+    # or they may be augmented (worth 1.5 times their original imperfect value) by means of a dot of augmentation
+    # for the minim
+    min_imp = sb_imp / 2
+    min_aug = min_imp * Fraction(3,2)
+    # for the semiminim
+    smin_imp = min_imp / 2
+    #smin_imp = sb_imp / 4
+    smin_aug = smin_imp * Fraction(3,2)
+    # for the fusa
+    fusa_imp = smin_imp / 2
+    #fusa_imp = sb_imp / 8
+    fusa_aug = fusa_imp * Fraction(3,2)
+    # for the semifusa
+    sfusa_imp = fusa_imp / 2
+    #sfusa_imp = sb_imp / 16
+    sfusa_aug = sfusa_imp * Fraction(3,2)
 
     # Note's Part:
     for note in notes:
@@ -154,17 +172,25 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
             # Maximas
-            if (int(max_imp * 5/6) - 1) <= durges_num and durges_num <= max_perf:
+            if l_perf < durges_num and durges_num <= max_perf:
                 dur = 'maxima'
             # Longas
-            elif (int(l_imp * 5/6) - 1) <= durges_num and durges_num <= l_perf:
+            elif b_perf < durges_num and durges_num <= l_perf:
                 dur = 'long'
             # Breves
-            elif (int(b_imp * 5/6) - 1) <= durges_num and durges_num <= b_perf:
+            elif sb_perf < durges_num and durges_num <= b_perf:
                 dur = 'breve'
             # Semibreves
-            elif (int(sb_imp * 5/6) - 1) <= durges_num and durges_num <= sb_perf:
+            elif min_aug < durges_num and durges_num <= sb_perf:
                 dur = '1'
+            elif smin_aug < durges_num and durges_num <= min_aug:
+                dur = '2'
+            elif fusa_aug < durges_num and durges_num <= smin_aug:
+                dur = '4'
+            elif sfusa_aug < durges_num and durges_num <= fusa_aug:
+                dur = '8'
+            elif sfusa_imp <= durges_num and durges_num <= sfusa_aug:
+                dur = '16'
             else:
                 print("Weird\n The tied note doesn't seem to be any note (perfect, imperfect, or afected by patial imperfection) in the range of semibreve to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
             note.getAttribute('dur').setValue(dur)
@@ -217,10 +243,15 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: modusmaior")
                     pass
             else:
-                # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection, coloration, or mistakes
                 ratio = Fraction(durges_num, max_def)
                 partial_imp = partial_imperfection(note, ratio, modusmaior, modusminor, tempus)
-                if not partial_imp:
+                if partial_imp:
+                    pass
+                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
+                    note.addAttribute('num','3')
+                    note.addAttribute('numbase','2')
+                else:
                     print("This MAXIMA " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
         # LONGA
@@ -269,10 +300,15 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: modusminor")
                     pass
             else:
-                # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection, coloration, or mistakes
                 ratio = Fraction(durges_num, l_def)
                 partial_imp = partial_imperfection(note, ratio, modusminor, tempus, prolatio)
-                if not partial_imp:
+                if partial_imp:
+                    pass
+                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
+                    note.addAttribute('num','3')
+                    note.addAttribute('numbase','2')
+                else:
                     print("This LONG " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
         # BREVIS
@@ -321,10 +357,15 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     print("MISTAKE IN MENSURATION: tempus")
                     pass
             else:
-                # Check for partial imperfection (and for mistakes)
+                # Check for partial imperfection, coloration, or mistakes
                 ratio = Fraction(durges_num, b_def)
                 partial_imp = partial_imperfection(note, ratio, tempus, prolatio)
-                if not partial_imp:
+                if partial_imp:
+                    pass
+                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
+                    note.addAttribute('num','3')
+                    note.addAttribute('numbase','2')
+                else:
                     print("This BREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
         # SEMIBREVIS
@@ -376,20 +417,33 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 # Check for mistakes (there is no partial imperfection for a semibreve)
                 print("This SEMIBREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(Fraction(durges_num, sb_def).numerator) + "/" + str(Fraction(durges_num, sb_def).denominator) + " part of its normal value.")
 
-        # MINIMA
-        elif dur == '2':
-            mens_dur = 'minima'
-
-        # INCORRECT NOTE VALUE
+       # SMALLER NOTES (OR MISTAKE)
         else:
-            if dur != "TiedNote!":
-                print("This note shouldn't be here, as it is larger than a maxima or shorter than a minima! " + str(note) + ", " + str(dur) + ", " + str(durges_num) + "p")
-                mens_dur = dur
-            else:
-                print("Still tied-note")
+            # Notes smaller than the semibreve (i.e., minima, semiminima, fusa, and semifusa)
+            try:
+                mens_dur = smaller_notes[dur]
+            # If this is not the case, we have an incorrect note value
+            except:
+                if dur != "TiedNote!":
+                    print("This note shouldn't be here, as it is larger than a maxima or shorter than a minima! " + str(note) + ", " + str(dur) + ", " + str(durges_num) + "p")
+                    mens_dur = dur
+                else:
+                    print("Still tied-note")
+            # If the note has been augmented (i.e., its performed duration is equal to min_aug, smin_aug, fusa_aug, or sfusa_aug), its imperfect value has been increased
+            # by a half and, thus, the note is now perfect and worths 3/2 its original value; this effect should be encoded as follows.
+            # (The presence of @dots='1' cannot be used to determined augmentation, as some dotted notes may not be included completely in a single measure,
+            # but divided across 2 measures and, in this case, it won't be dotted (e.g., instead of a dotted-half note, you have a half note tied up with a quarter note)
+            if int(note.getAttribute('dur.ges').value[:-1]) in [min_aug, smin_aug, fusa_aug, sfusa_aug]:
+                note.addAttribute('quality', 'p')
+                note.addAttribute('num', '2')
+                note.addAttribute('numbase', '3')
 
         # Change the @dur value to the corresponding mensural note value
         note.getAttribute('dur').setValue(mens_dur)
+        # And encode coloration if present in the note
+        if note.hasAttribute('color'):
+            note.addAttribute('colored', 'true')
+            note.removeAttribute('color')
 
 
     # Rest's Part:
@@ -398,11 +452,8 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
     for rest in rests:
         # Due to the mRest part of the code, all the rests have a @dur attribute.
         dur = rest.getAttribute('dur').value
-        # Minim rest
-        if dur == "2":
-            mens_dur = "minima"
         # Semibreve rest
-        elif dur == "1":
+        if dur == "1":
             mens_dur = "semibrevis"
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
@@ -464,13 +515,21 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 # Check for mistakes in duration (@dur.ges attribute)
                 else:
                     print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value")
-        # Mistake in rest's duration (@dur attribute)
         else:
-            print("This kind of Rest shouldn't be in this repertory " + str(note) + ", it has a duration of  " + str(dur) + "\n")
-            mens_dur = dur
+            # Notes smaller than the semibreve (i.e., minima, semiminima, fusa, and semifusa)
+            try:
+                mens_dur = smaller_notes[dur]
+            # Mistake in rest's duration (@dur attribute)
+            except:
+                print("This kind of Rest shouldn't be in this repertory " + str(note) + ", it has a duration of  " + str(dur) + "\n")
+                mens_dur = dur
 
         # Change the @dur value to the corresponding mensural note value
         rest.getAttribute('dur').setValue(mens_dur)
+        # And encode coloration if present in the rest
+        if rest.hasAttribute('color'):
+            rest.addAttribute('colored', 'true')
+            rest.removeAttribute('color')
 
 
 def fill_section(out_section, all_voices, ids_removeList, input_doc):
@@ -511,7 +570,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                     pass
                 # Tuplets
                 elif element.name == 'tuplet':
-                    # The only tuplets present in Ars Nova are tuplets of minims
+                    # The only tuplets present in Ars Nova and are tuplets of minims
                     flag_triplet_minims = True
                     tuplet = element
                     num = int(tuplet.getAttribute('num').value)
@@ -526,6 +585,15 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                         # Adding the <dot> element after a 'staccated' note or rest element
                         if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
                             layer.addChild(MeiElement('dot'))
+                # Beams: In white notation there are already fusas and semifusas, represented by eighth and sixteenth notes, respectively, which can be beamed together
+                elif element.name == 'beam':
+                    beam = element
+                    notes_grouped = beam.getChildren()
+                    for note in notes_grouped:
+                        layer.addChild(note)
+                        # Adding the <dot> element after a 'staccated' note or rest element
+                        if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
+                            layer.addChild(MeiElement('dot'))
                 # mRests
                 elif element.name == 'mRest':
                     # Change into simple <rest> elements (as there are no measure-rests in mensural notation)
@@ -533,9 +601,9 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                     rest.id = element.id
                     rest.setAttributes(element.getAttributes())
                     layer.addChild(rest)
-                    # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
+                    # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a breve)
                     if rest.hasAttribute('dur') == False:
-                        rest.addAttribute('dur', 'long')
+                        rest.addAttribute('dur', 'breve')
                 # Notes and simple rests
                 else:
                     layer.addChild(element)
