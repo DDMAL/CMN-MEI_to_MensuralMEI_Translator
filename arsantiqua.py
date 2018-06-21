@@ -371,7 +371,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
                     num = int(tuplet.getAttribute('num').value)
                     numbase = int(tuplet.getAttribute('numbase').value)
                     # @numbase is usually '2', because generally a breve = 3 minor semibreves, so tuplets of 3:2 are frequently used to represent 3 (minor) semibreves per breve.
-                    # There are also other cases in which we have more than 3 semibreves per breve: 4:2, 5:2, 6:2 and 7:2
+                    # There are also other cases in which we have more than 3 semibreves per breve: 4:2, 5:2, 6:2, and 7:2. According to Petrus de Cruce, you could have up to 9:2
                     if numbase == 2:
                         base = int(breve_choice)
                     # There is also the case of 2:1 tuplets, in which case @numbase = '1', to indicate a group of two semibreves which should be interpreted as one minor semibreve
