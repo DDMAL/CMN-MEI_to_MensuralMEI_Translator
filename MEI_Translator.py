@@ -185,6 +185,7 @@ class MensuralTranslation(MeiDocument):
                 voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
                 voice_staffDef.addAttribute('tempus', num(voice_mensuration[2]))
                 voice_staffDef.addAttribute('prolatio', num(voice_mensuration[3]))
+                voice_staffDef.addAttribute('notationtype', "mensural")
         # -> For the old notation (ars antiqua)
         else:
             for i in range(0, len(stavesDef)):
@@ -193,6 +194,7 @@ class MensuralTranslation(MeiDocument):
                 voice_staffDef.addAttribute('modusmaior', '2')
                 voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
                 voice_staffDef.addAttribute('tempus', voice_mensuration[0])
+                voice_staffDef.addAttribute('notationtype', "mensural")
         out_scoreDef.addChild(out_staffGrp)
 
         # Section Part of the <score> element:
