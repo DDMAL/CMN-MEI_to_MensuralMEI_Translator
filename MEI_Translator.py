@@ -51,7 +51,7 @@ def merge_ties(doc):
     """
     ids_removeList = []
     ties_list = doc.getElementsByName('tie')
-    for i in range (len(ties_list)-1, -1, -1):
+    for i in range(len(ties_list)-1, -1, -1):
         tie = ties_list[i]
 
         # Start note
@@ -117,7 +117,7 @@ def remove_non_mensural_attributes(doc):
             if artic.value == "stacc":
                 note.removeAttribute('artic')
             elif artic.value == "ten":
-                note.addAttribute('stem.dir', 'down') # If the note has this attribute (@stem.dir) already, it overwrites its value
+                note.addAttribute('stem.dir', 'down')  # If the note has this attribute (@stem.dir) already, it overwrites its value
                 note.removeAttribute('artic')
     # Remove @dots from <rest> elements
     rests = doc.getElementsByName('rest')
@@ -141,10 +141,10 @@ def num(mensurationString):
 class MensuralTranslation(MeiDocument):
     """Translate a CMN-MEI document to a Mensural-MEI document.
 
-    MensuralTranslation is a subclass of MeiDocument. It inherits all its methods, without any modification to any of them. 
+    MensuralTranslation is a subclass of MeiDocument. It inherits all its methods, without any modification to any of them.
     The constructor is the only extended method, as not only the MeiDocument which would contain the Mensural-translation is created here, but also the translation process itself is done here. 
     And there is only one additional method (getModifiedNotes) to deal with the peculiarities of mensural notation.
-    
+
     Methods:
     getModifiedNotes -- gets a list of notes which value has been modified from the original (the default value given by the mensuration)
     """
@@ -270,7 +270,7 @@ class MensuralTranslation(MeiDocument):
         modification_type -- string with 5 possible values: 'alteration', 'imperfection', 'perfection', 'partial imperfection', 'major semibreve'. (Default value: None)
 
         Return:
-        List of tuplets. 
+        List of tuplets.
         First element of the tuplet indicates a note that has been modified from its default value (the value given by the mensuration).
         Second element indicates the modification that note has experienced ('i' for imperfection, 'a' for alteration, 'p' for perfection, etc).
         """
@@ -302,7 +302,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('piece', help="If the CMN-MEI file of the piece is in the same directory as the MEI_Translator module, just enter the 'name' of the piece (including its extension: '.mei'). If not, insert the whole 'path' of the piece.")
     parser.add_argument('style', choices=['ars_antiqua', 'ars_nova', 'white_mensural'], help="This indicates the style of the piece, whether it belongs to the 'ars antiqua', 'ars nova', or 'white notation' repertoire. If you select 'ars_nova' or 'white_mensural' you have to use the optional argument '-NewVoiceN' to add the mensuration (values for: modusmajor, modusminor, tempus, and prolatio) for each voice. If you choose 'ars_antiqua' you have to use the optional argument '-NewVoiceA' to add the mensuration (values for: breve and modusminor) for each voice.")
-    parser.add_argument('-NewVoiceA', nargs=2, action='append', choices=['3','2', 'p', 'i'], help="Use this flag for each new voice (in ars antiqua) that you are entering. After the flag, use '2' or '3' to indicate the 'division of the breve' (duple of triple division) and then use 'p' or 'i' to indicate the 'modusminor'. The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Antiqua 4-voice motet with 3 minor semibreves per breve and imperfect modus: -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i") # for now, you have to add each voice
+    parser.add_argument('-NewVoiceA', nargs=2, action='append', choices=['3', '2', 'p', 'i'], help="Use this flag for each new voice (in ars antiqua) that you are entering. After the flag, use '2' or '3' to indicate the 'division of the breve' (duple of triple division) and then use 'p' or 'i' to indicate the 'modusminor'. The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Antiqua 4-voice motet with 3 minor semibreves per breve and imperfect modus: -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i") # for now, you have to add each voice
     parser.add_argument('-NewVoiceN', nargs=4, action='append', choices=['p', 'i'], help="Use this flag for each new voice (in ars nova or in white mensural notation) that you are entering. After the flag, use 'p' or 'i' to indicate the mensuration (in the order: modusmajor + modusminor + tempus + prolatio). The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Nova 3-voice motet with different mensurations for each voice: -NewVoiceN i i p p -NewVoiceN i p i p -NewVoiceN p i i i") # for now, just 4 values per voice are allowed
     args = parser.parse_args()
 

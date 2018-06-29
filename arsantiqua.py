@@ -9,10 +9,10 @@ sb_major_minor -- Identify 'major semibreves' by adding @num, @numbase and @qual
 fill_section -- Fill the output <section> element with the appropriate musical content
 """
 # Ars Antiqua is characterized by the following:
-# 1. Absence of 'minims' 
+# 1. Absence of 'minims'
 # 2. Absence of 'prolatio'
-# 3. The 'breve' can't be identified as 'perfect' or 'imperfect'. 
-#    It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves, 
+# 3. The 'breve' can't be identified as 'perfect' or 'imperfect'.
+#    It is just considered to be equal to 3 minor semibreves, or a pair of minor-major semibreves,
 #    or it is equal to 2 equal duration semibreves.
 # 4. The fact that the 'breve' can't be catalogued as 'perfect' or 'imperfect', implies that the 'semibreve' can't be 'altered.
 #    It just can't be 'major' or 'minor'.
@@ -36,9 +36,9 @@ def noterest_to_mensural(notes, rests, modusminor):
     """
     # Default values for notes according to the mensuration
     b_def = 2048
-    
+
     l_def = modusminor * b_def
-    l_imp = 2* b_def
+    l_imp = 2 * b_def
     l_perf = 3 * b_def
 
     max_def = 2 * l_def
@@ -156,7 +156,7 @@ def noterest_to_mensural(notes, rests, modusminor):
                     print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of 1024p\n")
         # Breve rest
         elif dur == "breve":
-            mens_dur = "brevis" # 1B rest??????????
+            mens_dur = "brevis"  # 1B rest??????????
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
@@ -174,7 +174,7 @@ def noterest_to_mensural(notes, rests, modusminor):
                     rest.addAttribute('EVENTUALDUR', '2B')  # It will be:   mens_dur = '2B'
                     ###################################################################################################################
                     ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
-                    if modusminor == 3: # 'imperfected'
+                    if modusminor == 3:  # 'imperfected'
                         rest.addAttribute('num', '3')
                         rest.addAttribute('numbase', '2')
                     else:   # Default
@@ -185,7 +185,7 @@ def noterest_to_mensural(notes, rests, modusminor):
                     rest.addAttribute('EVENTUALDUR', '3B')  # It will be:   mens_dur = '3B'
                     ###################################################################################################################
                     ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
-                    if modusminor == 2: # 'perfected'
+                    if modusminor == 2:  # 'perfected'
                         rest.addAttribute('num', '2')
                         rest.addAttribute('numbase', '3')
                     else:   # Default
@@ -194,12 +194,12 @@ def noterest_to_mensural(notes, rests, modusminor):
                 # Check for mistakes in duration (@dur.ges attribute)
                 else:
                     print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
-                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " + str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
             else:
                 # 3-breve rest
                 if modusminor == 3:
                     rest.addAttribute('EVENTUALDUR', '3B')
-                #2-breve rest
+                # 2-breve rest
                 elif modusminor == 2:
                     rest.addAttribute('EVENTUALDUR', '2B')
                 # Check for mistakes in duration (@dur.ges attribute)
@@ -253,7 +253,7 @@ def sb_major_minor(children_of_voiceStaff):
                     pass
         # Case 2: Odd number of semibreves
         else:
-            # This can (should) only happen when there is a 2:1 tuplet at one extreme of the sequence of semibreves,
+            # This can (should) only happen when there is a 2:1 tuplet at one end of the sequence of semibreves,
             # so that the whole tuplet is equal to just 1 minor semibreve,
             # and the semibreve that precedes/follows it (ususally has a downward stem to indicate its longer duration in the group) is the Major Semibreve that completes the Perfect Breve.
             # Without this grouping (major semibreve and tuplet), we are left with an even number of semibreves that can be grouped into minor-major pairs, as usual.
@@ -315,7 +315,7 @@ def sb_major_minor(children_of_voiceStaff):
                     # The first semibreve of each pair (it is generally minor, so we don't make any changes to it)
                     else:
                         pass
-            # Mistake case: If there is no tuplet 2:1 in any extreme, there shouldn't be an odd number of semibreves
+            # Mistake case: If there is no tuplet 2:1 at any of the ends of the sequence, there shouldn't be an odd number of semibreves
             else:
                 print("This shouldn't happen! \nThere is an odd number of semibreves between two perfect breves (or tuplets that are equivalent to a perfect breve), \nwhich doesn't allow to form minor-major (or major-minor) pairs of semibreves.")
                 print("You can find these breves between the " + str(start_element.name) + " with id " + str(start_element.id) + " and the " + str(end_element.name) + " with id " + str(end_element.id))
@@ -379,7 +379,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
                         base = 1
                     else:
                         print("Shouldn't happen!")
-                    # Find the simplified ratio between @numbase and @num 
+                    # Find the simplified ratio between @numbase and @num
                     notes_grouped = tuplet.getChildren()
                     durRatio = Fraction(base, num)
                     # If the ratio isn't 1, add the simplified @num and @numbase attributes to each of the notes in the tuplet
@@ -407,7 +407,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc, breve_choic
                     rest.setAttributes(element.getAttributes())
                     layer.addChild(rest)
                     # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a long)
-                    if rest.hasAttribute('dur') == False:
+                    if rest.hasAttribute('dur') is False:
                         rest.addAttribute('dur', 'long')
                     # Add the <rest> to the list of elements in the voice
                     elements_per_voice.append(rest)

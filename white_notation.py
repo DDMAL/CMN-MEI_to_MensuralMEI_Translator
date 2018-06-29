@@ -57,7 +57,7 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
         semibrevis_imp = semibrevis_default_val
         semibrevis_perf = round(1.5 * semibrevis_default_val)
     elif prolatio == 3:
-        semibrevis_imp = round(semibrevis_default_val * Fraction(2,3))
+        semibrevis_imp = round(semibrevis_default_val * Fraction(2, 3))
         semibrevis_perf = semibrevis_default_val
     else:
         pass
@@ -70,7 +70,7 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     return [[semibrevis_default_val, semibrevis_imp, semibrevis_perf], [brevis_default_val, brevis_imp, brevis_perf], [longa_default_val, longa_imp, longa_perf], [maxima_default_val, maxima_imp, maxima_perf]]
 
 
-def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
+def partial_imperfection(note, ratio, modusminor, tempus, prolatio=None):
     """Identify when a note experimented a partial imperfection and return True in that case, otherwise return False.
 
     When a note experimented a partial imperfection, besides returning True, this function adds the appropriate @quality, @num and @numbase attributes.
@@ -79,7 +79,7 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
     note -- A <note> element in a particular voice on the mei document
     ratio -- The ratio between the actual performed duration of the <note> and its default performed duration
     modusminor, tempus, prolatio -- Integer values (3 or 2) that give the mensuration of the voice. The last argument is optional (default None).
-    When the note is a 'longa' these exact arguments are used: modusminor, tempus and prolatio. 
+    When the note is a 'longa' these exact arguments are used: modusminor, tempus and prolatio.
     When the note is a 'maxima', these arguments stand for: modusmaior, modusminor and tempus, respectively.
     When the note is a breve, these arguments stand for: tempus, prolatio and None (the last argument is left blank).
     """
@@ -88,26 +88,26 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
     partial_imperf = True
 
     # Immediate imperfection: tempus should be 3
-    if tempus == 3 and modusminor == 2 and ratio == Fraction(5,6):
+    if tempus == 3 and modusminor == 2 and ratio == Fraction(5, 6):
         note.addAttribute('quality', 'immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(5,9):
+    elif tempus == 3 and modusminor == 3 and ratio == Fraction(5, 9):
         note.addAttribute('quality', 'imperfection + immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(8,9):
+    elif tempus == 3 and modusminor == 3 and ratio == Fraction(8, 9):
         note.addAttribute('quality', 'immediate_imp')
 
     # Remote imperfection: there should be a prolatio value, and it should be 3
     elif prolatio is not None:
-        if prolatio == 3 and tempus == 2 and modusminor == 2 and ratio == Fraction(11,12):
+        if prolatio == 3 and tempus == 2 and modusminor == 2 and ratio == Fraction(11, 12):
             note.addAttribute('quality', 'remote_imp')
-        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(11,18):
+        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(11, 18):
             note.addAttribute('quality', 'imperfection + remote_imp')
-        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(17,18):
+        elif prolatio == 3 and tempus == 2 and modusminor == 3 and ratio == Fraction(17, 18):
             note.addAttribute('quality', 'remote_imp')
-        elif prolatio == 3 and tempus == 3 and modusminor == 2 and ratio == Fraction(17,18):
+        elif prolatio == 3 and tempus == 3 and modusminor == 2 and ratio == Fraction(17, 18):
             note.addAttribute('quality', 'remote_imp')
-        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(17,27):
+        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(17, 27):
             note.addAttribute('quality', 'imperfection + remote_imp')
-        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(26,27):
+        elif prolatio == 3 and tempus == 3 and modusminor == 3 and ratio == Fraction(26, 27):
             note.addAttribute('quality', 'remote_imp')
         # It is not a 'remote partial imperfection' nor an 'immediate partial imperfection'
         else:
@@ -123,6 +123,7 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio = None):
         note.addAttribute('numbase', str(ratio.numerator))
 
     return partial_imperf
+
 
 # Performs the actual change, in notes and rests, from contemporary to mensural notation.  This involves 2 steps:
 # 1. Note/Rest Shape part: Changes the @dur value to represent mensural figures
@@ -149,19 +150,19 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
     # or they may be augmented (worth 1.5 times their original imperfect value) by means of a dot of augmentation
     # for the minim
     min_imp = sb_imp / 2
-    min_aug = min_imp * Fraction(3,2)
+    min_aug = min_imp * Fraction(3, 2)
     # for the semiminim
     smin_imp = min_imp / 2
-    #smin_imp = sb_imp / 4
-    smin_aug = smin_imp * Fraction(3,2)
+    # smin_imp = sb_imp / 4
+    smin_aug = smin_imp * Fraction(3, 2)
     # for the fusa
     fusa_imp = smin_imp / 2
-    #fusa_imp = sb_imp / 8
-    fusa_aug = fusa_imp * Fraction(3,2)
+    # fusa_imp = sb_imp / 8
+    fusa_aug = fusa_imp * Fraction(3, 2)
     # for the semifusa
     sfusa_imp = fusa_imp / 2
-    #sfusa_imp = sb_imp / 16
-    sfusa_aug = sfusa_imp * Fraction(3,2)
+    # sfusa_imp = sb_imp / 16
+    sfusa_aug = sfusa_imp * Fraction(3, 2)
 
     # Note's Part:
     for note in notes:
@@ -248,9 +249,9 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 partial_imp = partial_imperfection(note, ratio, modusmaior, modusminor, tempus)
                 if partial_imp:
                     pass
-                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
-                    note.addAttribute('num','3')
-                    note.addAttribute('numbase','2')
+                elif ratio == Fraction(2, 3) and note.hasAttribute('color'):
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
                 else:
                     print("This MAXIMA " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
@@ -305,9 +306,9 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 partial_imp = partial_imperfection(note, ratio, modusminor, tempus, prolatio)
                 if partial_imp:
                     pass
-                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
-                    note.addAttribute('num','3')
-                    note.addAttribute('numbase','2')
+                elif ratio == Fraction(2, 3) and note.hasAttribute('color'):
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
                 else:
                     print("This LONG " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
@@ -362,9 +363,9 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 partial_imp = partial_imperfection(note, ratio, tempus, prolatio)
                 if partial_imp:
                     pass
-                elif ratio == Fraction(2,3) and note.hasAttribute('color'):
-                    note.addAttribute('num','3')
-                    note.addAttribute('numbase','2')
+                elif ratio == Fraction(2, 3) and note.hasAttribute('color'):
+                    note.addAttribute('num', '3')
+                    note.addAttribute('numbase', '2')
                 else:
                     print("This BREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(ratio.numerator) + "/" + str(ratio.denominator) + " part of its normal value.")
 
@@ -417,7 +418,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 # Check for mistakes (there is no partial imperfection for a semibreve)
                 print("This SEMIBREVE " + str(note) + " has an inappropriate duration @dur.ges = " + str(durges_num) + "p, as it is " + str(Fraction(durges_num, sb_def).numerator) + "/" + str(Fraction(durges_num, sb_def).denominator) + " part of its normal value.")
 
-       # SMALLER NOTES (OR MISTAKE)
+        # SMALLER NOTES (OR MISTAKE)
         else:
             # Notes smaller than the semibreve (i.e., minima, semiminima, fusa, and semifusa)
             try:
@@ -445,7 +446,6 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
             note.addAttribute('colored', 'true')
             note.removeAttribute('color')
 
-
     # Rest's Part:
     # Rests can't be modified from its original value
     # Long-rests don't exist, there only is 1, 2 or 3 breve rests.
@@ -460,22 +460,22 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 if durges_num != sb_def:
                     print("This SEMIBREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(sb_def) + "p;")
-                    print("i.e., instead of being " + str(prolatio) + " times a MINIM, it is " + str(float(durges_num * prolatio)/ sb_def) + " times a MINIM")
+                    print("i.e., instead of being " + str(prolatio) + " times a MINIM, it is " + str(float(durges_num * prolatio) / sb_def) + " times a MINIM")
                     print("SO IT IS: " + str(Fraction(durges_num, sb_def).numerator) + "/" + str(Fraction(durges_num, sb_def).denominator) + " ITS DEFAULT VALUE\n")
         # Breve rest
         elif dur == "breve":
-            mens_dur = "brevis" # 1B rest??????????
+            mens_dur = "brevis"  # 1B rest??????????
             # Check for mistakes in duration (@dur.ges attribute)
             if rest.hasAttribute('dur.ges'):
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
                 if durges_num != b_def:
                     print("This BREVE rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(b_def) + "p;")
-                    print("i.e., instead of being " + str(tempus) + " times a SEMIBREVE, it is " + str(float(durges_num * tempus)/ b_def) + " times a SEMIBREVE")
+                    print("i.e., instead of being " + str(tempus) + " times a SEMIBREVE, it is " + str(float(durges_num * tempus) / b_def) + " times a SEMIBREVE")
                     print("SO IT IS: " + str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " ITS DEFAULT VALUE\n")
         # 2-breve and 3-breve rest
         elif dur == "long":
             ##########################################################################################################
-            mens_dur = "longa" # THIS WONT BE HERE, INSTEAD WE WILL USE THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
+            mens_dur = "longa"  # THIS WONT BE HERE, INSTEAD WE WILL USE THE MENS_DUR SPECIFIED IN EACH CONDITION (IF)
             ##########################################################################################################
             if rest.hasAttribute('dur.ges'):
                 durges_num = int(rest.getAttribute('dur.ges').value[:-1])
@@ -484,7 +484,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     rest.addAttribute('EVENTUALDUR', '2B')  # It will be:   mens_dur = '2B'
                     ###################################################################################################################
                     ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
-                    if modusminor == 3: # 'imperfected'
+                    if modusminor == 3:  # 'imperfected'
                         rest.addAttribute('num', '3')
                         rest.addAttribute('numbase', '2')
                     else:   # Default
@@ -495,7 +495,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                     rest.addAttribute('EVENTUALDUR', '3B')  # It will be:   mens_dur = '3B'
                     ###################################################################################################################
                     ###### This will go away when the 3B and 2B rests (3-spaces and 2-spaces rests) are implemented in Verovio ########
-                    if modusminor == 2: # 'perfected'
+                    if modusminor == 2:  # 'perfected'
                         rest.addAttribute('num', '2')
                         rest.addAttribute('numbase', '3')
                     else:   # Default
@@ -504,12 +504,12 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
                 # Check for mistakes in duration (@dur.ges attribute)
                 else:
                     print("This 'LONG' Rest " + str(rest) + ", doesn't have the appropriate @dur.ges value, as it is " + str(durges_num) + "p, instead of " + str(l_imp) + "p or " + str(l_perf) + "p")
-                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " +  str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
+                    print("i.e., it isn't a 2-breve or 3-breve rest, instead it is: " + str(Fraction(durges_num, b_def).numerator) + "/" + str(Fraction(durges_num, b_def).denominator) + " times a BREVE rest\n")
             else:
                 # 3-breve rest
                 if modusminor == 3:
                     rest.addAttribute('EVENTUALDUR', '3B')
-                #2-breve rest
+                # 2-breve rest
                 elif modusminor == 2:
                     rest.addAttribute('EVENTUALDUR', '2B')
                 # Check for mistakes in duration (@dur.ges attribute)
@@ -600,7 +600,7 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                     rest.setAttributes(element.getAttributes())
                     layer.addChild(rest)
                     # If there is no duration encoded in the rest, this mRest has the duration of the measure (which, generally, is a breve)
-                    if rest.hasAttribute('dur') == False:
+                    if rest.hasAttribute('dur') is False:
                         rest.addAttribute('dur', 'breve')
                 # Notes and simple rests
                 else:
