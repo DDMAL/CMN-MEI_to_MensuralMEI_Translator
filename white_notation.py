@@ -55,9 +55,9 @@ def imp_perf_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolat
     semibrevis_default_val, brevis_default_val, longa_default_val, maxima_default_val = relative_vals(triplet_of_minims_flag, modusmaior, modusminor, tempus, prolatio)
     if prolatio == 2:
         semibrevis_imp = semibrevis_default_val
-        semibrevis_perf = int(1.5 * semibrevis_default_val)
+        semibrevis_perf = round(1.5 * semibrevis_default_val)
     elif prolatio == 3:
-        semibrevis_imp = int(semibrevis_default_val * 2/3)
+        semibrevis_imp = round(semibrevis_default_val * Fraction(2,3))
         semibrevis_perf = semibrevis_default_val
     else:
         pass
@@ -570,17 +570,15 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
                     pass
                 # Tuplets
                 elif element.name == 'tuplet':
-                    # The only tuplets present in Ars Nova and are tuplets of minims
+                    # Unlike modern transcriptions of Ars nova pieces, in a modern transcription of a white mensural piece probably there won't be any tuplets present.
+                    # Since there are way smaller note values in white notation compared to Ars nova,
+                    # it is better to represent a perfect semibreve as a dotted whole note that can be divided into three half notes,
+                    # than to represent it as a whole note that can be divided into a triplet of half notes (like in Ars nova).
+                    # To be safe, in the case tuplets are used, the following code was copied from the arsnova module.
                     flag_triplet_minims = True
                     tuplet = element
-                    num = int(tuplet.getAttribute('num').value)
-                    numbase = int(tuplet.getAttribute('numbase').value)
                     notes_grouped = tuplet.getChildren()
                     for note in notes_grouped:
-                        durges = note.getAttribute('dur.ges').value
-                        actual_durges_num = int( int(durges[0:len(durges)-1]) * numbase / num )
-                        actual_durges = str(actual_durges_num) + 'p'
-                        note.getAttribute('dur.ges').setValue(actual_durges)
                         layer.addChild(note)
                         # Adding the <dot> element after a 'staccated' note or rest element
                         if note.hasAttribute('artic') and note.getAttribute('artic').value == "stacc":
