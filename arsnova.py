@@ -89,11 +89,11 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio=None):
     partial_imperf = True
 
     # Immediate imperfection: tempus should be 3
-    if tempus == 3 and modusminor == 2 and ratio == Fraction(5, 6):
+    if tempus == 3 and modusminor == 2 and (ratio == Fraction(5, 6) or ratio == Fraction(4, 6)):
         note.addAttribute('quality', 'immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(5, 9):
+    elif tempus == 3 and modusminor == 3 and (ratio == Fraction(5, 9)):    # Should I also include the case: or ratio == Fraction(4, 9)?
         note.addAttribute('quality', 'imperfection + immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(8, 9):
+    elif tempus == 3 and modusminor == 3 and (ratio == Fraction(8, 9) or ratio == Fraction(7, 9)):
         note.addAttribute('quality', 'immediate_imp')
 
     # Remote imperfection: there should be a prolatio value, and it should be 3
@@ -154,16 +154,16 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
             # Maximas
-            if (int(max_imp * 5/6) - 1) <= durges_num and durges_num <= max_perf:
+            if (int(max_imp * 4/6) - 1) <= durges_num and durges_num <= max_perf:
                 dur = 'maxima'
             # Longas
-            elif (int(l_imp * 5/6) - 1) <= durges_num and durges_num <= l_perf:
+            elif (int(l_imp * 4/6) - 1) <= durges_num and durges_num <= l_perf:
                 dur = 'long'
             # Breves
-            elif (int(b_imp * 5/6) - 1) <= durges_num and durges_num <= b_perf:
+            elif (int(b_imp * 4/6) - 1) <= durges_num and durges_num <= b_perf:
                 dur = 'breve'
             # Semibreves
-            elif (int(sb_imp * 5/6) - 1) <= durges_num and durges_num <= sb_perf:
+            elif (int(sb_imp * 4/6) - 1) <= durges_num and durges_num <= sb_perf:
                 dur = '1'
             else:
                 print("Weird\n The tied note doesn't seem to be any note (perfect, imperfect, or afected by patial imperfection) in the range of semibreve to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
