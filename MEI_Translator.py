@@ -82,6 +82,38 @@ def merge_ties(doc):
     return ids_removeList
 
 
+def divide_voice(mensural_meidoc, mensur_elements):
+    voice_segments = []
+    mensur_positions = [mensur.getPositionInDocument() for mensur in mensur_elements]
+    mensuraldoc_tree = mensural_meidoc.getFlattenedTree()
+    for i in range (0, len(mensur_positions) - 1):
+        elements_in_between = mensuraldoc_tree[mensur_positions[i]+1 : mensur_positions[i+1]]
+        notes = []
+        rests = []
+        for element in elements_in_between:
+            if element.name == 'note':
+                notes.append(element)
+            elif element.name == 'rest':
+                rests.append(element)
+        mensuration = mensur_elements[i]
+        segment = {'mensuration': mensuration, 'notes': notes, 'rests': rests}
+    voice_segments.append(segment)
+
+    elements_in_between = mensuraldoc_tree[mensur_positions[len(mensur_positions) - 1] + 1:]
+    notes = []
+    rests = []
+    for element in elements_in_between:
+        if element.name == 'note':
+            notes.append(element)
+        elif element.name == 'rest':
+            rests.append(element)
+    mensuration = mensur_elements[len(mensur_positions) - 1]
+    segment = {'mensuration': mensuration, 'notes': notes, 'rests': rests}
+    voice_segments.append(segment)
+
+    return voice_segments
+
+
 def remove_non_mensural_attributes(doc):
     """Remove/Replace attributes inside <note> and <rest> elments on the pymei.MeiDocument object, that are not part of the Mensural-MEI schema.
 
@@ -214,22 +246,42 @@ class MensuralTranslation(MeiDocument):
                 rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
 
                 white_notation.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
+        
         # -> For ars nova
         elif ars_type == "ars_nova":
             tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, piece_mensuration)
-            staffDefs = self.getElementsByName('staffDef')
             staves = self.getElementsByName('staff')
-            for i in range(0, len(staffDefs)):
-                staffDef = staffDefs[i]
-                modusmaior = int(staffDef.getAttribute('modusmaior').value)
-                modusminor = int(staffDef.getAttribute('modusminor').value)
-                tempus = int(staffDef.getAttribute('tempus').value)
-                prolatio = int(staffDef.getAttribute('prolatio').value)
+            # For each voice: Separate it into sections that keep the same mensuration and
+            # process the musical content (notes and rests) of each section seprately.
+            for i, staff in enumerate(staves):
+                voice_mensur_elements = staff.getChildrenByName('layer')[0].getChildrenByName('mensur')
+                # If there are no mensuration changes in the voice (i.e., there is only one <mensur> element)
+                if len(voice_mensur_elements) == 1:
+                    # Mensuration of the voice
+                    voice_mensuration = voice_mensur_elements[0]                
+                    modusmaior = int(voice_mensuration.getAttribute('modusmaior').value)
+                    modusminor = int(voice_mensuration.getAttribute('modusminor').value)
+                    tempus = int(voice_mensuration.getAttribute('tempus').value)
+                    prolatio = int(voice_mensuration.getAttribute('prolatio').value)
+                    # Getting all the notes and rests from this voice
+                    voice_notes = staff.getChildrenByName('layer')[0].getChildrenByName('note')
+                    voice_rests = staff.getChildrenByName('layer')[0].getChildrenByName('rest')
+                    # Calling the noterest_to_mensural to encode the quality of the notes based on the voice mensuration
+                    arsnova.noterest_to_mensural(voice_notes, voice_rests, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
+                # If there are changes in mensuration within the voice
+                else:
+                    # Separate the music content of the voice (notes and rests) into segments that keep the same mensuration
+                    voice_segments = divide_voice(self, voice_mensur_elements)
+                    # For each segment:
+                    for i, segment in enumerate(voice_segments):
+                        # Mensuration of this segment of the voice
+                        modusmaior = int(segment['mensuration'].getAttribute('modusmaior').value)
+                        modusminor = int(segment['mensuration'].getAttribute('modusminor').value)
+                        tempus = int(segment['mensuration'].getAttribute('tempus').value)
+                        prolatio = int(segment['mensuration'].getAttribute('prolatio').value)
+                        # Calling the noterest_to_mensural to encode the quality of the notes and rests in this segment based on the mensuration
+                        arsnova.noterest_to_mensural(segment['notes'], segment['rests'], modusmaior, modusminor, tempus, prolatio, tuplet_minims)
 
-                notes_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('note')
-                rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
-
-                arsnova.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
         # -> For ars antiqua
         else:
             breve = mensuration_list[0][0]
