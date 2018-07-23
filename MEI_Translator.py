@@ -21,7 +21,8 @@ import arsantiqua
 
 
 def separate_staves_per_voice(doc):
-    """Return a list of lists, each of which contains all the <staff> elements of a voice in the pymei.MeiDocument object.
+    """Return a list of lists, each of which contains all the <staff> elements of a voice 
+    (which are children of different <measure> elements) in the pymei.MeiDocument object.
 
     Arguments:
     doc -- the pymei.MeiDocument object to be translated to Mensural-MEI
@@ -179,8 +180,7 @@ class MensuralTranslation(MeiDocument):
         # Mensuration added to the staves definition <staffDef>
         # -> For the new notation (ars nova or white mensural)
         if ars_type in ["ars_nova", "white_mensural"]:
-            for i in range(0, len(stavesDef)):
-                voice_staffDef = stavesDef[i]
+            for i, voice_staffDef in enumerate(stavesDef):
                 voice_mensuration = mensuration_list[i]
                 voice_staffDef.addAttribute('modusmaior', num(voice_mensuration[0]))
                 voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
@@ -189,8 +189,7 @@ class MensuralTranslation(MeiDocument):
                 voice_staffDef.addAttribute('notationtype', "mensural")
         # -> For the old notation (ars antiqua)
         else:
-            for i in range(0, len(stavesDef)):
-                voice_staffDef = stavesDef[i]
+            for i, voice_staffDef in enumerate(stavesDef):
                 voice_mensuration = mensuration_list[i]
                 voice_staffDef.addAttribute('modusmaior', '2')
                 voice_staffDef.addAttribute('modusminor', num(voice_mensuration[1]))
