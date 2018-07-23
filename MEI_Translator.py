@@ -200,7 +200,7 @@ class MensuralTranslation(MeiDocument):
         # Fill the section element with the information of each voice (contained in all_voices)
         # -> For white notation
         if ars_type == "white_mensural":
-            tuplet_minims = white_notation.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc)
+            tuplet_minims = white_notation.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, piece_mensuration)
             staffDefs = self.getElementsByName('staffDef')
             staves = self.getElementsByName('staff')
             for i in range(0, len(staffDefs)):
@@ -216,7 +216,7 @@ class MensuralTranslation(MeiDocument):
                 white_notation.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
         # -> For ars nova
         elif ars_type == "ars_nova":
-            tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc)
+            tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, piece_mensuration)
             staffDefs = self.getElementsByName('staffDef')
             staves = self.getElementsByName('staff')
             for i in range(0, len(staffDefs)):
@@ -233,7 +233,7 @@ class MensuralTranslation(MeiDocument):
         # -> For ars antiqua
         else:
             breve = mensuration_list[0][0]
-            voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, breve)
+            voices_elements = arsantiqua.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, breve, piece_mensuration)
             staffDefs = self.getElementsByName('staffDef')
             staves = self.getElementsByName('staff')
             for i in range(0, len(staffDefs)):

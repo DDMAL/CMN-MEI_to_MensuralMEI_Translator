@@ -472,7 +472,7 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         rest.getAttribute('dur').setValue(mens_dur)
 
 
-def fill_section(out_section, all_voices, ids_removeList, input_doc):
+def fill_section(out_section, all_voices, ids_removeList, input_doc, piece_mensuration):
     """
     Fill the <section> element of the Mensural-MEI document with the appropriate musical content.
 
