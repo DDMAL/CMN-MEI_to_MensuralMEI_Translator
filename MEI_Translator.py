@@ -11,6 +11,7 @@ Classes:
 MensuralTranslation -- Create the translated Mensural-MEI document.
 """
 import argparse
+import itertools
 
 from pymei import documentFromFile, documentToFile, MeiDocument, MeiElement
 
