@@ -324,15 +324,15 @@ if __name__ == "__main__":
             parser.error("There is a wrong mensuration in voice # " + str(i+1) + ".\nPlease follow the instructions regarding how to write the mensuration for " + args.style + " pieces.")
     
     # If everything is fine, save the list of mensurations
-    mensurationList = args.voice
+    mensuration_list = args.voice
 
     # 3. Error in the number of voices entered (it is smaller/larger than the number of voices in the piece)
     print(args.piece)
     input_doc = documentFromFile(args.piece).getMeiDocument()
     stavesDef = input_doc.getElementsByName('staffDef')
-    if len(mensurationList) < len(stavesDef):
+    if len(mensuration_list) < len(stavesDef):
         parser.error("The number of voices entered (amount of '-voice' flags) is smaller than the number of voices on the CMN-MEI file of the piece.")
-    elif len(mensurationList) > len(stavesDef):
+    elif len(mensuration_list) > len(stavesDef):
         parser.error("The number of voices entered (amount of '-voice' flags) is larger than the number of voices on the CMN-MEI file of the piece.")
     else:
         pass
