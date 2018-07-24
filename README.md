@@ -19,50 +19,56 @@ The MEI_Translator module contains general functions for the translation, shared
 - If you are transcribing a _white mensural_ piece, you need to __bar it by the breve__ for the Mensural MEI Translator to work properly.
 
 ## Running the script
-Parameters are set according to a composition's musical style. The two parameters that are common for both styles are: 
+There are three types of parameters:
 - the _piece name_, or the path to the piece if the composition is in a different directory than the script
 - the _musical style_, three values: "ars_antiqua", "ars_nova", and "white_mensural"
- 
-Other parameters indicate the mensuration for each of the voices in a composition. Use the following two flags to enter the mensuration definition for each voice: ```-NewVoiceN``` and ```-NewVoiceA```. The ```-NewVoiceN``` flag is used exclusively for _ars nova_ and _white mensural_ pieces (musical style = "ars_nova" or "white_mensural"), while the ```-NewVoiceA``` flag is used only for _ars antiqua_ pieces (musical style = "ars_antiqua").
+- the _-voice_ flag, which is used to enter the mensuration of each voice. The mensuration values used with this flag depend on the _musical style_ of the piece (see following section).
 
-#### New voice flag for _ars nova_ and _white mensural_ notation: ```-NewVoiceN```
+### The -voice flag
+Use this flag for each voice to enter its mensuration following the format: ```-voice <mensuration>```. The ```<mensuration>``` has two possible values depending of the style of your piece.
 
-Use this flag for each new voice (_ars nova_ or _white mensural_) that you are entering. After the flag, use the characters ```p``` or ```i``` to indicate the mensuration of one voice in the order: _modus major_, _modus minor_, _tempus_ and _prolatio_. Medieval theorists would refer to ternary prolation as 'major' and a binary prolation as 'minor', but the labels 'p' and 'i' are continued for prolation, for simplicity's sake.
+#### Ars antiqua mensuration values
+If your piece is from the Ars Antiqua, your mensuration string should be two-characters long. The first character is a ```2``` or a ```3``` and it indicates the ```division of the breve``` (_duple_ or _triple division_, respectively). The second character is an ```i``` or a ```p``` and it indicates the modusminor (_imperfect_ or _perfect modusminor_, respectively).
 
-##### Example:
+##### Example
+> ```-voice 3i``` indicates a voice with 3 minor semibreves (triple division) per breve and _imperfect modusminor_.
 
-> ``` -NewVoiceN i p i p``` indicates a voice with _imperfect modus major_ and _tempus_, and _perfect modus minor_ and _prolatio_.
+#### Ars nova and white notation mensuration values
+If, on the other hand, you are dealing with an Ars nova or a white notation piece, your mensuration string should be four-characters long and must consist only of ```p``` and ```i``` chracters. These characters must be used in the following order to indicate the mensuration: _modusmajor_, _modusminor_, _tempus_, and _prolatio_. Medieval theorists would refer to ternary prolation as 'major' and a binary prolation as 'minor', but the labels 'p' and 'i' are continued for prolation, for simplicity's sake.
 
-#### New voice flag for _ars antiqua_: ```-NewVoiceA```
+##### Example
+> ```-voice ipip``` indicates a voice with _imperfect modusmajor_ and _tempus_, and _perfect modusminor_ and _prolatio_.
 
-Use this flag for each new voice (_ars antiqua_) that you are entering. After the flag, use the characters ```2``` or ```3``` to indicate the _division of the breve_, which can be _duple_ or _triple_, and then use the characters ```p``` or ```i``` to indicte the _modus minor_.
+#### Changes in mensuration within a voice
+To indicate changes in mensuration within a voice you must provide the measure number in which the mensuration change happens using the following format: 
+> ```-voice <mensuration> <measure_number> <mensuration> <measure_number> <mensuration>``` and so on.
 
-##### Example: 
+##### Example 
+> ```-voice ippi 15 iipi 30 ipip``` indicates a voice that started in _imperfect modusmajor_, _perfect modusminor_, _perfect tempus_, and _minor prolation_. At measure 15, its _modusminor_ changes from _perfect_ to _imperfect_. At measure 30, the voice returns to its initial mensuration.
 
-> ```-NewVoiceA 3 i``` indicates a voice with 3 minor semibreves per breve (triple division) and _imperfect modus minor_.
+#### Multiple voices
+The ```-voice``` flag is used for each voice in order to enter its mensuration. Therefore, the number of ```-voice``` flags must coincide with the number of voices in the CMN MEI file (and the Sibelius file). **IMPORTANT: The order in which you enter the mensuration of the voices using the ```-voice``` flags should be the same as the order of the voices in the CMN MEI file (or the Sibelius file).**
 
-The order in which you enter the mensuration of the voices using the new voice flags (```-NewVoiceN``` or ```-NewVoiceA```) should be the same as the order of the voices in the CMN MEI file (or the Sibelius file).
+##### Examples
 
-##### Examples with more than one voice:
+> ```-voice 2p —voice 2p —voice 2p -voice 3i 10 2p 20 3i 30 2p 40 3i```. Four-voice Ars antiqua piece. The lower voice starts with _imperfect modusminor_ and _triple division of the breve_, it changes to _perfect modusminor_ and _duple division of the breve_ at measure 10. It keeps switching between these two mensurations at measures 20, 30, and 40. The voice ends with the same mensuration it started. While all these changes in mensuration happen in the lower voice, the upper voices are constantly in _perfect modusminor_ and _duple division of the breve_.
 
-> ```-NewVoiceN i i p p -NewVoice i p i p -NewVoiceN p i i i``` is used for an _ars nova_ 3-voice piece with different mensurations for each voice.
+> ```-voice ipii 25 iipp 40 ipii -voice ippi -voice ipii 25 iipp 40 ipii```. Three-voice Ars nova (or white mensural) piece. The upper and lower voices start with _imperfect modusmajor_, _perfect modusminor_, _imperfect tempus_, and _minor prolatio_. At measure 25, their _modusminor_ switch from _perfect_ to _imperfect_, while their tempus and prolatio switch from _imperfect_ to _perfect_. At measure 40, they return to their initial mensuration. While all these changes in mensuration happen in these two voices, the middle voice moves constantly in _imperfect modusmajor_, _perfect modusminor_, _perfect tempus_, and _minor prolatio_.
 
-> ```-NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p -NewVoiceA 2 p``` is used for and _ars antiqua_ 4-voice piece with the same mensuration for all its voices (duple divison of the breve and _perfect modus minor_).
-
-### Examples of running scripts at the command line
+### Examples of running scripts in the command line
 
 Here are two pieces, one for _ars nova_ and one for _ars antiqua_. The composition are included in this repository (_TestFiles_ directory).
 
 _Ars nova_ piece - _Zodiacum_ from the IvTrem:
 
 ```
-$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei ars_nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i p i p
+$ python MEI_Translator.py TestFiles/IvTrem/zodiacum.mei ars_nova -voice ipip -voice ipip -voice ipip
 ```
 
 _Ars antiqua_ piece - _Fauvel_ from the Fauvel:
 
 ```
-$ python MEI_Translator.py TestFiles/Fauv/fauvel.mei ars_antiqua -NewVoiceA 3 p -NewVoiceA 3 p -NewVoiceA 3 p
+$ python MEI_Translator.py TestFiles/Fauv/fauvel.mei ars_antiqua -voice 3p -voice 3p -voice 3p
 ```
 
 You can also go to the ```TestFiles``` directory and run:
@@ -91,7 +97,7 @@ cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/bona.mei").getMeiDocument(
 ```
 from MEI_Translator import MensuralTranslation`
 
-mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "i", "i", "p"]])
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_nova", [["ipip"], ["ipip"], ["iiip"]])
 ```
 
 Now you will be able to use all the ```pymei.MeiDocument``` methods (```getElementsByName```, ```getElementById```, etc.) and a new method included in the ```MensuralTranslation``` class (```getModifiedNotes```) to be able to access elements in the file and edit them before you call the function ```documentToFile``` to create the file containing the Mensural MEI document.
@@ -124,7 +130,7 @@ cmn_meidoc = pymei.documentFromFile("TestFiles/Fauv/fauvel.mei").getMeiDocument(
 
 from MEI_Translator import MensuralTranslation
 
-mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_antiqua", [["3", "p"], ["3", "p"], ["3", "p"]])
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_antiqua", [["3p"], ["3p"], ["3p"]])
 mensural_meidoc.getModifiedNotes('major semibreve')
 
 ```
@@ -138,7 +144,7 @@ cmn_meidoc = pymei.documentFromFile("TestFiles/IvTrem/zodiacum.mei").getMeiDocum
 
 from MEI_Translator import MensuralTranslation
 
-mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_nova", [["i", "p", "i", "p"], ["i", "p", "i", "p"], ["i", "p", "i", "p"]])
+mensural_meidoc = MensuralTranslation(cmn_meidoc, "ars_nova", [["ipip"], ["ipip"], ["ipip"]])
 mensural_meidoc.getModifiedNotes('partial imperfection')
 ```
 
@@ -158,5 +164,5 @@ You receive the same outcome as from the MEI\_Translator script, except that you
 
 <a name="two">2</a>: Alternatively, you could run the MEI\_Translator as a script on the command line to obtain the Mensural MEI file for this piece directly by entering: 
 ```
-python MEI_Translator.py TestFiles/IvTrem/bona.mei ars_nova -NewVoiceN i p i p -NewVoiceN i p i p -NewVoiceN i i i p
+python MEI_Translator.py TestFiles/IvTrem/bona.mei ars_nova -voice ipip -voice ipip -voice iiip
 ```
