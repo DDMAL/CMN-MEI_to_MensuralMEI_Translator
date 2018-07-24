@@ -246,7 +246,7 @@ class MensuralTranslation(MeiDocument):
                 rests_per_voice = staves[i].getChildrenByName('layer')[0].getChildrenByName('rest')
 
                 white_notation.noterest_to_mensural(notes_per_voice, rests_per_voice, modusmaior, modusminor, tempus, prolatio, tuplet_minims)
-        
+
         # -> For ars nova
         elif ars_type == "ars_nova":
             tuplet_minims = arsnova.fill_section(out_section, all_voices, ids_removeList, cmn_meidoc, piece_mensuration)
@@ -258,7 +258,7 @@ class MensuralTranslation(MeiDocument):
                 # If there are no mensuration changes in the voice (i.e., there is only one <mensur> element)
                 if len(voice_mensur_elements) == 1:
                     # Mensuration of the voice
-                    voice_mensuration = voice_mensur_elements[0]                
+                    voice_mensuration = voice_mensur_elements[0]
                     modusmaior = int(voice_mensuration.getAttribute('modusmaior').value)
                     modusminor = int(voice_mensuration.getAttribute('modusminor').value)
                     tempus = int(voice_mensuration.getAttribute('tempus').value)
@@ -347,7 +347,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('piece', help="If the CMN-MEI file of the piece is in the same directory as the MEI_Translator module, just enter the 'name' of the piece (including its extension: '.mei'). If not, insert the whole 'path' of the piece.")
     parser.add_argument('style', choices=['ars_antiqua', 'ars_nova', 'white_mensural'], help="This indicates the style of the piece, whether it belongs to the 'ars antiqua', 'ars nova', or 'white notation' repertoire. If you select 'ars_nova' or 'white_mensural'.")
-    parser.add_argument('-voice', nargs='+', action='append', help="Use this flag for each voice to enter its mensuration in the following format: -voice <mensuration>. \nThe mensuration string has two possible values depending of the style of your piece.\n-If your piece is from the Ars Antiqua, your mensuration string should be two chracters long, the first character is a '2' or a '3' and indicates  the 'division of the breve' (duple or triple division), and the second character is an 'i' or 'p' and it indicates the modusminor (imperfect or perfect modusminor). \nExample for an Ars Antiqua 3-voice piece with 2 minor semibreves per breve and perfect modus: -voice 2p -voice 2p -voice 2p \n-If, on the other hand, you are dealing with an Ars nova or a white notation piece, your mensuration string is four characters long and it is composed only of 'p' and 'i' chracters. These characters must be used to indicate the mensuration in the following order: modusmajor, modusminor, tempus, and prolatio. \nExample of a two-voice Ars nova (or white mensural) piece with different mensuration in each voice: -voice ippi -voice iipp. Both voices are in imperfect modusmajor, the upper one has perfect modus and tempus with minor prolatio, while the lower one is in imperfect modus, perfect tempus and major prolatio. \n\nTo indicate changes in mensuration within a voice you must provide the measure number in which the mensuration change happens using the following format: -voice <mensuration> <measure_number> <mensuration> <measure_number> <mensuration> and so on.\nExample: '-voice ipip 15 ippp 30 ipip -voice ipii -voice ipii'. In this example the first voice starts in imperfect modusmajor, perfect modusminor, imperfect tempus, and major prolatio. At measure 15th, its tempus changes from imperfect to perfect. Finally, it comes gack to imperfect tempus at measure 30th. While all these changes in mensuration happens in the uppper voice, the two lower voices move always in imperfect modusmajor, perfect modusminor and imperfect tempus with minor prolatio. \n\nThe order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file.")
+    parser.add_argument('-voice', nargs='+', action='append', help="Use this flag for each voice to enter its mensuration in the following format: -voice <mensuration>. \nThe mensuration string has two possible values depending of the style of your piece.\n-If your piece is from the Ars Antiqua, your mensuration string should be two-characters long. The first character is a '2' or a '3' and it indicates the 'division of the breve' (duple or triple division, respectively). The second character is an 'i' or a 'p' and it indicates the modusminor (imperfect or perfect modusminor, respectively). \nExample for an Ars Antiqua three-voice piece with two semibreves per breve and perfect modusminor: -voice 2p -voice 2p -voice 2p \n-If, on the other hand, you are dealing with an Ars nova or a white notation piece, your mensuration string should be four-characters long and must consist only of 'p' and 'i' chracters. These characters must be used in the following order to indicate the mensuration: modusmajor, modusminor, tempus, and prolatio. \nExample of a two-voice Ars nova (or white mensural) piece with different mensuration in each voice: -voice ippi -voice iipp. Both voices are in imperfect modusmajor. The upper voice has perfect modusminor and tempus with minor prolatio; while the lower voice is in imperfect modusminor, perfect tempus, and major prolatio. \n\nTo indicate changes in mensuration within a voice you must provide the measure number in which the mensuration change happens using the following format: -voice <mensuration> <measure_number> <mensuration> <measure_number> <mensuration> and so on.\nExample: '-voice ipip 15 ippp 30 ipip -voice ipii -voice ipii'. In this example the first voice starts in imperfect modusmajor, perfect modusminor, imperfect tempus, and major prolatio. At measure 15th, its tempus changes from imperfect to perfect. Finally, it comes back to imperfect tempus at measure 30th. While all these changes in mensuration happens in the upper voice, the two lower voices move always in imperfect modusmajor, perfect modusminor and imperfect tempus with minor prolatio. \n\nThe order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file.")
     args = parser.parse_args()
 
     # All possible choices of mensuration for ars antiqua and ars nova pieces
@@ -374,7 +374,7 @@ if __name__ == "__main__":
         # 2. Error in mensuration (it is not any of the available choices for ars antiqua or nova)
         if all([mensur in choices for mensur in mensurations]) is False:
             parser.error("There is a wrong mensuration in voice # " + str(i+1) + ".\nPlease follow the instructions regarding how to write the mensuration for " + args.style + " pieces.")
-    
+
     # If everything is fine, save the list of mensurations
     mensuration_list = args.voice
 
@@ -391,10 +391,10 @@ if __name__ == "__main__":
 
     # Just for visualization purposes:
     print(args.voice)
-    
-    
+
+
     # Reformatting of the mensuration information for whole piece:
-    # Changing the mensuration list given by the user to a dictionary that indicates the mensuration changes 
+    # Changing the mensuration list given by the user to a dictionary that indicates the mensuration changes
     # for each voice in a form easier to deal with according to the Mensural MEI schema.
 
     # 1. Adding the measure number ('1') for the first mensuration indicated by the user for each voice
@@ -408,10 +408,10 @@ if __name__ == "__main__":
     # Example:    piece_mensuration = {0: {'1': 'ipip'}, 1: {'1': 'ipip'}, 2: {'1': 'ipip', '33': 'ippp'}}
     # Each entry of the piece_mensuration dictionary is a key-value consisting of:
     # - The voice number as the key, and
-    # - A dictionary of the mensuration changes of that voice as its value. 
+    # - A dictionary of the mensuration changes of that voice as its value.
     # Consider the entry for the last voice:    2: {'1': 'ipip', '33': 'ippp'}
     # The dictionary shows the changes of mensuration within that voice. The keys indicate the measure where
-    # the mensuration change happens, and the value indicates the actual mensuration. 
+    # the mensuration change happens, and the value indicates the actual mensuration.
     # So for this entry, the initial mensuration (at measure 1) is given by 'ipip',
     # which changes at measure 33 to 'ippp'.
 
