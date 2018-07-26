@@ -184,16 +184,50 @@ class MensuralTranslation(MeiDocument):
     getModifiedNotes -- gets a list of notes which value has been modified from the original (the default value given by the mensuration)
     """
 
-    def __init__(self, cmn_meidoc, ars_type, piece_mensuration):
+    def __init__(self, cmn_meidoc, ars_type, mensuration_list):
         """Create the Mensural-MEI document that contains the translation of the CMN-MEI document.
 
         Arguments:
         cmn_meidoc -- the pymei.MeiDocument object that contains the CMN-MEI document intended to be translated to Mensural-MEI
         ars_type -- string that indicates if the piece belongs to the Ars Nova or the Ars Antiqua repertoire. It has two values: 'nova' or 'antiqua'
-        piece_mensuration -- dictionary in which each element is a list that encodes the mensuration for each voice.
+        mensuration_list -- list in which each element is a list that encodes the mensuration for each voice.
         For Ars Nova each sublist has 4 elements (with values 'p' or 'i') that indicate the mensuration of the voice (in the order: modusmaior, modusminor, tempus and prolatio).
         For Ars Antiqua each sublist has 2 elemnts (the first is '3' or '2' -indicating the division of the breve-, and the second is 'p' or 'i' -indicating the modusminor-).
         """
+
+        # Reformatting of the mensuration information for whole piece:
+        # Changing the mensuration list given by the user to a dictionary that indicates the mensuration changes
+        # for each voice in a form easier to deal with according to the Mensural MEI schema.
+
+        # 1. Adding the measure number ('1') for the first mensuration indicated by the user for each voice
+        for i, item in enumerate(mensuration_list):
+            mensuration_list[i] = ['1'] + item
+        # 2. Rewriting the mensuration list given by the user as a dictionary that indicates the mensuration changes for each voice
+        piece_mensuration = {}
+        for i, item in enumerate(mensuration_list):
+            voice_mensuration_changes = dict(zip(item[0::2], item[1::2]))
+            piece_mensuration[i] = voice_mensuration_changes
+        # Example:    piece_mensuration = {0: {'1': 'ipip'}, 1: {'1': 'ipip'}, 2: {'1': 'ipip', '33': 'ippp'}}
+        # Each entry of the piece_mensuration dictionary is a key-value consisting of:
+        # - The voice number as the key, and
+        # - A dictionary of the mensuration changes of that voice as its value.
+        # Consider the entry for the last voice:    2: {'1': 'ipip', '33': 'ippp'}
+        # The dictionary shows the changes of mensuration within that voice. The keys indicate the measure where
+        # the mensuration change happens, and the value indicates the actual mensuration.
+        # So for this entry, the initial mensuration (at measure 1) is given by 'ipip',
+        # which changes at measure 33 to 'ippp'.
+
+        # 3. Change the mensuration dictionary, so that the mensuration values are consistent with the way in
+        # which MEI encodes the modus major, modus minor, tempus, and prolatio
+        # Changing entries as 'ippp' to a list of the form ['2', '3', '3', '3'] that encodes the individual
+        # values for the attributes @modusmaior, @modusminor, @tempus, and @prolatio, respectively
+        numvalue = {'p': '3', '3': '3', 'i': '2', '2': '2'}
+        for voice_num in piece_mensuration:
+            voice_mensuration_changes = piece_mensuration[voice_num]
+            for measure_num in voice_mensuration_changes:
+                current_mensuration = voice_mensuration_changes[measure_num]
+                piece_mensuration[voice_num][measure_num] = [numvalue[mensur_note_level] for mensur_note_level in list(current_mensuration)]
+
         # Getting necessary information from the input (CMN-MEI) file
         all_voices = separate_staves_per_voice(cmn_meidoc)
         ids_removeList = merge_ties(cmn_meidoc)
@@ -405,40 +439,6 @@ if __name__ == "__main__":
     # Just for visualization purposes:
     print(args.voice)
 
-
-    # Reformatting of the mensuration information for whole piece:
-    # Changing the mensuration list given by the user to a dictionary that indicates the mensuration changes
-    # for each voice in a form easier to deal with according to the Mensural MEI schema.
-
-    # 1. Adding the measure number ('1') for the first mensuration indicated by the user for each voice
-    for i, item in enumerate(mensuration_list):
-        mensuration_list[i] = ['1'] + item
-    # 2. Rewriting the mensuration list given by the user as a dictionary that indicates the mensuration changes for each voice
-    piece_mensuration = {}
-    for i, item in enumerate(mensuration_list):
-        voice_mensuration_changes = dict(zip(item[0::2], item[1::2]))
-        piece_mensuration[i] = voice_mensuration_changes
-    # Example:    piece_mensuration = {0: {'1': 'ipip'}, 1: {'1': 'ipip'}, 2: {'1': 'ipip', '33': 'ippp'}}
-    # Each entry of the piece_mensuration dictionary is a key-value consisting of:
-    # - The voice number as the key, and
-    # - A dictionary of the mensuration changes of that voice as its value.
-    # Consider the entry for the last voice:    2: {'1': 'ipip', '33': 'ippp'}
-    # The dictionary shows the changes of mensuration within that voice. The keys indicate the measure where
-    # the mensuration change happens, and the value indicates the actual mensuration.
-    # So for this entry, the initial mensuration (at measure 1) is given by 'ipip',
-    # which changes at measure 33 to 'ippp'.
-
-    # 3. Change the mensuration dictionary, so that the mensuration values are consistent with the way in
-    # which MEI encodes the modus major, modus minor, tempus, and prolatio
-    # Changing entries as 'ippp' to a list of the form ['2', '3', '3', '3'] that encodes the individual
-    # values for the attributes @modusmaior, @modusminor, @tempus, and @prolatio, respectively
-    numvalue = {'p': '3', '3': '3', 'i': '2', '2': '2'}
-    for voice_num in piece_mensuration:
-        voice_mensuration_changes = piece_mensuration[voice_num]
-        for measure_num in voice_mensuration_changes:
-            current_mensuration = voice_mensuration_changes[measure_num]
-            piece_mensuration[voice_num][measure_num] = [numvalue[mensur_note_level] for mensur_note_level in list(current_mensuration)]
-
     # Translation step: use of the MensuralMeiTranslatedDocument class
-    mensural_meidoc = MensuralTranslation(input_doc, args.style, piece_mensuration)
+    mensural_meidoc = MensuralTranslation(input_doc, args.style, mensuration_list)
     documentToFile(mensural_meidoc, args.piece[:-4] + "_MENSURAL.mei")
