@@ -486,22 +486,40 @@ def fill_section(out_section, all_voices, ids_removeList, input_doc):
     input_doc -- the pymei.MeiDocument that has all the CMN-MEI file information
     """
     flag_triplet_minims = False
-    for ind_voice in all_voices:
+    for k, ind_voice in enumerate(all_voices):
         # Add a staff for each voice, with the id corresponding to the first <staff> element in the input_file for that exact voice
         staff = MeiElement('staff')
-        old_staff = input_doc.getElementsByName('staff')[all_voices.index(ind_voice)]
+        old_staff = input_doc.getElementsByName('staff')[k]
         staff.setId(old_staff.id)
         staff.addAttribute(old_staff.getAttribute('n'))
         out_section.addChild(staff)
         # Add a layer inside the <staff> for each voice, with the id corresponding to the first <layer> element in the input_file for that exact voice
         layer = MeiElement('layer')
-        old_layer = input_doc.getElementsByName('layer')[all_voices.index(ind_voice)]
+        old_layer = input_doc.getElementsByName('layer')[k]
         layer.setId(old_layer.id)
         layer.addAttribute(old_layer.getAttribute('n'))
         staff.addChild(layer)
+
         # Fill each voice (fill the <layer> of each <staff>) with musical information (notes/rests)
-        for i in range(0, len(ind_voice)):
-            musical_content = ind_voice[i].getChildrenByName('layer')[0].getChildren()
+        for i, staff_element in enumerate(ind_voice):
+
+            # Before retrieving the musical content of this staff element, 
+            # check if there is any CHANGE IN MENSURATION.
+            measure = staff_element.getParent()
+            measure_num = measure.getAttribute('n').value
+            # If there is a change in mensuration, add a <mensur> element encoding the new mensuration values
+            if measure_num in list(piece_mensuration[k].keys()):
+                mensur = MeiElement('mensur')
+                voice_mensuration_changes = piece_mensuration[k]
+                mensuration = voice_mensuration_changes[measure_num]
+                mensur.addAttribute('modusmaior', mensuration[0])
+                mensur.addAttribute('modusminor', mensuration[1])
+                mensur.addAttribute('tempus', mensuration[2])
+                mensur.addAttribute('prolatio', mensuration[3])
+                layer.addChild(mensur)
+
+            # Retrieve the MUSICAL CONTENT of this staff element
+            musical_content = staff_element.getChildrenByName('layer')[0].getChildren()
             # Add the elements of each measure into the <layer> and a <barLine/> element after the measure-content
             for element in musical_content:
                 # Tied notes
