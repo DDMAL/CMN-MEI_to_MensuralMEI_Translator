@@ -170,7 +170,7 @@ class MensuralTranslation(MeiDocument):
         if ars_type in ["ars_nova", "white_mensural"]:
             for i, voice_staffDef in enumerate(stavesDef):
                 voice_mensuration_changes = piece_mensuration[i]
-                voice_initial_mensuration = voice_mensuration_changes[1]
+                voice_initial_mensuration = voice_mensuration_changes['1']
                 voice_staffDef.addAttribute('modusmaior', voice_initial_mensuration[0])
                 voice_staffDef.addAttribute('modusminor', voice_initial_mensuration[1])
                 voice_staffDef.addAttribute('tempus', voice_initial_mensuration[2])
@@ -180,7 +180,7 @@ class MensuralTranslation(MeiDocument):
         else:
             for i, voice_staffDef in enumerate(stavesDef):
                 voice_mensuration_changes = piece_mensuration[i]
-                voice_initial_mensuration = voice_mensuration_changes[1]
+                voice_initial_mensuration = voice_mensuration_changes['1']
                 voice_staffDef.addAttribute('modusmaior', '2')
                 voice_staffDef.addAttribute('modusminor', voice_initial_mensuration[1])
                 voice_staffDef.addAttribute('tempus', voice_initial_mensuration[0])
