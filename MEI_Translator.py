@@ -82,11 +82,13 @@ def merge_ties(doc):
     return ids_removeList
 
 
-def divide_voice(mensural_meidoc, mensur_elements):
+def divide_voice(mensural_meidoc, mensur_elements, voice_index):
     voice_segments = []
     mensur_positions = [mensur.getPositionInDocument() for mensur in mensur_elements]
     mensuraldoc_tree = mensural_meidoc.getFlattenedTree()
-    for i in range (0, len(mensur_positions) - 1):
+
+    # For all the segments written in one mensuration, but the last
+    for i in range(0, len(mensur_positions) - 1):
         elements_in_between = mensuraldoc_tree[mensur_positions[i]+1 : mensur_positions[i+1]]
         notes = []
         rests = []
@@ -97,9 +99,20 @@ def divide_voice(mensural_meidoc, mensur_elements):
                 rests.append(element)
         mensuration = mensur_elements[i]
         segment = {'mensuration': mensuration, 'notes': notes, 'rests': rests}
-    voice_segments.append(segment)
+        voice_segments.append(segment)
 
-    elements_in_between = mensuraldoc_tree[mensur_positions[len(mensur_positions) - 1] + 1:]
+    # For the final segment of the voice
+    voices = mensural_meidoc.getElementsByName('staff')
+    # In the case we are at the lowest voice,
+    # we look for the notes between the last mensuraiton sign and the end of the file.
+    if voice_index == len(voices) - 1:
+        elements_in_between = mensuraldoc_tree[mensur_positions[-1]+1:]
+    # In the case we are at any other voice,
+    # we look for the notes between the last mensuration sign and the start of the next voice.
+    else:
+        next_voice_staff = voices[voice_index + 1]
+        end_voice_position = next_voice_staff.getPositionInDocument()
+        elements_in_between = mensuraldoc_tree[mensur_positions[-1]+1:end_voice_position]
     notes = []
     rests = []
     for element in elements_in_between:
@@ -271,9 +284,9 @@ class MensuralTranslation(MeiDocument):
                 # If there are changes in mensuration within the voice
                 else:
                     # Separate the music content of the voice (notes and rests) into segments that keep the same mensuration
-                    voice_segments = divide_voice(self, voice_mensur_elements)
+                    voice_segments = divide_voice(self, voice_mensur_elements, i)
                     # For each segment:
-                    for i, segment in enumerate(voice_segments):
+                    for segment in voice_segments:
                         # Mensuration of this segment of the voice
                         modusmaior = int(segment['mensuration'].getAttribute('modusmaior').value)
                         modusminor = int(segment['mensuration'].getAttribute('modusminor').value)
