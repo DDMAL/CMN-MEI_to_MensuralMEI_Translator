@@ -11,6 +11,7 @@ Classes:
 MensuralTranslation -- Create the translated Mensural-MEI document.
 """
 import argparse
+import itertools
 
 from pymei import documentFromFile, documentToFile, MeiDocument, MeiElement
 
@@ -298,53 +299,52 @@ class MensuralTranslation(MeiDocument):
         return all_modified_notes
 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('piece', help="If the CMN-MEI file of the piece is in the same directory as the MEI_Translator module, just enter the 'name' of the piece (including its extension: '.mei'). If not, insert the whole 'path' of the piece.")
-    parser.add_argument('style', choices=['ars_antiqua', 'ars_nova', 'white_mensural'], help="This indicates the style of the piece, whether it belongs to the 'ars antiqua', 'ars nova', or 'white notation' repertoire. If you select 'ars_nova' or 'white_mensural' you have to use the optional argument '-NewVoiceN' to add the mensuration (values for: modusmajor, modusminor, tempus, and prolatio) for each voice. If you choose 'ars_antiqua' you have to use the optional argument '-NewVoiceA' to add the mensuration (values for: breve and modusminor) for each voice.")
-    parser.add_argument('-NewVoiceA', nargs=2, action='append', choices=['3', '2', 'p', 'i'], help="Use this flag for each new voice (in ars antiqua) that you are entering. After the flag, use '2' or '3' to indicate the 'division of the breve' (duple of triple division) and then use 'p' or 'i' to indicate the 'modusminor'. The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Antiqua 4-voice motet with 3 minor semibreves per breve and imperfect modus: -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i -NewVoiceA 3 i") # for now, you have to add each voice
-    parser.add_argument('-NewVoiceN', nargs=4, action='append', choices=['p', 'i'], help="Use this flag for each new voice (in ars nova or in white mensural notation) that you are entering. After the flag, use 'p' or 'i' to indicate the mensuration (in the order: modusmajor + modusminor + tempus + prolatio). The order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file. \nExample for an Ars Nova 3-voice motet with different mensurations for each voice: -NewVoiceN i i p p -NewVoiceN i p i p -NewVoiceN p i i i") # for now, just 4 values per voice are allowed
+    parser.add_argument('style', choices=['ars_antiqua', 'ars_nova', 'white_mensural'], help="This indicates the style of the piece, whether it belongs to the 'ars antiqua', 'ars nova', or 'white notation' repertoire.")
+    parser.add_argument('-voice', nargs='+', action='append', help="Use this flag for each voice to enter its mensuration in the following format: -voice <mensuration>. \nThe mensuration string has two possible values depending of the style of your piece.\n-If your piece is from the Ars Antiqua, your mensuration string should be two chracters long, the first character is a '2' or a '3' and indicates  the 'division of the breve' (duple or triple division), and the second character is an 'i' or 'p' and it indicates the modusminor (imperfect or perfect modusminor). \nExample for an Ars Antiqua 3-voice piece with 2 minor semibreves per breve and perfect modus: -voice 2p -voice 2p -voice 2p \n-If, on the other hand, you are dealing with an Ars nova or a white notation piece, your mensuration string is four characters long and it is composed only of 'p' and 'i' chracters. These characters must be used to indicate the mensuration in the following order: modusmajor, modusminor, tempus, and prolatio. \nExample of a two-voice Ars nova (or white mensural) piece with different mensuration in each voice: -voice ippi -voice iipp. Both voices are in imperfect modusmajor, the upper one has perfect modus and tempus with minor prolatio, while the lower one is in imperfect modus, perfect tempus and major prolatio. \n\nTo indicate changes in mensuration within a voice you must provide the measure number in which the mensuration change happens using the following format: -voice <mensuration> <measure_number> <mensuration> <measure_number> <mensuration> and so on.\nExample: '-voice ipip 15 ippp 30 ipip -voice ipii -voice ipii'. In this example the first voice starts in imperfect modusmajor, perfect modusminor, imperfect tempus, and major prolatio. At measure 15th, its tempus changes from imperfect to perfect. Finally, it comes gack to imperfect tempus at measure 30th. While all these changes in mensuration happens in the uppper voice, the two lower voices move always in imperfect modusmajor, perfect modusminor and imperfect tempus with minor prolatio. \n\nThe order in which you enter the mensuration of the voices here should be the same as the order of the voices in the CMN-MEI file.")
     args = parser.parse_args()
 
-    # Parser errors:
-    # Case: ars nova or white mensural notation
-    if args.style in ['ars_nova', 'white_mensural']:
-        # Inconsistency between the style argument and the NewVoice flag used
-        if args.NewVoiceA is not None:
-            parser.error("Use of incorrect 'NewVoice' flag. For 'ars nova' and 'white mensural' use exclusively -NewVoiceN flag to add the mensuration information of each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
-        # Missing information of the mensuration of the voices
-        if args.NewVoiceN is None:
-            parser.error("No voice mensuration information has been provided. Use the flag -NewVoiceN to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
-        else:
-            mensurationList = args.NewVoiceN
-    # Case: ars antiqua
+    # All possible choices of mensuration for ars antiqua and ars nova pieces
+    choices_antiq = [breve+modus for modus in 'ip' for breve in '32']
+    choices_nova = [''.join(i) for i in itertools.product(['i', 'p'], repeat=4)]
+
+    # Choices depending on the style chosen by the user
+    if args.style == 'ars_antiqua':
+        choices = choices_antiq
     else:
-        # Inconsistency between the style argument and the NewVoice flag used
-        if args.NewVoiceN is not None:
-            parser.error("Use of incorrect 'NewVoice' flag. For 'ars antiqua' use exclusively -NewVoiceA flag to add the mensuration information of each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
-        # Missing information of the mensuration of the voices
-        if args.NewVoiceA is None:
-            parser.error("No voice mensuration information has been provided. Use the flag -NewVoiceA to add the mensuration information for each voice. \nSee the 'help' for more information: 'python MEI_Translator.py -h'")
-        else:
-            mensurationList = args.NewVoiceA
-        # Wrong argument for 'breve division' (first argument of -NewVoiceA) in ars antiqua
-        for voice in args.NewVoiceA:
-            breve_division = voice[0]
-            if breve_division not in ['3', '2']:
-                parser.error("Use of invalid arguments for -NewVoiceA. First argument (breve division) should be '3' or '2' (triple or duple).")
-            else:
-                pass
-    # Case: the numer of voices entered by the user is smaller/larger than the number of voices in the piece
+        choices = choices_nova
+
+    # Evaluating the user input
+    for i, voice in enumerate(args.voice):
+        measures = voice[1::2]
+        mensurations = voice[0::2]
+
+        # Error in Measure number (it is not an integer)
+        try:
+            [int(m) for m in measures]
+        except:
+            parser.error("There is a wrong measure number in voice # " + str(i+1))
+
+        # Error in mensuration (it is not any of the available choices for ars antiqua or nova)
+        if all([mensur in choices for mensur in mensurations]) is False:
+            parser.error("There is a wrong mensuration in voice # " + str(i+1) + ".\nPlease follow the instructions regarding how to write the mensuration for " + args.style + " pieces.")
+    # If everything is fine, save the list of mensurations
+    mensurationList = args.voice
+
     print(args.piece)
     input_doc = documentFromFile(args.piece).getMeiDocument()
     stavesDef = input_doc.getElementsByName('staffDef')
     if len(mensurationList) < len(stavesDef):
-        parser.error("The number of voices entered (amount of 'NewVoice' flags) is smaller than the number of voices on the CMN-MEI file of the piece.")
+        parser.error("The number of voices entered (amount of '-voice' flags) is smaller than the number of voices on the CMN-MEI file of the piece.")
     elif len(mensurationList) > len(stavesDef):
-        parser.error("The number of voices entered (amount of 'NewVoice' flags) is larger than the number of voices on the CMN-MEI file of the piece.")
+        parser.error("The number of voices entered (amount of '-voice' flags) is larger than the number of voices on the CMN-MEI file of the piece.")
     else:
         pass
 
+    print(args.voice)
     # Translation step: use of the MensuralMeiTranslatedDocument class
     mensural_meidoc = MensuralTranslation(input_doc, args.style, mensurationList)
     documentToFile(mensural_meidoc, args.piece[:-4] + "_MENSURAL.mei")
