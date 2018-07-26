@@ -88,11 +88,11 @@ def partial_imperfection(note, ratio, modusminor, tempus, prolatio=None):
     partial_imperf = True
 
     # Immediate imperfection: tempus should be 3
-    if tempus == 3 and modusminor == 2 and ratio == Fraction(5, 6):
+    if tempus == 3 and modusminor == 2 and (ratio == Fraction(5, 6) or ratio == Fraction(4, 6)):
         note.addAttribute('quality', 'immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(5, 9):
+    elif tempus == 3 and modusminor == 3 and (ratio == Fraction(5, 9)):    # Should I also include the case: or ratio == Fraction(4, 9)?
         note.addAttribute('quality', 'imperfection + immediate_imp')
-    elif tempus == 3 and modusminor == 3 and ratio == Fraction(8, 9):
+    elif tempus == 3 and modusminor == 3 and (ratio == Fraction(8, 9) or ratio == Fraction(7, 9)):
         note.addAttribute('quality', 'immediate_imp')
 
     # Remote imperfection: there should be a prolatio value, and it should be 3
