@@ -153,18 +153,18 @@ def noterest_to_mensural(notes, rests, modusmaior, modusminor, tempus, prolatio,
         # For the tied notes:
         # First find its right (contemporary) duration
         if dur == 'TiedNote!':
-            # Maximas
-            if (int(max_imp * 4/6) - 1) <= durges_num and durges_num <= max_perf:
-                dur = 'maxima'
-            # Longas
-            elif (int(l_imp * 4/6) - 1) <= durges_num and durges_num <= l_perf:
-                dur = 'long'
+            # Semibreves
+            if (int(sb_imp * 4/6) - 1) <= durges_num and durges_num <= sb_perf:
+                dur = '1'
             # Breves
             elif (int(b_imp * 4/6) - 1) <= durges_num and durges_num <= b_perf:
                 dur = 'breve'
-            # Semibreves
-            elif (int(sb_imp * 4/6) - 1) <= durges_num and durges_num <= sb_perf:
-                dur = '1'
+            # Longas
+            elif (int(l_imp * 4/6) - 1) <= durges_num and durges_num <= l_perf:
+                dur = 'long'
+            # Maximas
+            elif (int(max_imp * 4/6) - 1) <= durges_num and durges_num <= max_perf:
+                dur = 'maxima'
             else:
                 print("Weird\n The tied note doesn't seem to be any note (perfect, imperfect, or afected by patial imperfection) in the range of semibreve to maxima - " + str(note) + ", its duration is " + str(durges_num) + "p")
             note.getAttribute('dur').setValue(dur)
